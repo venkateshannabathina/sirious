@@ -1,0 +1,1619 @@
+{
+  "source": "assets/Female Standing Pose.fbx",
+  "target": "assets/Blender/blender.Fbx",
+  "source_action": "Armature.001|mixamo.com|Layer0",
+  "source_frame_range": [
+    1,
+    2
+  ],
+  "source_bones": 65,
+  "target_bones": 101,
+  "mapped_deforming_bones": 52,
+  "mapped_pairs": {
+    "mixamorig:Hips": "CC_Base_Hip",
+    "mixamorig:Spine": "CC_Base_Pelvis",
+    "mixamorig:Spine1": "CC_Base_Waist",
+    "mixamorig:Spine2": "CC_Base_Spine02",
+    "mixamorig:Neck": "CC_Base_NeckTwist01",
+    "mixamorig:Head": "CC_Base_Head",
+    "mixamorig:LeftShoulder": "CC_Base_L_Clavicle",
+    "mixamorig:LeftArm": "CC_Base_L_Upperarm",
+    "mixamorig:LeftForeArm": "CC_Base_L_Forearm",
+    "mixamorig:LeftHand": "CC_Base_L_Hand",
+    "mixamorig:LeftHandThumb1": "CC_Base_L_Thumb1",
+    "mixamorig:LeftHandThumb2": "CC_Base_L_Thumb2",
+    "mixamorig:LeftHandThumb3": "CC_Base_L_Thumb3",
+    "mixamorig:LeftHandIndex1": "CC_Base_L_Index1",
+    "mixamorig:LeftHandIndex2": "CC_Base_L_Index2",
+    "mixamorig:LeftHandIndex3": "CC_Base_L_Index3",
+    "mixamorig:LeftHandMiddle1": "CC_Base_L_Mid1",
+    "mixamorig:LeftHandMiddle2": "CC_Base_L_Mid2",
+    "mixamorig:LeftHandMiddle3": "CC_Base_L_Mid3",
+    "mixamorig:LeftHandRing1": "CC_Base_L_Ring1",
+    "mixamorig:LeftHandRing2": "CC_Base_L_Ring2",
+    "mixamorig:LeftHandRing3": "CC_Base_L_Ring3",
+    "mixamorig:LeftHandPinky1": "CC_Base_L_Pinky1",
+    "mixamorig:LeftHandPinky2": "CC_Base_L_Pinky2",
+    "mixamorig:LeftHandPinky3": "CC_Base_L_Pinky3",
+    "mixamorig:RightShoulder": "CC_Base_R_Clavicle",
+    "mixamorig:RightArm": "CC_Base_R_Upperarm",
+    "mixamorig:RightForeArm": "CC_Base_R_Forearm",
+    "mixamorig:RightHand": "CC_Base_R_Hand",
+    "mixamorig:RightHandThumb1": "CC_Base_R_Thumb1",
+    "mixamorig:RightHandThumb2": "CC_Base_R_Thumb2",
+    "mixamorig:RightHandThumb3": "CC_Base_R_Thumb3",
+    "mixamorig:RightHandIndex1": "CC_Base_R_Index1",
+    "mixamorig:RightHandIndex2": "CC_Base_R_Index2",
+    "mixamorig:RightHandIndex3": "CC_Base_R_Index3",
+    "mixamorig:RightHandMiddle1": "CC_Base_R_Mid1",
+    "mixamorig:RightHandMiddle2": "CC_Base_R_Mid2",
+    "mixamorig:RightHandMiddle3": "CC_Base_R_Mid3",
+    "mixamorig:RightHandRing1": "CC_Base_R_Ring1",
+    "mixamorig:RightHandRing2": "CC_Base_R_Ring2",
+    "mixamorig:RightHandRing3": "CC_Base_R_Ring3",
+    "mixamorig:RightHandPinky1": "CC_Base_R_Pinky1",
+    "mixamorig:RightHandPinky2": "CC_Base_R_Pinky2",
+    "mixamorig:RightHandPinky3": "CC_Base_R_Pinky3",
+    "mixamorig:LeftUpLeg": "CC_Base_L_Thigh",
+    "mixamorig:LeftLeg": "CC_Base_L_Calf",
+    "mixamorig:LeftFoot": "CC_Base_L_Foot",
+    "mixamorig:LeftToeBase": "CC_Base_L_ToeBase",
+    "mixamorig:RightUpLeg": "CC_Base_R_Thigh",
+    "mixamorig:RightLeg": "CC_Base_R_Calf",
+    "mixamorig:RightFoot": "CC_Base_R_Foot",
+    "mixamorig:RightToeBase": "CC_Base_R_ToeBase"
+  },
+  "unmapped_source_terminal_markers": [
+    "mixamorig:HeadTop_End",
+    "mixamorig:LeftHandIndex4",
+    "mixamorig:LeftHandMiddle4",
+    "mixamorig:LeftHandPinky4",
+    "mixamorig:LeftHandRing4",
+    "mixamorig:LeftHandThumb4",
+    "mixamorig:LeftToe_End",
+    "mixamorig:RightHandIndex4",
+    "mixamorig:RightHandMiddle4",
+    "mixamorig:RightHandPinky4",
+    "mixamorig:RightHandRing4",
+    "mixamorig:RightHandThumb4",
+    "mixamorig:RightToe_End"
+  ],
+  "unmapped_source_deforming_bones": [],
+  "preserved_cc3_only_bones": [
+    "CC_Base_BoneRoot",
+    "CC_Base_FacialBone",
+    "CC_Base_JawRoot",
+    "CC_Base_L_BigToe1",
+    "CC_Base_L_Breast",
+    "CC_Base_L_CalfTwist01",
+    "CC_Base_L_CalfTwist02",
+    "CC_Base_L_ElbowShareBone",
+    "CC_Base_L_Eye",
+    "CC_Base_L_ForearmTwist01",
+    "CC_Base_L_ForearmTwist02",
+    "CC_Base_L_IndexToe1",
+    "CC_Base_L_KneeShareBone",
+    "CC_Base_L_MidToe1",
+    "CC_Base_L_PinkyToe1",
+    "CC_Base_L_RibsTwist",
+    "CC_Base_L_RingToe1",
+    "CC_Base_L_ThighTwist01",
+    "CC_Base_L_ThighTwist02",
+    "CC_Base_L_ToeBaseShareBone",
+    "CC_Base_L_UpperarmTwist01",
+    "CC_Base_L_UpperarmTwist02",
+    "CC_Base_NeckTwist02",
+    "CC_Base_R_BigToe1",
+    "CC_Base_R_Breast",
+    "CC_Base_R_CalfTwist01",
+    "CC_Base_R_CalfTwist02",
+    "CC_Base_R_ElbowShareBone",
+    "CC_Base_R_Eye",
+    "CC_Base_R_ForearmTwist01",
+    "CC_Base_R_ForearmTwist02",
+    "CC_Base_R_IndexToe1",
+    "CC_Base_R_KneeShareBone",
+    "CC_Base_R_MidToe1",
+    "CC_Base_R_PinkyToe1",
+    "CC_Base_R_RibsTwist",
+    "CC_Base_R_RingToe1",
+    "CC_Base_R_ThighTwist01",
+    "CC_Base_R_ThighTwist02",
+    "CC_Base_R_ToeBaseShareBone",
+    "CC_Base_R_UpperarmTwist01",
+    "CC_Base_R_UpperarmTwist02",
+    "CC_Base_Spine01",
+    "CC_Base_Teeth01",
+    "CC_Base_Teeth02",
+    "CC_Base_Tongue01",
+    "CC_Base_Tongue02",
+    "CC_Base_Tongue03",
+    "CC_Base_UpperJaw"
+  ],
+  "sample_frames": [
+    1,
+    2
+  ],
+  "maximum_direction_error_degrees": 26.540001,
+  "target_rest_delta_bones": [
+    "CC_Base_Head",
+    "CC_Base_Hip",
+    "CC_Base_L_Foot",
+    "CC_Base_L_ToeBase",
+    "CC_Base_NeckTwist01",
+    "CC_Base_Pelvis",
+    "CC_Base_R_Foot",
+    "CC_Base_R_ToeBase",
+    "CC_Base_Spine02",
+    "CC_Base_Waist"
+  ],
+  "torso_forward_correction_bones": [
+    "CC_Base_Head",
+    "CC_Base_NeckTwist01",
+    "CC_Base_Spine02",
+    "CC_Base_Waist"
+  ],
+  "torso_forward_correction_degrees": 3.0,
+  "samples": {
+    "1": {
+      "mixamorig:Hips": {
+        "target": "CC_Base_Hip",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.117669,
+          0.005254,
+          0.993039
+        ],
+        "target_direction": [
+          0.117669,
+          0.005253,
+          0.993039
+        ]
+      },
+      "mixamorig:Spine": {
+        "target": "CC_Base_Pelvis",
+        "direction_angle_degrees": 22.1234,
+        "source_direction": [
+          0.053051,
+          0.144837,
+          0.988032
+        ],
+        "target_direction": [
+          0.04631,
+          -0.238415,
+          0.970058
+        ]
+      },
+      "mixamorig:Spine1": {
+        "target": "CC_Base_Waist",
+        "direction_angle_degrees": 26.54,
+        "source_direction": [
+          -0.033581,
+          0.129927,
+          0.990955
+        ],
+        "target_direction": [
+          -0.03806,
+          -0.326758,
+          0.944341
+        ]
+      },
+      "mixamorig:Spine2": {
+        "target": "CC_Base_Spine02",
+        "direction_angle_degrees": 0.1219,
+        "source_direction": [
+          -0.119661,
+          0.114356,
+          0.986207
+        ],
+        "target_direction": [
+          -0.118597,
+          0.112553,
+          0.986543
+        ]
+      },
+      "mixamorig:Neck": {
+        "target": "CC_Base_NeckTwist01",
+        "direction_angle_degrees": 18.7349,
+        "source_direction": [
+          -0.123895,
+          -0.056725,
+          0.990673
+        ],
+        "target_direction": [
+          -0.12031,
+          -0.374349,
+          0.91945
+        ]
+      },
+      "mixamorig:Head": {
+        "target": "CC_Base_Head",
+        "direction_angle_degrees": 3.0292,
+        "source_direction": [
+          -0.023966,
+          -0.083949,
+          0.996182
+        ],
+        "target_direction": [
+          -0.023939,
+          -0.136491,
+          0.990352
+        ]
+      },
+      "mixamorig:LeftShoulder": {
+        "target": "CC_Base_L_Clavicle",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.961994,
+          -0.010539,
+          -0.272866
+        ],
+        "target_direction": [
+          0.961995,
+          -0.010539,
+          -0.272865
+        ]
+      },
+      "mixamorig:LeftArm": {
+        "target": "CC_Base_L_Upperarm",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.209136,
+          -0.006609,
+          -0.977864
+        ],
+        "target_direction": [
+          0.209136,
+          -0.006609,
+          -0.977864
+        ]
+      },
+      "mixamorig:LeftForeArm": {
+        "target": "CC_Base_L_Forearm",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.140863,
+          -0.35139,
+          -0.925572
+        ],
+        "target_direction": [
+          0.140863,
+          -0.35139,
+          -0.925572
+        ]
+      },
+      "mixamorig:LeftHand": {
+        "target": "CC_Base_L_Hand",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.165018,
+          -0.304126,
+          -0.93823
+        ],
+        "target_direction": [
+          0.165018,
+          -0.304126,
+          -0.93823
+        ]
+      },
+      "mixamorig:LeftHandThumb1": {
+        "target": "CC_Base_L_Thumb1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.1047,
+          -0.614595,
+          -0.781864
+        ],
+        "target_direction": [
+          -0.1047,
+          -0.614595,
+          -0.781863
+        ]
+      },
+      "mixamorig:LeftHandThumb2": {
+        "target": "CC_Base_L_Thumb2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.10708,
+          -0.275825,
+          -0.955225
+        ],
+        "target_direction": [
+          -0.10708,
+          -0.275825,
+          -0.955225
+        ]
+      },
+      "mixamorig:LeftHandThumb3": {
+        "target": "CC_Base_L_Thumb3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.083673,
+          -0.504034,
+          -0.859621
+        ],
+        "target_direction": [
+          -0.083672,
+          -0.504033,
+          -0.859622
+        ]
+      },
+      "mixamorig:LeftHandIndex1": {
+        "target": "CC_Base_L_Index1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.002073,
+          -0.322252,
+          -0.946652
+        ],
+        "target_direction": [
+          0.002073,
+          -0.322251,
+          -0.946652
+        ]
+      },
+      "mixamorig:LeftHandIndex2": {
+        "target": "CC_Base_L_Index2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.319995,
+          -0.287264,
+          -0.902819
+        ],
+        "target_direction": [
+          -0.319995,
+          -0.287265,
+          -0.902819
+        ]
+      },
+      "mixamorig:LeftHandIndex3": {
+        "target": "CC_Base_L_Index3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.547001,
+          -0.201964,
+          -0.812404
+        ],
+        "target_direction": [
+          -0.547002,
+          -0.201964,
+          -0.812404
+        ]
+      },
+      "mixamorig:LeftHandMiddle1": {
+        "target": "CC_Base_L_Mid1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.095525,
+          -0.307345,
+          -0.946791
+        ],
+        "target_direction": [
+          -0.095525,
+          -0.307346,
+          -0.946791
+        ]
+      },
+      "mixamorig:LeftHandMiddle2": {
+        "target": "CC_Base_L_Mid2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.541702,
+          -0.227648,
+          -0.809157
+        ],
+        "target_direction": [
+          -0.541702,
+          -0.227648,
+          -0.809157
+        ]
+      },
+      "mixamorig:LeftHandMiddle3": {
+        "target": "CC_Base_L_Mid3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.702346,
+          -0.199962,
+          -0.683173
+        ],
+        "target_direction": [
+          -0.702345,
+          -0.199962,
+          -0.683174
+        ]
+      },
+      "mixamorig:LeftHandRing1": {
+        "target": "CC_Base_L_Ring1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.070211,
+          -0.266252,
+          -0.961343
+        ],
+        "target_direction": [
+          -0.070211,
+          -0.266252,
+          -0.961343
+        ]
+      },
+      "mixamorig:LeftHandRing2": {
+        "target": "CC_Base_L_Ring2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.608183,
+          -0.185152,
+          -0.771902
+        ],
+        "target_direction": [
+          -0.608182,
+          -0.185152,
+          -0.771903
+        ]
+      },
+      "mixamorig:LeftHandRing3": {
+        "target": "CC_Base_L_Ring3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.7994,
+          -0.095669,
+          -0.593134
+        ],
+        "target_direction": [
+          -0.799399,
+          -0.095669,
+          -0.593135
+        ]
+      },
+      "mixamorig:LeftHandPinky1": {
+        "target": "CC_Base_L_Pinky1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.278697,
+          -0.26066,
+          -0.924329
+        ],
+        "target_direction": [
+          -0.278697,
+          -0.26066,
+          -0.924329
+        ]
+      },
+      "mixamorig:LeftHandPinky2": {
+        "target": "CC_Base_L_Pinky2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.777289,
+          -0.140518,
+          -0.61325
+        ],
+        "target_direction": [
+          -0.777289,
+          -0.140518,
+          -0.613251
+        ]
+      },
+      "mixamorig:LeftHandPinky3": {
+        "target": "CC_Base_L_Pinky3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.909801,
+          -0.010674,
+          -0.414908
+        ],
+        "target_direction": [
+          -0.909801,
+          -0.010674,
+          -0.414907
+        ]
+      },
+      "mixamorig:RightShoulder": {
+        "target": "CC_Base_R_Clavicle",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.97068,
+          0.016535,
+          -0.239807
+        ],
+        "target_direction": [
+          -0.97068,
+          0.016535,
+          -0.239807
+        ]
+      },
+      "mixamorig:RightArm": {
+        "target": "CC_Base_R_Upperarm",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.157628,
+          0.140389,
+          -0.977468
+        ],
+        "target_direction": [
+          -0.157629,
+          0.140389,
+          -0.977468
+        ]
+      },
+      "mixamorig:RightForeArm": {
+        "target": "CC_Base_R_Forearm",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.198598,
+          -0.186574,
+          -0.962159
+        ],
+        "target_direction": [
+          -0.198598,
+          -0.186574,
+          -0.962159
+        ]
+      },
+      "mixamorig:RightHand": {
+        "target": "CC_Base_R_Hand",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.04509,
+          0.058272,
+          -0.997282
+        ],
+        "target_direction": [
+          -0.04509,
+          0.058272,
+          -0.997282
+        ]
+      },
+      "mixamorig:RightHandThumb1": {
+        "target": "CC_Base_R_Thumb1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.160839,
+          -0.36567,
+          -0.916742
+        ],
+        "target_direction": [
+          0.16084,
+          -0.36567,
+          -0.916742
+        ]
+      },
+      "mixamorig:RightHandThumb2": {
+        "target": "CC_Base_R_Thumb2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.202298,
+          -0.009695,
+          -0.979276
+        ],
+        "target_direction": [
+          0.202297,
+          -0.009695,
+          -0.979276
+        ]
+      },
+      "mixamorig:RightHandThumb3": {
+        "target": "CC_Base_R_Thumb3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.178592,
+          -0.029821,
+          -0.983471
+        ],
+        "target_direction": [
+          0.178593,
+          -0.029821,
+          -0.983471
+        ]
+      },
+      "mixamorig:RightHandIndex1": {
+        "target": "CC_Base_R_Index1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.089517,
+          0.015468,
+          -0.995865
+        ],
+        "target_direction": [
+          0.089516,
+          0.015468,
+          -0.995865
+        ]
+      },
+      "mixamorig:RightHandIndex2": {
+        "target": "CC_Base_R_Index2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.405267,
+          -0.006951,
+          -0.914172
+        ],
+        "target_direction": [
+          0.405268,
+          -0.006951,
+          -0.914172
+        ]
+      },
+      "mixamorig:RightHandIndex3": {
+        "target": "CC_Base_R_Index3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.62562,
+          0.013668,
+          -0.780008
+        ],
+        "target_direction": [
+          0.62562,
+          0.013668,
+          -0.780008
+        ]
+      },
+      "mixamorig:RightHandMiddle1": {
+        "target": "CC_Base_R_Mid1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.186625,
+          0.014042,
+          -0.982331
+        ],
+        "target_direction": [
+          0.186625,
+          0.014043,
+          -0.982331
+        ]
+      },
+      "mixamorig:RightHandMiddle2": {
+        "target": "CC_Base_R_Mid2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.617041,
+          -0.014092,
+          -0.786805
+        ],
+        "target_direction": [
+          0.61704,
+          -0.014092,
+          -0.786805
+        ]
+      },
+      "mixamorig:RightHandMiddle3": {
+        "target": "CC_Base_R_Mid3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.764241,
+          -0.040061,
+          -0.643685
+        ],
+        "target_direction": [
+          0.764241,
+          -0.040061,
+          -0.643685
+        ]
+      },
+      "mixamorig:RightHandRing1": {
+        "target": "CC_Base_R_Ring1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.162347,
+          0.090843,
+          -0.982543
+        ],
+        "target_direction": [
+          0.162347,
+          0.090843,
+          -0.982543
+        ]
+      },
+      "mixamorig:RightHandRing2": {
+        "target": "CC_Base_R_Ring2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.676199,
+          0.009086,
+          -0.736663
+        ],
+        "target_direction": [
+          0.676199,
+          0.009086,
+          -0.736663
+        ]
+      },
+      "mixamorig:RightHandRing3": {
+        "target": "CC_Base_R_Ring3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.851524,
+          -0.006549,
+          -0.524275
+        ],
+        "target_direction": [
+          0.851524,
+          -0.006549,
+          -0.524274
+        ]
+      },
+      "mixamorig:RightHandPinky1": {
+        "target": "CC_Base_R_Pinky1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.369399,
+          0.030349,
+          -0.928775
+        ],
+        "target_direction": [
+          0.369398,
+          0.030349,
+          -0.928775
+        ]
+      },
+      "mixamorig:RightHandPinky2": {
+        "target": "CC_Base_R_Pinky2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.832698,
+          -0.029571,
+          -0.552938
+        ],
+        "target_direction": [
+          0.832698,
+          -0.02957,
+          -0.552938
+        ]
+      },
+      "mixamorig:RightHandPinky3": {
+        "target": "CC_Base_R_Pinky3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.950492,
+          0.013976,
+          -0.310434
+        ],
+        "target_direction": [
+          0.950492,
+          0.013976,
+          -0.310433
+        ]
+      },
+      "mixamorig:LeftUpLeg": {
+        "target": "CC_Base_L_Thigh",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.163448,
+          -0.239544,
+          -0.957029
+        ],
+        "target_direction": [
+          0.163447,
+          -0.239543,
+          -0.957029
+        ]
+      },
+      "mixamorig:LeftLeg": {
+        "target": "CC_Base_L_Calf",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.168231,
+          0.113505,
+          -0.979191
+        ],
+        "target_direction": [
+          0.16823,
+          0.113505,
+          -0.979191
+        ]
+      },
+      "mixamorig:LeftFoot": {
+        "target": "CC_Base_L_Foot",
+        "direction_angle_degrees": 22.4917,
+        "source_direction": [
+          0.538634,
+          -0.56488,
+          -0.625127
+        ],
+        "target_direction": [
+          0.562528,
+          -0.772137,
+          -0.295577
+        ]
+      },
+      "mixamorig:LeftToeBase": {
+        "target": "CC_Base_L_ToeBase",
+        "direction_angle_degrees": 24.2305,
+        "source_direction": [
+          0.680241,
+          -0.62532,
+          -0.382423
+        ],
+        "target_direction": [
+          0.533671,
+          -0.843876,
+          -0.055395
+        ]
+      },
+      "mixamorig:RightUpLeg": {
+        "target": "CC_Base_R_Thigh",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.140855,
+          0.023705,
+          -0.989746
+        ],
+        "target_direction": [
+          0.140854,
+          0.023705,
+          -0.989747
+        ]
+      },
+      "mixamorig:RightLeg": {
+        "target": "CC_Base_R_Calf",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.060574,
+          0.083274,
+          -0.994684
+        ],
+        "target_direction": [
+          0.060573,
+          0.083274,
+          -0.994684
+        ]
+      },
+      "mixamorig:RightFoot": {
+        "target": "CC_Base_R_Foot",
+        "direction_angle_degrees": 24.656,
+        "source_direction": [
+          -0.288741,
+          -0.701328,
+          -0.651742
+        ],
+        "target_direction": [
+          -0.227385,
+          -0.928014,
+          -0.295102
+        ]
+      },
+      "mixamorig:RightToeBase": {
+        "target": "CC_Base_R_ToeBase",
+        "direction_angle_degrees": 23.3368,
+        "source_direction": [
+          -0.385266,
+          -0.845692,
+          -0.36929
+        ],
+        "target_direction": [
+          -0.174034,
+          -0.983314,
+          -0.052971
+        ]
+      }
+    },
+    "2": {
+      "mixamorig:Hips": {
+        "target": "CC_Base_Hip",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.117669,
+          0.005254,
+          0.993039
+        ],
+        "target_direction": [
+          0.117669,
+          0.005253,
+          0.993039
+        ]
+      },
+      "mixamorig:Spine": {
+        "target": "CC_Base_Pelvis",
+        "direction_angle_degrees": 22.1234,
+        "source_direction": [
+          0.053051,
+          0.144837,
+          0.988032
+        ],
+        "target_direction": [
+          0.04631,
+          -0.238415,
+          0.970058
+        ]
+      },
+      "mixamorig:Spine1": {
+        "target": "CC_Base_Waist",
+        "direction_angle_degrees": 26.54,
+        "source_direction": [
+          -0.033581,
+          0.129927,
+          0.990955
+        ],
+        "target_direction": [
+          -0.03806,
+          -0.326758,
+          0.944341
+        ]
+      },
+      "mixamorig:Spine2": {
+        "target": "CC_Base_Spine02",
+        "direction_angle_degrees": 0.1219,
+        "source_direction": [
+          -0.119661,
+          0.114356,
+          0.986207
+        ],
+        "target_direction": [
+          -0.118597,
+          0.112553,
+          0.986543
+        ]
+      },
+      "mixamorig:Neck": {
+        "target": "CC_Base_NeckTwist01",
+        "direction_angle_degrees": 18.7349,
+        "source_direction": [
+          -0.123895,
+          -0.056725,
+          0.990673
+        ],
+        "target_direction": [
+          -0.12031,
+          -0.374349,
+          0.91945
+        ]
+      },
+      "mixamorig:Head": {
+        "target": "CC_Base_Head",
+        "direction_angle_degrees": 3.0292,
+        "source_direction": [
+          -0.023966,
+          -0.083949,
+          0.996182
+        ],
+        "target_direction": [
+          -0.023939,
+          -0.136491,
+          0.990352
+        ]
+      },
+      "mixamorig:LeftShoulder": {
+        "target": "CC_Base_L_Clavicle",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.961994,
+          -0.010539,
+          -0.272866
+        ],
+        "target_direction": [
+          0.961995,
+          -0.010539,
+          -0.272865
+        ]
+      },
+      "mixamorig:LeftArm": {
+        "target": "CC_Base_L_Upperarm",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.209136,
+          -0.006609,
+          -0.977864
+        ],
+        "target_direction": [
+          0.209136,
+          -0.006609,
+          -0.977864
+        ]
+      },
+      "mixamorig:LeftForeArm": {
+        "target": "CC_Base_L_Forearm",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.140863,
+          -0.35139,
+          -0.925572
+        ],
+        "target_direction": [
+          0.140863,
+          -0.35139,
+          -0.925572
+        ]
+      },
+      "mixamorig:LeftHand": {
+        "target": "CC_Base_L_Hand",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.165018,
+          -0.304126,
+          -0.93823
+        ],
+        "target_direction": [
+          0.165018,
+          -0.304126,
+          -0.93823
+        ]
+      },
+      "mixamorig:LeftHandThumb1": {
+        "target": "CC_Base_L_Thumb1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.1047,
+          -0.614595,
+          -0.781864
+        ],
+        "target_direction": [
+          -0.1047,
+          -0.614595,
+          -0.781863
+        ]
+      },
+      "mixamorig:LeftHandThumb2": {
+        "target": "CC_Base_L_Thumb2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.10708,
+          -0.275825,
+          -0.955225
+        ],
+        "target_direction": [
+          -0.10708,
+          -0.275825,
+          -0.955225
+        ]
+      },
+      "mixamorig:LeftHandThumb3": {
+        "target": "CC_Base_L_Thumb3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.083673,
+          -0.504034,
+          -0.859621
+        ],
+        "target_direction": [
+          -0.083672,
+          -0.504033,
+          -0.859622
+        ]
+      },
+      "mixamorig:LeftHandIndex1": {
+        "target": "CC_Base_L_Index1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.002073,
+          -0.322252,
+          -0.946652
+        ],
+        "target_direction": [
+          0.002073,
+          -0.322251,
+          -0.946652
+        ]
+      },
+      "mixamorig:LeftHandIndex2": {
+        "target": "CC_Base_L_Index2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.319995,
+          -0.287264,
+          -0.902819
+        ],
+        "target_direction": [
+          -0.319995,
+          -0.287265,
+          -0.902819
+        ]
+      },
+      "mixamorig:LeftHandIndex3": {
+        "target": "CC_Base_L_Index3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.547001,
+          -0.201964,
+          -0.812404
+        ],
+        "target_direction": [
+          -0.547002,
+          -0.201964,
+          -0.812404
+        ]
+      },
+      "mixamorig:LeftHandMiddle1": {
+        "target": "CC_Base_L_Mid1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.095525,
+          -0.307345,
+          -0.946791
+        ],
+        "target_direction": [
+          -0.095525,
+          -0.307346,
+          -0.946791
+        ]
+      },
+      "mixamorig:LeftHandMiddle2": {
+        "target": "CC_Base_L_Mid2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.541702,
+          -0.227648,
+          -0.809157
+        ],
+        "target_direction": [
+          -0.541702,
+          -0.227648,
+          -0.809157
+        ]
+      },
+      "mixamorig:LeftHandMiddle3": {
+        "target": "CC_Base_L_Mid3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.702346,
+          -0.199962,
+          -0.683173
+        ],
+        "target_direction": [
+          -0.702345,
+          -0.199962,
+          -0.683174
+        ]
+      },
+      "mixamorig:LeftHandRing1": {
+        "target": "CC_Base_L_Ring1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.070211,
+          -0.266252,
+          -0.961343
+        ],
+        "target_direction": [
+          -0.070211,
+          -0.266252,
+          -0.961343
+        ]
+      },
+      "mixamorig:LeftHandRing2": {
+        "target": "CC_Base_L_Ring2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.608183,
+          -0.185152,
+          -0.771902
+        ],
+        "target_direction": [
+          -0.608182,
+          -0.185152,
+          -0.771903
+        ]
+      },
+      "mixamorig:LeftHandRing3": {
+        "target": "CC_Base_L_Ring3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.7994,
+          -0.095669,
+          -0.593134
+        ],
+        "target_direction": [
+          -0.799399,
+          -0.095669,
+          -0.593135
+        ]
+      },
+      "mixamorig:LeftHandPinky1": {
+        "target": "CC_Base_L_Pinky1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.278697,
+          -0.26066,
+          -0.924329
+        ],
+        "target_direction": [
+          -0.278697,
+          -0.26066,
+          -0.924329
+        ]
+      },
+      "mixamorig:LeftHandPinky2": {
+        "target": "CC_Base_L_Pinky2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.777289,
+          -0.140518,
+          -0.61325
+        ],
+        "target_direction": [
+          -0.777289,
+          -0.140518,
+          -0.613251
+        ]
+      },
+      "mixamorig:LeftHandPinky3": {
+        "target": "CC_Base_L_Pinky3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.909801,
+          -0.010674,
+          -0.414908
+        ],
+        "target_direction": [
+          -0.909801,
+          -0.010674,
+          -0.414907
+        ]
+      },
+      "mixamorig:RightShoulder": {
+        "target": "CC_Base_R_Clavicle",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.97068,
+          0.016535,
+          -0.239807
+        ],
+        "target_direction": [
+          -0.97068,
+          0.016535,
+          -0.239807
+        ]
+      },
+      "mixamorig:RightArm": {
+        "target": "CC_Base_R_Upperarm",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.157628,
+          0.140389,
+          -0.977468
+        ],
+        "target_direction": [
+          -0.157629,
+          0.140389,
+          -0.977468
+        ]
+      },
+      "mixamorig:RightForeArm": {
+        "target": "CC_Base_R_Forearm",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.198598,
+          -0.186574,
+          -0.962159
+        ],
+        "target_direction": [
+          -0.198598,
+          -0.186574,
+          -0.962159
+        ]
+      },
+      "mixamorig:RightHand": {
+        "target": "CC_Base_R_Hand",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          -0.04509,
+          0.058272,
+          -0.997282
+        ],
+        "target_direction": [
+          -0.04509,
+          0.058272,
+          -0.997282
+        ]
+      },
+      "mixamorig:RightHandThumb1": {
+        "target": "CC_Base_R_Thumb1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.160839,
+          -0.36567,
+          -0.916742
+        ],
+        "target_direction": [
+          0.16084,
+          -0.36567,
+          -0.916742
+        ]
+      },
+      "mixamorig:RightHandThumb2": {
+        "target": "CC_Base_R_Thumb2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.202298,
+          -0.009695,
+          -0.979276
+        ],
+        "target_direction": [
+          0.202297,
+          -0.009695,
+          -0.979276
+        ]
+      },
+      "mixamorig:RightHandThumb3": {
+        "target": "CC_Base_R_Thumb3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.178592,
+          -0.029821,
+          -0.983471
+        ],
+        "target_direction": [
+          0.178593,
+          -0.029821,
+          -0.983471
+        ]
+      },
+      "mixamorig:RightHandIndex1": {
+        "target": "CC_Base_R_Index1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.089517,
+          0.015468,
+          -0.995865
+        ],
+        "target_direction": [
+          0.089516,
+          0.015468,
+          -0.995865
+        ]
+      },
+      "mixamorig:RightHandIndex2": {
+        "target": "CC_Base_R_Index2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.405267,
+          -0.006951,
+          -0.914172
+        ],
+        "target_direction": [
+          0.405268,
+          -0.006951,
+          -0.914172
+        ]
+      },
+      "mixamorig:RightHandIndex3": {
+        "target": "CC_Base_R_Index3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.62562,
+          0.013668,
+          -0.780008
+        ],
+        "target_direction": [
+          0.62562,
+          0.013668,
+          -0.780008
+        ]
+      },
+      "mixamorig:RightHandMiddle1": {
+        "target": "CC_Base_R_Mid1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.186625,
+          0.014042,
+          -0.982331
+        ],
+        "target_direction": [
+          0.186625,
+          0.014043,
+          -0.982331
+        ]
+      },
+      "mixamorig:RightHandMiddle2": {
+        "target": "CC_Base_R_Mid2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.617041,
+          -0.014092,
+          -0.786805
+        ],
+        "target_direction": [
+          0.61704,
+          -0.014092,
+          -0.786805
+        ]
+      },
+      "mixamorig:RightHandMiddle3": {
+        "target": "CC_Base_R_Mid3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.764241,
+          -0.040061,
+          -0.643685
+        ],
+        "target_direction": [
+          0.764241,
+          -0.040061,
+          -0.643685
+        ]
+      },
+      "mixamorig:RightHandRing1": {
+        "target": "CC_Base_R_Ring1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.162347,
+          0.090843,
+          -0.982543
+        ],
+        "target_direction": [
+          0.162347,
+          0.090843,
+          -0.982543
+        ]
+      },
+      "mixamorig:RightHandRing2": {
+        "target": "CC_Base_R_Ring2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.676199,
+          0.009086,
+          -0.736663
+        ],
+        "target_direction": [
+          0.676199,
+          0.009086,
+          -0.736663
+        ]
+      },
+      "mixamorig:RightHandRing3": {
+        "target": "CC_Base_R_Ring3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.851524,
+          -0.006549,
+          -0.524275
+        ],
+        "target_direction": [
+          0.851524,
+          -0.006549,
+          -0.524274
+        ]
+      },
+      "mixamorig:RightHandPinky1": {
+        "target": "CC_Base_R_Pinky1",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.369399,
+          0.030349,
+          -0.928775
+        ],
+        "target_direction": [
+          0.369398,
+          0.030349,
+          -0.928775
+        ]
+      },
+      "mixamorig:RightHandPinky2": {
+        "target": "CC_Base_R_Pinky2",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.832698,
+          -0.029571,
+          -0.552938
+        ],
+        "target_direction": [
+          0.832698,
+          -0.02957,
+          -0.552938
+        ]
+      },
+      "mixamorig:RightHandPinky3": {
+        "target": "CC_Base_R_Pinky3",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.950492,
+          0.013976,
+          -0.310434
+        ],
+        "target_direction": [
+          0.950492,
+          0.013976,
+          -0.310433
+        ]
+      },
+      "mixamorig:LeftUpLeg": {
+        "target": "CC_Base_L_Thigh",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.163448,
+          -0.239544,
+          -0.957029
+        ],
+        "target_direction": [
+          0.163447,
+          -0.239543,
+          -0.957029
+        ]
+      },
+      "mixamorig:LeftLeg": {
+        "target": "CC_Base_L_Calf",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.168231,
+          0.113505,
+          -0.979191
+        ],
+        "target_direction": [
+          0.16823,
+          0.113505,
+          -0.979191
+        ]
+      },
+      "mixamorig:LeftFoot": {
+        "target": "CC_Base_L_Foot",
+        "direction_angle_degrees": 22.4917,
+        "source_direction": [
+          0.538634,
+          -0.56488,
+          -0.625127
+        ],
+        "target_direction": [
+          0.562528,
+          -0.772137,
+          -0.295577
+        ]
+      },
+      "mixamorig:LeftToeBase": {
+        "target": "CC_Base_L_ToeBase",
+        "direction_angle_degrees": 24.2305,
+        "source_direction": [
+          0.680241,
+          -0.62532,
+          -0.382423
+        ],
+        "target_direction": [
+          0.533671,
+          -0.843876,
+          -0.055395
+        ]
+      },
+      "mixamorig:RightUpLeg": {
+        "target": "CC_Base_R_Thigh",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.140855,
+          0.023705,
+          -0.989746
+        ],
+        "target_direction": [
+          0.140854,
+          0.023705,
+          -0.989747
+        ]
+      },
+      "mixamorig:RightLeg": {
+        "target": "CC_Base_R_Calf",
+        "direction_angle_degrees": 0.0,
+        "source_direction": [
+          0.060574,
+          0.083274,
+          -0.994684
+        ],
+        "target_direction": [
+          0.060573,
+          0.083274,
+          -0.994684
+        ]
+      },
+      "mixamorig:RightFoot": {
+        "target": "CC_Base_R_Foot",
+        "direction_angle_degrees": 24.656,
+        "source_direction": [
+          -0.288741,
+          -0.701328,
+          -0.651742
+        ],
+        "target_direction": [
+          -0.227385,
+          -0.928014,
+          -0.295102
+        ]
+      },
+      "mixamorig:RightToeBase": {
+        "target": "CC_Base_R_ToeBase",
+        "direction_angle_degrees": 23.3368,
+        "source_direction": [
+          -0.385266,
+          -0.845692,
+          -0.36929
+        ],
+        "target_direction": [
+          -0.174034,
+          -0.983314,
+          -0.052971
+        ]
+      }
+    }
+  }
+}

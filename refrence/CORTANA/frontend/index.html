@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORTANA · Companion Studio</title>
+    <link rel="stylesheet" href="style.css?v=cortana-foundation-20260727-v1">
+    <link rel="stylesheet" href="styles/tokens.css?v=cortana-ui-20260727-v2">
+    <link rel="stylesheet" href="styles/shell.css?v=cortana-ui-20260727-v2">
+    <link rel="stylesheet" href="styles/studio.css?v=cortana-expression-20260730-v1">
+    <link rel="stylesheet" href="styles/rig.css?v=cortana-ui-20260727-v2">
+    <link rel="stylesheet" href="styles/responsive.css?v=cortana-ui-20260727-v2">
+    <link rel="stylesheet" href="styles/island.css?v=cortana-island-20260727-v4">
+    <link rel="stylesheet" href="styles/simple-rig.css?v=cortana-simple-rig-20260731-v1">
+</head>
+<body>
+    <script>
+        window.onerror = function(msg, url, line, col, error) {
+            console.error("[CORTANA]", msg, url, line, col, error);
+            var existing = document.getElementById("runtime-alert");
+            if (existing) return false;
+            var err = document.createElement('div');
+            err.id = "runtime-alert";
+            err.className = "runtime-alert";
+            err.setAttribute("role", "alert");
+            err.innerHTML = "<strong>Interface error</strong><span>Please reload the workspace. Technical details are available in the console.</span>";
+            document.body.appendChild(err);
+            return false;
+        };
+    </script>
+    <!-- Three.js Canvas Container -->
+    <div id="canvas-container"></div>
+
+    <button id="rig-test-toggle" type="button" aria-controls="rig-test-panel" aria-expanded="false">Rig Test</button>
+    <aside id="rig-test-panel" hidden aria-labelledby="rig-test-title">
+        <header class="rig-test-titlebar">
+            <strong id="rig-test-title">CC3 Rig Test</strong>
+            <button id="rig-test-close" type="button" aria-label="Close rig test">X</button>
+        </header>
+        <div class="rig-test-statusbar">
+            <span id="rig-test-light" data-state="loading"></span>
+            <span id="rig-test-status">Waiting for model...</span>
+        </div>
+        <div id="rig-test-controls"></div>
+        <footer class="rig-test-footer">
+            <button id="rig-test-all" type="button">Test All</button>
+            <button id="rig-test-reset" type="button">Reset</button>
+        </footer>
+    </aside>
+
+    <div class="app-identity" aria-label="CORTANA Companion Studio">
+        <span class="app-identity-mark" aria-hidden="true">C</span>
+        <span>
+            <strong>CORTANA</strong>
+            <small><i class="identity-status-dot" aria-hidden="true"></i><span id="studio-live-status">Ready</span></small>
+        </span>
+    </div>
+
+    <div id="settings-container" aria-label="Studio controls">
+        <nav class="control-cluster" aria-label="Character, world and camera">
+            <button id="character-mode-button" class="icon-button root-mode-button" type="button" aria-label="Character tools" aria-controls="world-editor" aria-expanded="false" aria-pressed="false" title="Character">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="7" r="3.25"></circle><path d="M5.5 21v-2.4A6.5 6.5 0 0 1 12 12.1a6.5 6.5 0 0 1 6.5 6.5V21"></path>
+                </svg>
+            </button>
+            <button id="world-mode-button" class="icon-button root-mode-button" type="button" aria-label="World tools" aria-controls="world-editor" aria-expanded="false" aria-pressed="false" title="World">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3 4 7.5v9L12 21l8-4.5v-9L12 3Z"></path><path d="m4.3 7.7 7.7 4.4 7.7-4.4M12 21v-8.9"></path>
+                </svg>
+            </button>
+            <span class="control-cluster-divider" aria-hidden="true"></span>
+            <button id="camera-view-button" class="icon-button" type="button" aria-label="Camera shots" aria-controls="world-editor" aria-expanded="false" title="Camera shots">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M14.5 5h-5L7.8 7.5H5.5A2.5 2.5 0 0 0 3 10v6.5A2.5 2.5 0 0 0 5.5 19h13a2.5 2.5 0 0 0 2.5-2.5V10a2.5 2.5 0 0 0-2.5-2.5h-2.3L14.5 5Z"></path><circle cx="12" cy="13" r="3.25"></circle>
+                </svg>
+            </button>
+            <button id="zoom-button" class="icon-button" type="button" aria-label="Reframe character" aria-pressed="true" title="Reframe character">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"></path><circle cx="12" cy="12" r="3"></circle>
+                </svg>
+            </button>
+            <button id="settings-button" class="icon-button" type="button" aria-label="AI preferences" aria-controls="world-editor" aria-expanded="false" title="AI preferences">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6"></path>
+                </svg>
+            </button>
+            <span class="control-cluster-divider" aria-hidden="true"></span>
+            <div id="axis-orbit-control" class="axis-orbit-control" role="application" aria-label="Orbit axis control">
+                <button id="axis-orbit-button" class="axis-orbit-button" type="button" aria-label="Drag to orbit. Click for axis views." aria-controls="axis-orbit-menu" aria-expanded="false" title="Drag to orbit · click for views">
+                    <span class="axis-stem axis-stem-x"></span><span class="axis-label axis-label-x">X</span>
+                    <span class="axis-stem axis-stem-y"></span><span class="axis-label axis-label-y">Y</span>
+                    <span class="axis-stem axis-stem-z"></span><span class="axis-label axis-label-z">Z</span>
+                    <span class="axis-center"></span>
+                </button>
+                <div id="axis-orbit-menu" class="axis-orbit-menu hidden" role="menu" aria-label="Snap camera view">
+                    <button type="button" role="menuitem" data-axis-view="front"><i class="axis-dot axis-z"></i>Front <kbd>1</kbd></button>
+                    <button type="button" role="menuitem" data-axis-view="right"><i class="axis-dot axis-x"></i>Right <kbd>3</kbd></button>
+                    <button type="button" role="menuitem" data-axis-view="top"><i class="axis-dot axis-y"></i>Top <kbd>7</kbd></button>
+                    <button type="button" role="menuitem" data-axis-view="hero"><i class="axis-dot axis-free"></i>3/4 view</button>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <aside id="world-editor" class="world-editor hidden" data-root="character" data-category="character" aria-labelledby="studio-editor-title">
+        <header class="editor-header">
+            <div>
+                <span id="studio-editor-kicker" class="editor-kicker">Character · Overview</span>
+                <h1 id="studio-editor-title">Character</h1>
+            </div>
+            <div class="editor-header-status">
+                <span id="studio-context-status"><i aria-hidden="true"></i>Ready</span>
+                <button id="close-world-editor" class="editor-icon-button" type="button" aria-label="Collapse studio" title="Collapse studio">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M18 6 6 18M6 6l12 12"></path>
+                </svg>
+                </button>
+            </div>
+        </header>
+
+        <nav class="studio-mode-tabs" aria-label="Studio workspace" role="tablist">
+            <button class="is-active" type="button" role="tab" aria-selected="true" data-studio-mode="photo">Character</button>
+            <button type="button" role="tab" aria-selected="false" data-studio-mode="world">World</button>
+        </nav>
+
+        <div class="editor-toolbar" aria-label="Editor commands">
+            <button id="editor-undo" class="editor-icon-button" type="button" aria-label="Undo" title="Undo">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 14 4 9l5-5"></path><path d="M4 9h10a6 6 0 0 1 6 6v1"></path>
+                </svg>
+            </button>
+            <button id="editor-redo" class="editor-icon-button" type="button" aria-label="Redo" title="Redo">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m15 14 5-5-5-5"></path><path d="M20 9H10a6 6 0 0 0-6 6v1"></path>
+                </svg>
+            </button>
+            <span class="editor-toolbar-divider"></span>
+            <button id="editor-duplicate" class="editor-icon-button" type="button" aria-label="Duplicate object" title="Duplicate object">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+                    <rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
+                </svg>
+            </button>
+            <button id="editor-delete" class="editor-icon-button is-danger" type="button" aria-label="Delete object" title="Delete object">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v5M14 11v5"></path>
+                </svg>
+            </button>
+            <span class="editor-toolbar-divider"></span>
+            <button id="editor-refresh-scene" class="editor-icon-button" type="button" aria-label="Refresh loaded scene" title="Refresh loaded scene">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12a9 9 0 0 1-15.5 6.2"></path><path d="M3 12A9 9 0 0 1 18.5 5.8"></path><path d="M18 2v4h4"></path><path d="M6 22v-4H2"></path>
+                </svg>
+            </button>
+            <button id="editor-toggle-skeleton" class="editor-icon-button" type="button" aria-label="Toggle armature view" title="Toggle armature view">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="5" r="2"></circle><path d="M12 7v5"></path><path d="m9 9 3 3 3-3"></path><path d="M8 22v-5l4-5 4 5v5"></path><path d="M7 14h10"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div class="island-workspace">
+            <div class="island-nav-shell">
+                <nav id="character-category-nav" class="island-category-nav" aria-label="Character categories" role="tablist" aria-orientation="vertical">
+                    <button class="is-active" type="button" role="tab" aria-selected="true" data-studio-category="character">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="3"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg><span>Character<small>Identity & model</small></span>
+                    </button>
+                    <button type="button" role="tab" aria-selected="false" data-studio-category="appearance">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 1.6 4.3L18 9l-4.4 1.7L12 15l-1.6-4.3L6 9l4.4-1.7L12 3Z"></path><path d="m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14Z"></path></svg><span>Appearance</span>
+                    </button>
+                    <button type="button" role="tab" aria-selected="false" data-studio-category="outfit">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 4-5 4 3 4 2-1v9h8v-9l2 1 3-4-5-4c-.8 1.3-2.2 2-4 2S8.8 5.3 8 4Z"></path></svg><span>Outfit</span>
+                    </button>
+                    <button type="button" role="tab" aria-selected="false" data-studio-category="hair">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13V9a7 7 0 0 1 14 0v4"></path><path d="M7 11v8M17 11v8M9 7c2 2 4 2 6 0"></path></svg><span>Hair</span>
+                    </button>
+                    <button type="button" role="tab" aria-selected="false" data-studio-category="face">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9 10h.01M15 10h.01M8.5 15c2.3 2 4.7 2 7 0"></path></svg><span>Face</span>
+                    </button>
+                    <button type="button" role="tab" aria-selected="false" data-studio-category="animation">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 9 6-9 6V6Z"></path><circle cx="12" cy="12" r="10"></circle></svg><span>Animation</span>
+                    </button>
+                    <button type="button" role="tab" aria-selected="false" data-studio-category="voice">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8"></path></svg><span>Voice</span>
+                    </button>
+                    <button type="button" role="tab" aria-selected="false" data-studio-category="ai">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="13" rx="4"></rect><path d="M9 11h.01M15 11h.01M9 15h6M12 6V3"></path></svg><span>AI</span>
+                    </button>
+                </nav>
+
+                <nav id="world-category-nav" class="island-category-nav hidden" aria-label="World categories" role="tablist" aria-orientation="vertical">
+                    <button class="is-active" type="button" role="tab" aria-selected="true" data-studio-category="environment">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"></path></svg><span>Environment</span>
+                    </button>
+                    <button type="button" role="tab" aria-selected="false" data-studio-category="camera">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5h-5L8 7.5H5a2 2 0 0 0-2 2V17a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9.5a2 2 0 0 0-2-2h-3L14.5 5Z"></path><circle cx="12" cy="13" r="3"></circle></svg><span>Camera</span>
+                    </button>
+                    <button type="button" role="tab" aria-selected="false" data-studio-category="lighting">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"></path></svg><span>Lighting</span>
+                    </button>
+                    <button type="button" role="tab" aria-selected="false" data-studio-category="objects">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"></path><path d="m4 7.5 8 4.5 8-4.5M12 12v9"></path></svg><span>Objects</span>
+                    </button>
+                    <button type="button" role="tab" aria-selected="false" data-studio-category="materials">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 12l8 9 8-9-8-9Z"></path><path d="m4 12 8 3 8-3"></path></svg><span>Materials</span>
+                    </button>
+                    <button type="button" role="tab" aria-selected="false" data-studio-category="physics">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="4"></circle><circle cx="16" cy="16" r="4"></circle><path d="m11 11 2 2"></path></svg><span>Physics</span>
+                    </button>
+                    <button type="button" role="tab" aria-selected="false" data-studio-category="world-settings">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"></path></svg><span>World Settings</span>
+                    </button>
+                </nav>
+            </div>
+
+            <div class="editor-scroll">
+            <section id="photo-booth" class="photo-booth" aria-label="Photo Booth">
+                <div class="studio-category-panel" data-character-category="character">
+                    <div class="category-hero">
+                        <div class="category-hero-mark" aria-hidden="true">C</div>
+                        <div>
+                            <span class="category-eyebrow">Active model</span>
+                            <h2>CORTANA CC3+</h2>
+                            <p>Production character · facial rig connected</p>
+                        </div>
+                    </div>
+                    <div class="signal-strip" aria-label="Character readiness">
+                        <span><i class="signal-ok"></i>Model ready</span>
+                        <span><i class="signal-ok"></i>Face linked</span>
+                        <span><i class="signal-ok"></i>Motion ready</span>
+                    </div>
+                    <div class="control-card">
+                        <div class="control-card-heading">
+                            <span><strong>Framing</strong><small>Choose a useful working view</small></span>
+                        </div>
+                        <div class="camera-shot-grid compact" aria-label="Character framing">
+                            <button type="button" data-camera-view="hero">Hero 3/4</button>
+                            <button type="button" data-camera-view="portrait">Portrait</button>
+                            <button type="button" data-camera-view="body">Full body</button>
+                            <button type="button" data-camera-view="front">Front</button>
+                        </div>
+                    </div>
+                    <p class="category-footnote">Edits preview live. Nothing in this panel changes the source CC3 file.</p>
+                </div>
+
+                <div class="studio-category-panel hidden" data-character-category="appearance">
+                    <div class="category-intro">
+                        <span class="category-eyebrow">Presentation</span>
+                        <h2>Appearance</h2>
+                        <p>Change the viewport treatment without touching textures or source materials.</p>
+                    </div>
+                    <div class="control-card">
+                        <div class="control-card-heading">
+                            <span><strong>Render shade</strong><small>Non-destructive viewport preset</small></span>
+                            <output id="appearance-shade-status">Natural</output>
+                        </div>
+                        <div class="shade-buttons-container appearance-shades">
+                            <button class="shade-button is-active" type="button" data-shade="natural" aria-label="Natural" aria-pressed="true" title="Natural" style="--swatch: linear-gradient(135deg, #d6a38a 0%, #f7f7f7 52%, #343840 100%);"></button>
+                            <button class="shade-button" type="button" data-shade="warm" aria-label="Warm" aria-pressed="false" title="Warm" style="--swatch: linear-gradient(135deg, #e2aa87 0%, #fffbf6 52%, #4b3e45 100%);"></button>
+                            <button class="shade-button" type="button" data-shade="cool" aria-label="Cool" aria-pressed="false" title="Cool" style="--swatch: linear-gradient(135deg, #c7d1da 0%, #f7fbff 52%, #263a4d 100%);"></button>
+                            <button class="shade-button" type="button" data-shade="clay" aria-label="Clay" aria-pressed="false" title="Clay" style="--swatch: linear-gradient(135deg, #b9aa99 0%, #f8f6f2 52%, #8f8276 100%);"></button>
+                            <button class="shade-button" type="button" data-shade="graphite" aria-label="Graphite" aria-pressed="false" title="Graphite" style="--swatch: linear-gradient(135deg, #8f8f8f 0%, #f4f4f4 52%, #242424 100%);"></button>
+                            <button class="shade-button" type="button" data-shade="xray" aria-label="X-Ray" aria-pressed="false" title="X-Ray" style="--swatch: linear-gradient(135deg, #72c9ff 0%, #f7fbff 52%, #255476 100%);"></button>
+                            <button class="shade-button" type="button" data-shade="material_preview" aria-label="Material Preview" aria-pressed="false" title="Material Preview" style="--swatch: conic-gradient(from 180deg at 50% 50%, #2a8af6 0deg, #a853ba 180deg, #e92a67 360deg);"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="studio-category-panel hidden" data-character-category="outfit">
+                    <div class="category-intro">
+                        <span class="category-eyebrow">Garments</span>
+                        <h2>Outfit</h2>
+                        <p>Work with the garment meshes already attached to the active CC3 character.</p>
+                    </div>
+                    <div class="control-card">
+                        <label class="island-switch-row">
+                            <span><strong>Base outfit</strong><small>Bra and underwear meshes</small></span>
+                            <input id="outfit-visible-toggle" type="checkbox" checked>
+                            <i aria-hidden="true"></i>
+                        </label>
+                        <label class="island-color-row">
+                            <span><strong>Color tint</strong><small>Live preview only</small></span>
+                            <input id="outfit-tint-input" type="color" value="#171717" aria-label="Outfit tint">
+                        </label>
+                    </div>
+                    <div class="safe-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3.5 7.5V13c0 4.5 3.4 7.5 8.5 9 5.1-1.5 8.5-4.5 8.5-9V7.5L12 3Z"></path><path d="m8.5 12 2.2 2.2 4.8-5"></path></svg><span>Visibility and tint are reversible and do not modify the source model.</span></div>
+                </div>
+
+                <div class="studio-category-panel hidden" data-character-category="hair">
+                    <div class="category-intro">
+                        <span class="category-eyebrow">Head detail</span>
+                        <h2>Hair</h2>
+                        <p>Focus the camera automatically and tune the attached hairstyle.</p>
+                    </div>
+                    <div class="control-card">
+                        <label class="island-switch-row">
+                            <span><strong>Hairstyle</strong><small>Female Angled · attached</small></span>
+                            <input id="hair-visible-toggle" type="checkbox" checked>
+                            <i aria-hidden="true"></i>
+                        </label>
+                        <label class="island-color-row">
+                            <span><strong>Color tint</strong><small>Preserves texture detail</small></span>
+                            <input id="hair-tint-input" type="color" value="#332724" aria-label="Hair tint">
+                        </label>
+                        <label class="island-range-row">
+                            <span><strong>Sheen</strong><output id="hair-sheen-value">42%</output></span>
+                            <input id="hair-sheen-slider" type="range" min="0" max="100" value="42">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="studio-category-panel hidden" data-character-category="voice">
+                    <div class="category-intro">
+                        <span class="category-eyebrow">Speech</span>
+                        <h2>Voice</h2>
+                        <p>The selected voice is used for the next spoken response.</p>
+                    </div>
+                    <div class="control-card">
+                        <label class="island-select-row" for="voice-name-select">
+                            <span><strong>Voice</strong><small>Microsoft Neural voice</small></span>
+                            <select id="voice-name-select">
+                                <option value="en-US-EmmaNeural" selected>Emma · US</option>
+                                <option value="en-US-JennyNeural">Jenny · US</option>
+                                <option value="en-US-AriaNeural">Aria · US</option>
+                                <option value="en-GB-SoniaNeural">Sonia · UK</option>
+                            </select>
+                        </label>
+                        <div class="voice-state-row"><span class="voice-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span><strong>Expression-aware delivery</strong><small>Rate and pitch follow response emotion</small></span></div>
+                    </div>
+                </div>
+
+                <div id="render-controls" class="studio-category-panel hidden" data-character-category="ai">
+                    <div class="category-intro">
+                        <span class="category-eyebrow">Conversation</span>
+                        <h2>AI</h2>
+                        <p>Provider credentials stay in this browser session and are never saved into the project.</p>
+                    </div>
+                    <div class="control-card">
+                        <label class="island-select-row" for="provider-select">
+                            <span><strong>Provider</strong><small>Conversation model</small></span>
+                            <select id="provider-select" class="settings-input">
+                                <option value="groq">Groq</option>
+                                <option value="openai" selected>OpenAI</option>
+                            </select>
+                        </label>
+                        <label id="api-key-section" class="island-input-row" for="api-key-input">
+                            <span><strong>API key</strong><small>Optional request override</small></span>
+                            <input type="password" id="api-key-input" class="settings-input" placeholder="sk-..." autocomplete="off">
+                        </label>
+                    </div>
+                    <div class="control-card">
+                        <label class="island-switch-row">
+                            <span><strong>Head follows camera</strong><small>Natural attention while speaking</small></span>
+                            <input type="checkbox" id="head-tracking-toggle" checked>
+                            <i aria-hidden="true"></i>
+                        </label>
+                        <div id="head-sensitivity-container" class="island-range-row">
+                            <span><strong>Look sensitivity</strong><output id="head-sensitivity-value">50%</output></span>
+                            <input type="range" id="head-sensitivity-slider" class="settings-input" min="1" max="100" value="50">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="photo-booth-tabs" role="tablist" aria-label="Photo Booth controls">
+                    <button id="photo-booth-animation-tab" class="is-active" type="button" role="tab" aria-selected="true" data-photo-tab="animations" aria-label="Animation">Animation</button>
+                    <button id="photo-booth-face-tab" type="button" role="tab" aria-selected="false" data-photo-tab="facial" aria-label="Face">Face</button>
+                    <button id="photo-booth-creator-tab" type="button" role="tab" aria-selected="false" data-photo-tab="creator" aria-label="Rig">Rig</button>
+                </div>
+
+                <div id="photo-booth-animations" class="photo-booth-pane" role="tabpanel" aria-labelledby="photo-booth-animation-tab">
+                    <label class="photo-booth-field" for="photo-animation-select">
+                        <span>Animation</span>
+                        <select id="photo-animation-select">
+                            <option value="idle">Standard</option>
+                            <option value="loco_walk">Walking</option>
+                            <option value="loco_run">Running</option>
+                            <option value="loco_left_turn">Spin left</option>
+                            <option value="loco_right_turn">Spin right</option>
+                            <option value="loco_left_walk">Step left</option>
+                            <option value="loco_right_walk">Step right</option>
+                            <option value="loco_jump">Jump</option>
+                        </select>
+                    </label>
+                    <div class="photo-animation-actions">
+                        <button id="photo-animation-play" class="photo-booth-primary" type="button">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"></path></svg>
+                            Play animation
+                        </button>
+                        <button id="photo-animation-stop" class="photo-booth-secondary" type="button">Reset pose</button>
+                    </div>
+
+                    <div class="photo-booth-divider"></div>
+                    <h2>Camera framing</h2>
+                    <div class="photo-camera-options" aria-label="Camera framing">
+                        <button type="button" data-photo-camera="body">Show full body</button>
+                        <button class="is-active" type="button" data-photo-camera="portrait">Portrait</button>
+                        <button type="button" data-photo-camera="face">Face close-up</button>
+                    </div>
+                    <p class="photo-booth-note">You can also orbit and zoom directly in the preview.</p>
+                </div>
+
+                <div id="photo-booth-facial" class="photo-booth-pane hidden" role="tabpanel" aria-labelledby="photo-booth-face-tab">
+                    <label class="photo-check">
+                        <input id="photo-overwrite-face" type="checkbox" checked>
+                        <span aria-hidden="true"></span>
+                        Overwrite facial expressions
+                    </label>
+
+                    <h2>Eye direction</h2>
+                    <label class="photo-check photo-look-camera">
+                        <input id="photo-look-camera" type="checkbox" checked>
+                        <span aria-hidden="true"></span>
+                        Look at camera
+                    </label>
+                    <div id="photo-eye-pad" class="photo-eye-pad" aria-label="Eye direction pad" role="application" tabindex="0">
+                        <span id="photo-eye-dot"></span>
+                    </div>
+
+                    <div id="photo-quick-face-controls" class="photo-quick-face-controls">
+                        <div class="photo-control-group" data-photo-group="Emotion">
+                            <h2>Emotion</h2>
+                            <label>Neutral <input type="range" min="0" max="100" value="100" data-photo-emotion="Neutral"></label>
+                            <label>Fun <input type="range" min="0" max="100" value="0" data-photo-emotion="Excited"></label>
+                            <label>Sorrow <input type="range" min="0" max="100" value="0" data-photo-emotion="Sad"></label>
+                            <label>Angry <input type="range" min="0" max="100" value="0" data-photo-emotion="Serious"></label>
+                            <label>Joy <input type="range" min="0" max="100" value="0" data-photo-emotion="Happy"></label>
+                        </div>
+                        <div class="photo-control-group" data-photo-group="Eye">
+                            <h2>Eye</h2>
+                            <label>Blink <input type="range" min="0" max="100" value="0" data-photo-channel="A14_Eye_Blink_Left,A15_Eye_Blink_Right"></label>
+                            <label>Squint <input type="range" min="0" max="100" value="0" data-photo-pattern="squint"></label>
+                        </div>
+                        <div class="photo-control-group" data-photo-group="Mouth">
+                            <h2>Mouth</h2>
+                            <label>A (aa) <input type="range" min="0" max="100" value="0" data-photo-vowel="A"></label>
+                            <label>I (ih) <input type="range" min="0" max="100" value="0" data-photo-vowel="I"></label>
+                            <label>U (ou) <input type="range" min="0" max="100" value="0" data-photo-vowel="U"></label>
+                            <label>E (ee) <input type="range" min="0" max="100" value="0" data-photo-vowel="E"></label>
+                            <label>O (oh) <input type="range" min="0" max="100" value="0" data-photo-vowel="O"></label>
+                        </div>
+                        <div class="photo-control-group" data-photo-group="User Definition">
+                            <h2>User Definition</h2>
+                            <label>Surprised <input type="range" min="0" max="100" value="0" data-photo-emotion="Surprised"></label>
+                        </div>
+                    </div>
+
+                    <section class="expression-lab" aria-labelledby="expression-lab-title">
+                        <div class="expression-lab-head">
+                            <div>
+                                <span class="category-eyebrow">Behavior recipes</span>
+                                <h2 id="expression-lab-title">Expression Lab</h2>
+                            </div>
+                            <span id="expression-runtime-status" data-state="warn">LOADING</span>
+                        </div>
+                        <div class="expression-runtime">
+                            <div>
+                                <small>ACTIVE</small>
+                                <strong id="expression-active-name">Calm</strong>
+                            </div>
+                            <div id="expression-progress" class="expression-progress"></div>
+                            <div class="expression-runtime-meta">
+                                <span id="expression-mapped-count">0 mapped</span>
+                                <span id="expression-layer-state">idle</span>
+                            </div>
+                        </div>
+                        <div class="expression-filter-row">
+                            <input id="expression-search" type="search" placeholder="Search expressions" aria-label="Search expressions">
+                            <select id="expression-category" aria-label="Expression category">
+                                <option value="">All</option>
+                            </select>
+                            <output id="expression-catalog-count">0/0</output>
+                        </div>
+                        <div class="expression-tuning">
+                            <label>
+                                <span>Intensity <output id="expression-intensity-value">75%</output></span>
+                                <input id="expression-intensity" type="range" min="10" max="100" value="75">
+                            </label>
+                            <label>
+                                <span>Duration <output id="expression-duration-value">2.4 s</output></span>
+                                <input id="expression-duration" type="range" min="8" max="600" value="240">
+                            </label>
+                        </div>
+                        <div class="expression-options">
+                            <label class="photo-check">
+                                <input id="expression-auto" type="checkbox" checked><span></span>Human idle
+                            </label>
+                            <label class="photo-check">
+                                <input id="expression-loop" type="checkbox"><span></span>Loop
+                            </label>
+                        </div>
+                        <div class="expression-commands">
+                            <button id="expression-play" class="photo-booth-primary" type="button">Play</button>
+                            <button id="expression-stop" class="photo-booth-secondary" type="button">Stop</button>
+                            <button id="expression-random" class="photo-booth-secondary" type="button">Random</button>
+                        </div>
+                        <div id="expression-test-list" class="expression-test-list"></div>
+                    </section>
+
+                    <details class="photo-all-face-keys">
+                        <summary>All CC3 face keys <span id="photo-face-key-count">0</span></summary>
+                        <div class="face-editor-tools">
+                            <div id="editor-face-summary" class="face-editor-summary">No face keys loaded</div>
+                            <button id="editor-face-reset" class="editor-secondary-button" type="button">Reset face</button>
+                        </div>
+                        <div class="face-performance-panel">
+                            <div class="face-performance-head">
+                                <strong>Performance</strong>
+                                <span id="editor-face-active">Neutral · waiting for speech</span>
+                            </div>
+                            <div class="face-expression-presets" aria-label="Facial expression previews">
+                                <button type="button" data-face-expression="Neutral">Neutral</button>
+                                <button type="button" data-face-expression="Happy">Happy</button>
+                                <button type="button" data-face-expression="Excited">Excited</button>
+                                <button type="button" data-face-expression="Calm">Calm</button>
+                                <button type="button" data-face-expression="Sad">Sad</button>
+                                <button type="button" data-face-expression="Empathetic">Empathy</button>
+                                <button type="button" data-face-expression="Curious">Curious</button>
+                                <button type="button" data-face-expression="Confident">Confident</button>
+                                <button type="button" data-face-expression="Serious">Serious</button>
+                                <button type="button" data-face-expression="Surprised">Surprised</button>
+                            </div>
+                            <button id="editor-lipsync-preview" class="face-lipsync-preview" type="button">Preview all 8 speech shapes</button>
+                        </div>
+                        <div id="editor-face-list" class="face-editor-list"></div>
+                    </details>
+                </div>
+
+                <div id="photo-booth-creator" class="photo-booth-pane expression-creator-pane hidden" role="tabpanel" aria-labelledby="photo-booth-creator-tab">
+                    <div class="expression-creator-head">
+                        <div>
+                            <span class="expression-creator-kicker">CC3 hybrid controls</span>
+                            <h2>Ultimate Face Rig</h2>
+                        </div>
+                        <span id="expression-creator-active" class="expression-creator-badge">Neutral</span>
+                    </div>
+                    <div class="expression-rig-toolbar" aria-label="Face rig options">
+                        <button id="expression-rig-symmetry" type="button" aria-pressed="false">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v18M8 7 4 12l4 5M16 7l4 5-4 5"></path></svg>
+                            Symmetry
+                        </button>
+                        <span id="expression-rig-connectivity">Discovering rig…</span>
+                    </div>
+                    <p class="expression-creator-help">Drag a point along its rail. Circles control morphs, outlined squares control bones, and diamonds control the tongue chain.</p>
+
+                    <div class="expression-rig-shell">
+                        <svg id="expression-rig-map" class="expression-rig-map" viewBox="0 0 480 700" role="application" aria-label="Ultimate draggable CC3 facial rig">
+                            <text class="rig-brand" x="240" y="28">CORTANA ULTIMATE RIG</text>
+                            <path class="rig-face-outline" d="M142 75 Q178 42 240 40 Q302 42 338 75 Q366 110 365 173 L377 161 Q389 165 386 205 Q384 233 369 247 Q362 350 318 455 Q282 510 240 513 Q198 510 162 455 Q118 350 111 247 Q96 233 94 205 Q91 165 103 161 L115 173 Q114 110 142 75Z"/>
+                            <path class="rig-guide" d="M139 211 Q178 187 216 209 M264 209 Q302 187 341 211 M184 333 Q240 310 296 333 M174 375 Q240 405 306 375 M190 432 Q240 453 290 432"/>
+                            <path class="rig-guide rig-guide-faint" d="M240 83V310 M174 284L159 324 M306 284L321 324"/>
+
+                            <g class="rig-eye-cage">
+                                <rect x="145" y="188" width="72" height="52" rx="3"></rect>
+                                <rect x="263" y="188" width="72" height="52" rx="3"></rect>
+                            </g>
+
+                            <g class="rig-card">
+                                <text x="10" y="322">Cheek Puff</text><rect x="6" y="330" width="94" height="52" rx="3"></rect>
+                                <text x="10" y="404">Purse / Funnel</text><rect x="6" y="412" width="94" height="68" rx="3"></rect>
+                                <path d="M53 412V480"></path>
+                                <text x="10" y="498">Bite / Press</text><rect x="6" y="506" width="94" height="68" rx="3"></rect>
+                                <path d="M53 506V574"></path>
+                            </g>
+                            <g class="rig-card">
+                                <text x="382" y="108">Teeth</text><rect x="378" y="116" width="96" height="82" rx="3"></rect>
+                                <path d="M426 116V198"></path>
+                                <text x="382" y="220">Lip Roll</text><rect x="378" y="228" width="96" height="82" rx="3"></rect>
+                                <path d="M426 228V310"></path>
+                                <text x="382" y="332">Lips</text><rect x="378" y="340" width="96" height="104" rx="3"></rect>
+                                <path d="M426 340V444"></path>
+                            </g>
+                            <g class="rig-card rig-card-tongue">
+                                <text x="356" y="468">Tongue</text><rect x="352" y="476" width="122" height="118" rx="3"></rect>
+                                <path d="M413 476V594 M352 535H474"></path>
+                            </g>
+                            <g class="rig-card rig-card-jaw">
+                                <text x="177" y="570">Jaw</text><rect x="170" y="579" width="140" height="91" rx="3"></rect>
+                                <path d="M240 579V670"></path>
+                            </g>
+
+                            <g id="expression-rig-links"></g>
+                            <g id="expression-rig-controls"></g>
+                        </svg>
+                    </div>
+
+                    <div class="expression-rig-inspector" aria-live="polite">
+                        <span id="expression-rig-selected-kind" class="is-morph">Morph</span>
+                        <div>
+                            <strong id="expression-rig-selected-name">Select a control</strong>
+                            <small id="expression-rig-selected-target">Drag a rig point to inspect its exact CC3 target.</small>
+                        </div>
+                        <output id="expression-rig-selected-value">0%</output>
+                    </div>
+                    <label class="expression-rig-strength">
+                        <span>Rig strength</span>
+                        <input id="expression-rig-strength" type="range" min="0" max="100" value="100">
+                        <output id="expression-rig-strength-value">100%</output>
+                    </label>
+                    <div class="expression-creator-footer">
+                        <div class="expression-rig-legend">
+                            <span class="is-morph"><i></i>Morph</span>
+                            <span class="is-bone"><i></i>Bone</span>
+                            <span class="is-tongue"><i></i>Tongue</span>
+                        </div>
+                        <div class="expression-rig-actions">
+                            <button id="expression-rig-reset-selected" class="photo-booth-secondary" type="button" disabled>Reset selected</button>
+                            <button id="expression-creator-reset" class="photo-booth-secondary" type="button">Reset all</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div id="world-editor-workspace" class="hidden">
+            <section class="editor-section world-camera-section" data-world-categories="camera">
+                <div class="category-intro">
+                    <span class="category-eyebrow">Composition</span>
+                    <h2>Camera</h2>
+                    <p>Use a designed shot, then refine it without losing your current target.</p>
+                </div>
+                <div class="control-card camera-section">
+                    <div class="control-card-heading"><span><strong>Recommended shots</strong><small>Character-relative framing</small></span></div>
+                    <div class="camera-shot-grid" aria-label="Camera view presets">
+                        <button class="is-active" type="button" data-camera-view="portrait">Portrait</button>
+                        <button type="button" data-camera-view="hero">Hero 3/4</button>
+                        <button type="button" data-camera-view="face">Face</button>
+                        <button type="button" data-camera-view="body">Full body</button>
+                        <button type="button" data-camera-view="front">Front</button>
+                        <button type="button" data-camera-view="profile">Profile</button>
+                        <button type="button" data-camera-view="rear">Rear</button>
+                        <button type="button" data-camera-view="top">Top</button>
+                        <button type="button" data-camera-view="wide">Wide</button>
+                        <button type="button" data-camera-view="custom">Custom</button>
+                    </div>
+                </div>
+                <div class="control-card">
+                    <div class="camera-button-row" aria-label="Camera control modes">
+                        <button class="camera-chip is-active" type="button" data-camera-control="orbit">Orbit</button>
+                        <button class="camera-chip" type="button" data-camera-control="wasd">Walk</button>
+                        <button class="camera-chip" type="button" data-camera-control="lock">Lock</button>
+                    </div>
+                    <label class="island-switch-row camera-lock-row">
+                        <span><strong>Lock camera</strong><small>Prevent accidental orbit</small></span>
+                        <input type="checkbox" id="cam-lock-toggle">
+                        <i aria-hidden="true"></i>
+                    </label>
+                </div>
+                <div class="control-card camera-fine-controls">
+                    <label class="camera-range"><span>Angle <output id="camera-yaw-value">0</output>°</span><input id="camera-yaw-slider" type="range" min="-180" max="180" step="1" value="0"></label>
+                    <label class="camera-range"><span>Height <output id="camera-pitch-value">10</output>°</span><input id="camera-pitch-slider" type="range" min="-70" max="75" step="1" value="10"></label>
+                    <label class="camera-range"><span>Distance <output id="camera-distance-value">1.42</output></span><input id="camera-distance-slider" type="range" min="0.45" max="5" step="0.01" value="1.42"></label>
+                    <label class="camera-range"><span>Lens <output id="camera-fov-value">40</output>°</span><input id="camera-fov-slider" type="range" min="24" max="72" step="1" value="40"></label>
+                    <div class="camera-action-row">
+                        <button id="camera-save-view" class="camera-action-button" type="button">Save custom</button>
+                        <button id="camera-apply-view" class="camera-action-button" type="button">Apply</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="editor-section world-lighting-section" data-world-categories="lighting">
+                <div class="category-intro">
+                    <span class="category-eyebrow">Scene illumination</span>
+                    <h2>Lighting</h2>
+                    <p>Tune the live key, fill, and ambient lights. The current composition stays locked while you work.</p>
+                </div>
+                <div class="control-card">
+                    <label class="island-select-row" for="light-tone-select">
+                        <span><strong>Key tone</strong><small>White balance</small></span>
+                        <select id="light-tone-select">
+                            <option value="warm" selected>Warm studio</option>
+                            <option value="neutral">Neutral daylight</option>
+                            <option value="cool">Cool daylight</option>
+                        </select>
+                    </label>
+                    <label class="island-range-row"><span><strong>Key</strong><output id="light-key-value">135%</output></span><input id="light-key-slider" type="range" min="0" max="300" value="135"></label>
+                    <label class="island-range-row"><span><strong>Fill</strong><output id="light-fill-value">115%</output></span><input id="light-fill-slider" type="range" min="0" max="250" value="115"></label>
+                    <label class="island-range-row"><span><strong>Ambient</strong><output id="light-ambient-value">165%</output></span><input id="light-ambient-slider" type="range" min="0" max="250" value="165"></label>
+                </div>
+            </section>
+
+            <section class="editor-section" data-world-categories="objects">
+                <div class="editor-section-title">
+                    <h2>Add object</h2>
+                </div>
+                <div class="primitive-grid">
+                    <button type="button" data-add-object="box"><span class="primitive-shape shape-box"></span>Box</button>
+                    <button type="button" data-add-object="sphere"><span class="primitive-shape shape-sphere"></span>Sphere</button>
+                    <button type="button" data-add-object="cylinder"><span class="primitive-shape shape-cylinder"></span>Cylinder</button>
+                </div>
+            </section>
+
+            <section class="editor-section" data-world-categories="objects">
+                <div class="editor-section-title">
+                    <h2>Scene objects</h2>
+                    <span id="editor-object-count">0</span>
+                </div>
+                <div id="editor-object-list" class="editor-object-list"></div>
+            </section>
+
+            <section class="editor-section" data-world-categories="objects">
+                <div class="editor-section-title">
+                    <h2>Loaded scene</h2>
+                    <span id="scene-node-count">0</span>
+                </div>
+                <div class="scene-outliner-tools">
+                    <div class="scene-search">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                            <circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path>
+                        </svg>
+                        <input id="scene-search-input" type="search" placeholder="Search loaded scene" aria-label="Search loaded scene">
+                    </div>
+                    <div class="scene-view-modes" aria-label="Scene view modes">
+                        <button class="is-active" type="button" data-scene-view="all">All</button>
+                        <button type="button" data-scene-view="isolate">Isolate</button>
+                        <button type="button" data-scene-view="armature">Armature</button>
+                        <button type="button" data-scene-view="mesh">Meshes</button>
+                    </div>
+                </div>
+                <div id="scene-stat-strip" class="scene-stat-strip"></div>
+                <div class="scene-outliner-head" aria-hidden="true">
+                    <span>Scene Collection</span>
+                    <span>Type</span>
+                    <span>View</span>
+                    <span>Solo</span>
+                </div>
+                <div id="scene-hierarchy-list" class="scene-hierarchy-list" role="tree" aria-label="Loaded scene hierarchy"></div>
+                <div id="scene-node-details" class="scene-node-details"></div>
+            </section>
+
+            <section id="editor-inspector" class="editor-section editor-inspector is-empty" data-world-categories="objects materials physics">
+                <div class="editor-empty-state">
+                    <span class="selection-reticle" aria-hidden="true"></span>
+                    <p>Select an object</p>
+                </div>
+                <div class="editor-inspector-content">
+                    <div class="editor-section-title">
+                        <h2>Inspector</h2>
+                        <span id="editor-type-badge">Box</span>
+                    </div>
+                    <label class="editor-field">
+                        <span>Name</span>
+                        <input id="editor-name" type="text" maxlength="48">
+                    </label>
+
+                    <div class="transform-group">
+                        <div class="transform-label">Position</div>
+                        <div class="vector-inputs">
+                            <label><span class="axis-x">X</span><input data-transform="position" data-axis="x" type="number" step="0.1"></label>
+                            <label><span class="axis-y">Y</span><input data-transform="position" data-axis="y" type="number" step="0.1"></label>
+                            <label><span class="axis-z">Z</span><input data-transform="position" data-axis="z" type="number" step="0.1"></label>
+                        </div>
+                    </div>
+
+                    <div class="transform-group">
+                        <div class="transform-label">Rotation</div>
+                        <div class="vector-inputs">
+                            <label><span class="axis-x">X</span><input data-transform="rotation" data-axis="x" type="number" step="1"></label>
+                            <label><span class="axis-y">Y</span><input data-transform="rotation" data-axis="y" type="number" step="1"></label>
+                            <label><span class="axis-z">Z</span><input data-transform="rotation" data-axis="z" type="number" step="1"></label>
+                        </div>
+                    </div>
+
+                    <div class="transform-group">
+                        <div class="transform-label">Scale</div>
+                        <div class="vector-inputs">
+                            <label><span class="axis-x">X</span><input data-transform="scale" data-axis="x" type="number" min="0.1" step="0.1"></label>
+                            <label><span class="axis-y">Y</span><input data-transform="scale" data-axis="y" type="number" min="0.1" step="0.1"></label>
+                            <label><span class="axis-z">Z</span><input data-transform="scale" data-axis="z" type="number" min="0.1" step="0.1"></label>
+                        </div>
+                    </div>
+
+                    <div class="editor-field-row">
+                        <label class="editor-field color-field">
+                            <span>Material</span>
+                            <input id="editor-color" type="color" value="#4f7cff">
+                        </label>
+                        <label class="editor-toggle"><input id="editor-collision" type="checkbox" checked><span></span>Collision</label>
+                        <label class="editor-toggle"><input id="editor-visible" type="checkbox" checked><span></span>Visible</label>
+                    </div>
+                </div>
+            </section>
+
+            <section class="editor-section" data-world-categories="environment">
+                <div class="editor-section-title"><h2>Environment</h2></div>
+                <div class="environment-grid">
+                    <label class="editor-field color-field"><span>Sky</span><input id="editor-background" type="color" value="#ffffff"></label>
+                    <label class="editor-field color-field"><span>Ground</span><input id="editor-ground-color" type="color" value="#ffffff"></label>
+                </div>
+                <label class="editor-field range-field">
+                    <span>Tile density <output id="editor-tile-value">30</output></span>
+                    <input id="editor-tile-scale" type="range" min="4" max="60" step="1" value="30">
+                </label>
+            </section>
+
+            <section class="editor-section selection-guidance" data-world-categories="materials">
+                <div class="category-intro">
+                    <span class="category-eyebrow">Selected object</span>
+                    <h2>Materials</h2>
+                    <p>Select an editable world object in Objects, then return here to change its live material color.</p>
+                </div>
+            </section>
+
+            <section class="editor-section world-physics-section" data-world-categories="physics">
+                <div class="category-intro">
+                    <span class="category-eyebrow">Simulation</span>
+                    <h2>Physics</h2>
+                    <p>Gravity applies immediately. Per-object collision appears below when an editable object is selected.</p>
+                </div>
+                <div class="control-card">
+                    <label class="island-range-row">
+                        <span><strong>Gravity</strong><output id="world-gravity-value">9.82 m/s²</output></span>
+                        <input id="world-gravity-slider" type="range" min="0" max="30" step="0.01" value="9.82">
+                    </label>
+                    <div class="safe-note compact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v14M7 12l5 5 5-5M5 21h14"></path></svg><span>Y-up scene · gravity points toward −Y</span></div>
+                </div>
+            </section>
+
+            <section class="editor-section world-settings-section" data-world-categories="world-settings">
+                <div class="category-intro">
+                    <span class="category-eyebrow">Workspace</span>
+                    <h2>World Settings</h2>
+                    <p>Choose viewport quality and manage this world draft without exposing technical noise.</p>
+                </div>
+                <div class="control-card">
+                    <label class="island-select-row" for="renderer-quality-select">
+                        <span><strong>Viewport quality</strong><small>Pixel density and GPU load</small></span>
+                        <select id="renderer-quality-select">
+                            <option value="performance">Performance</option>
+                            <option value="balanced" selected>Balanced</option>
+                            <option value="quality">High quality</option>
+                        </select>
+                    </label>
+                    <div class="world-save-summary">
+                        <span><i aria-hidden="true"></i><strong>World document</strong></span>
+                        <small>Changes remain a draft until Save world is pressed.</small>
+                    </div>
+                </div>
+            </section>
+            </div>
+        </div>
+        </div>
+
+        <footer id="photo-booth-footer" class="photo-booth-footer">
+            <div id="photo-booth-status" class="photo-booth-status" role="status">Ready for your shot</div>
+            <div class="photo-capture-actions">
+                <button id="photo-capture-button" type="button" aria-label="Take photo" title="Take photo">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7.5 7H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2.5l-2-3Z"></path><circle cx="12" cy="13" r="3.2"></circle></svg>
+                </button>
+                <button id="photo-record-button" type="button" aria-label="Start video recording" title="Start video recording">
+                    <svg width="29" height="29" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3v-4Z"></path></svg>
+                </button>
+            </div>
+        </footer>
+
+        <footer id="world-editor-footer" class="editor-footer hidden">
+            <div id="editor-save-status" class="editor-save-status" role="status">All changes saved</div>
+            <button id="editor-reset" class="editor-secondary-button" type="button">Reset world draft</button>
+            <button id="editor-save" class="editor-primary-button" type="button">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path><path d="M17 21v-8H7v8M7 3v5h8"></path>
+                </svg>
+                Save world
+            </button>
+        </footer>
+    </aside>
+    <button id="studio-scrim" class="studio-scrim hidden" type="button" aria-label="Close Studio"></button>
+
+    <div id="editor-mode-pill" class="editor-mode-pill hidden">
+        <span></span>
+        <strong id="editor-mode-label">Character</strong>
+    </div>
+
+    <!-- Minimalist Chat Input Box at the Bottom -->
+    <div id="chat-container">
+        <form id="chat-form">
+            <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off" required>
+            <button type="submit" id="send-button">Send</button>
+        </form>
+    </div>
+
+    <!-- Audio element for TTS playback -->
+    <audio id="tts-audio" crossorigin="anonymous"></audio>
+
+    <!-- Three.js and loader dependencies (served locally for reliability) -->
+    <script src="libs/three.min.js?v=apt-20260722-v99"></script>
+    <script src="libs/fflate.min.js?v=apt-20260722-v99"></script>
+    <script src="libs/FBXLoader.js?v=apt-20260722-v99"></script>
+    <script src="libs/RGBELoader.js?v=apt-20260722-v99"></script>
+    <script src="libs/GLTFLoader.js?v=apt-20260722-v99"></script>
+    <script src="libs/OrbitControls.js?v=apt-20260722-v99"></script>
+    <script src="libs/cannon.min.js?v=apt-20260722-v99"></script>
+    <script src="libs/Sky.js?v=apt-20260722-v99"></script>
+    
+    <!-- Main Application Logic -->
+    <script src="facial-engine.js?v=cortana-expression-20260730-v1"></script>
+    <script src="app.js?v=cortana-simple-rig-20260731-v1"></script>
+    <script src="simple-rig.js?v=cortana-simple-rig-20260731-v1"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#05070b">
+  <title>Sirious — CC3 Peak Viewer</title>
+  <link rel="stylesheet" href="/style.css?v=sirious-arkit-rig-v1">
+</head>
+<body data-viewer-state="booting">
+  <main id="viewport" aria-label="Interactive 3D model viewport"></main>
+
+  <header class="topbar">
+    <div class="quality-cluster">
+      <span id="live-dot" class="live-dot" aria-hidden="true"></span>
+      <span id="render-status">Initializing renderer</span>
+      <button id="settings-toggle" class="icon-button" type="button" aria-expanded="false" aria-controls="settings-panel" title="Render settings">
+        <span aria-hidden="true">⚙</span>
+      </button>
+    </div>
+  </header>
+
+  <aside id="settings-panel" class="settings-panel" aria-hidden="true">
+    <div class="panel-heading">
+      <div>
+        <span class="eyebrow">RENDER PROFILE</span>
+        <h2>Viewport quality</h2>
+      </div>
+      <button id="settings-close" class="close-button" type="button" aria-label="Close settings">×</button>
+    </div>
+
+    <label class="setting-row" for="quality-select">
+      <span>
+        <strong>Quality</strong>
+        <small>Peak is the full-fidelity default</small>
+      </span>
+      <select id="quality-select">
+        <option value="peak" selected>Peak</option>
+        <option value="balanced">Balanced</option>
+      </select>
+    </label>
+
+    <label class="setting-row switch-row" for="shadows-toggle">
+      <span>
+        <strong>Soft shadows</strong>
+        <small>High-resolution contact shadows</small>
+      </span>
+      <input id="shadows-toggle" type="checkbox" checked>
+    </label>
+
+    <div class="setting-row">
+      <span>
+        <strong>Camera lock</strong>
+        <small>Freeze orbit, zoom, and pan</small>
+      </span>
+      <button id="camera-lock-toggle" class="lock-toggle is-locked" type="button" aria-pressed="true">
+        <span class="lock-indicator" aria-hidden="true"></span>
+        <span class="lock-label">Locked</span>
+      </button>
+    </div>
+
+    <label class="setting-row" for="exposure-range">
+      <span>
+        <strong>Exposure</strong>
+        <small id="exposure-value">1.08</small>
+      </span>
+      <input id="exposure-range" type="range" min="0.65" max="1.55" value="1.08" step="0.01">
+    </label>
+
+    <div class="diagnostics">
+      <span><small>Resolution</small><strong id="resolution-value">—</strong></span>
+      <span><small>Renderer</small><strong id="renderer-value">WebGL</strong></span>
+      <span><small>Geometry</small><strong id="geometry-value">Loading</strong></span>
+      <span><small>Textures</small><strong id="texture-value">Loading</strong></span>
+    </div>
+
+    <section class="clothing-panel" aria-labelledby="clothing-heading">
+      <span id="clothing-heading" class="eyebrow">CLOTHING</span>
+      <div class="clothing-row">
+        <span>
+          <strong>Bra</strong>
+          <small id="bra-state">Visible</small>
+        </span>
+        <div class="clothing-actions">
+          <button id="bra-visibility" type="button" aria-label="Hide bra">Hide</button>
+          <button id="bra-remove" class="danger-button" type="button" aria-label="Remove bra">Remove</button>
+        </div>
+      </div>
+      <div class="clothing-row">
+        <span>
+          <strong>Underwear</strong>
+          <small id="underwear-state">Visible</small>
+        </span>
+        <div class="clothing-actions">
+          <button id="underwear-visibility" type="button" aria-label="Hide underwear">Hide</button>
+          <button id="underwear-remove" class="danger-button" type="button" aria-label="Remove underwear">Remove</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="filter-panel" aria-labelledby="filter-heading">
+      <div class="filter-heading-row">
+        <span id="filter-heading" class="eyebrow">SCREEN FILTERS</span>
+        <small id="active-filter-label">Clean</small>
+      </div>
+      <div class="filter-grid" role="group" aria-label="Screen filters">
+        <button class="filter-button is-active" type="button" data-filter="0" aria-pressed="true">
+          <span class="filter-swatch clean-swatch" aria-hidden="true"></span>
+          <span>Clean</span>
+        </button>
+        <button class="filter-button" type="button" data-filter="1" aria-pressed="false">
+          <span class="filter-swatch error-swatch" aria-hidden="true"></span>
+          <span>System Error</span>
+        </button>
+        <button class="filter-button" type="button" data-filter="2" aria-pressed="false">
+          <span class="filter-swatch pixel-swatch" aria-hidden="true"></span>
+          <span>Pixel Grid</span>
+        </button>
+        <button class="filter-button" type="button" data-filter="3" aria-pressed="false">
+          <span class="filter-swatch protocol-swatch" aria-hidden="true"></span>
+          <span>Red Protocol</span>
+        </button>
+        <button class="filter-button filter-button-wide" type="button" data-filter="4" aria-pressed="false">
+          <span class="filter-swatch contour-swatch" aria-hidden="true"></span>
+          <span>Neon Contour</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="arkit-launch-panel" aria-labelledby="arkit-launch-heading">
+      <div>
+        <span id="arkit-launch-heading" class="eyebrow">FACIAL RIGGING</span>
+        <strong>ARKit Face Rig</strong>
+        <small id="arkit-launch-status">Waiting for the CC3 face</small>
+      </div>
+      <button id="arkit-open" type="button" aria-haspopup="dialog" aria-controls="arkit-panel" disabled>
+        Open rig
+      </button>
+    </section>
+
+    <section class="expression-idle-panel" aria-labelledby="expression-idle-heading">
+      <div>
+        <span id="expression-idle-heading" class="eyebrow">EXPRESSION ENGINE</span>
+        <strong>Living idle</strong>
+        <small id="expression-idle-status">Face + breathing</small>
+      </div>
+      <button id="expression-idle-toggle" class="is-active" type="button" aria-pressed="true">On</button>
+    </section>
+
+    <label class="model-picker" for="model-input">
+      <span>Load another model</span>
+      <small>GLB, glTF, or FBX</small>
+      <input id="model-input" type="file" accept=".glb,.gltf,.fbx">
+    </label>
+  </aside>
+
+  <aside id="arkit-panel" class="arkit-panel" role="dialog" aria-modal="false" aria-labelledby="arkit-title" aria-hidden="true">
+    <div class="arkit-heading">
+      <div>
+        <span class="eyebrow">CC3 · LIVE TESTING</span>
+        <h2 id="arkit-title">ARKit Face Rig</h2>
+      </div>
+      <button id="arkit-close" class="close-button" type="button" aria-label="Close ARKit Face Rig">×</button>
+    </div>
+    <div class="arkit-toolbar">
+      <span id="arkit-status"><i aria-hidden="true"></i>Loading facial channels</span>
+      <div>
+        <button id="arkit-test-all" type="button">Test all</button>
+        <button id="arkit-reset" type="button">Reset</button>
+      </div>
+    </div>
+    <div id="arkit-controls" class="arkit-controls"></div>
+  </aside>
+
+  <section id="loading-card" class="loading-card" aria-live="polite">
+    <div class="model-glyph" aria-hidden="true">
+      <i></i><i></i><i></i>
+    </div>
+    <div class="loading-copy">
+      <span class="eyebrow">CC3 MASTER ASSET</span>
+      <strong id="loading-title">Preparing high-fidelity model</strong>
+      <small id="loading-detail">Initializing color-managed WebGL</small>
+    </div>
+    <div class="progress-track"><span id="progress-bar"></span></div>
+    <span id="progress-label">0%</span>
+  </section>
+
+  <footer class="viewport-footer">
+    <button id="reset-view" class="reset-button" type="button">Reset view</button>
+  </footer>
+
+  <div id="error-card" class="error-card" role="alert" hidden>
+    <strong>Model could not be loaded</strong>
+    <span id="error-message"></span>
+    <button id="retry-button" type="button">Retry</button>
+  </div>
+
+  <script src="/libs/three.min.js"></script>
+  <script src="/libs/fflate.min.js"></script>
+  <script src="/libs/OrbitControls.js"></script>
+  <script src="/libs/GLTFLoader.js"></script>
+  <script src="/libs/FBXLoader.js"></script>
+  <script src="/libs/RGBELoader.js"></script>
+  <script src="/app.js?v=sirious-idle-mouth-v12"></script>
+</body>
+</html>

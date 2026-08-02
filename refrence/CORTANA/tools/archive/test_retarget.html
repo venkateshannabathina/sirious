@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="frontend/libs/three.min.js"></script>
+<script src="frontend/libs/fflate.min.js"></script>
+<script src="frontend/libs/mmdparser.min.js"></script>
+<script src="frontend/libs/MMDLoader.js"></script>
+<script src="frontend/libs/FBXLoader.js"></script>
+<script>
+const scene = new THREE.Scene();
+const mmdLoader = new THREE.MMDLoader();
+const fbxLoader = new THREE.FBXLoader();
+
+let pmx, fbx;
+mmdLoader.load('frontend/model/test/Chisa/Chisa.pmx', mmd => {
+    pmx = mmd;
+    console.log("PMX loaded");
+    check();
+});
+fbxLoader.load('frontend/model/test/Idle.fbx', f => {
+    fbx = f;
+    console.log("FBX loaded");
+    check();
+});
+
+function check() {
+    if (!pmx || !fbx) return;
+    
+    // Find left arm in PMX
+    let pmxLeftArm;
+    pmx.traverse(c => { if (c.name === '左腕') pmxLeftArm = c; });
+    
+    // Find left arm in FBX
+    let fbxLeftArm;
+    fbx.traverse(c => { if (c.name === 'mixamorigLeftArm') fbxLeftArm = c; });
+    
+    // Update matrices
+    pmx.updateMatrixWorld(true);
+    fbx.updateMatrixWorld(true);
+    
+    const div = document.createElement('div');
+    div.innerHTML = `
+        <h3>PMX Left Arm</h3>
+        Local Quat: ${pmxLeftArm.quaternion.toArray().map(n => n.toFixed(3)).join(', ')}<br>
+        World Quat: ${pmxLeftArm.getWorldQuaternion(new THREE.Quaternion()).toArray().map(n => n.toFixed(3)).join(', ')}<br>
+        Position: ${pmxLeftArm.getWorldPosition(new THREE.Vector3()).toArray().map(n => n.toFixed(3)).join(', ')}<br>
+        
+        <h3>FBX Left Arm</h3>
+        Local Quat: ${fbxLeftArm.quaternion.toArray().map(n => n.toFixed(3)).join(', ')}<br>
+        World Quat: ${fbxLeftArm.getWorldQuaternion(new THREE.Quaternion()).toArray().map(n => n.toFixed(3)).join(', ')}<br>
+        Position: ${fbxLeftArm.getWorldPosition(new THREE.Vector3()).toArray().map(n => n.toFixed(3)).join(', ')}<br>
+    `;
+    document.body.appendChild(div);
+}
+</script>
+</body>
+</html>

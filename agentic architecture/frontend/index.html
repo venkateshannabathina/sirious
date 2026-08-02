@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Phoebe Chat Lab</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main class="window">
+      <header class="titlebar">Phoebe — Chat Test v0.1</header>
+
+      <section class="toolbar" aria-label="Chat settings">
+        <label for="provider">AI provider:</label>
+        <select id="provider">
+          <option value="demo">Demo (no API key)</option>
+          <option value="openai">OpenAI</option>
+          <option value="anthropic">Claude / Anthropic</option>
+          <option value="gemini">Google Gemini</option>
+          <option value="groq">Groq</option>
+          <option value="grok">Grok / xAI</option>
+        </select>
+        <label for="model">Model:</label>
+        <input id="model" type="text" autocomplete="off" />
+        <button id="clear" type="button">Clear</button>
+      </section>
+
+      <div id="status" class="status">Loading provider status...</div>
+      <section id="messages" class="messages" aria-live="polite" aria-label="Conversation"></section>
+
+      <form id="chat-form" class="composer">
+        <label for="prompt">Message</label>
+        <textarea id="prompt" rows="4" required autofocus placeholder="Type a message..."></textarea>
+        <div class="actions">
+          <span>Enter = send · Shift+Enter = new line</span>
+          <button id="send" type="submit">Send Message</button>
+        </div>
+      </form>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>

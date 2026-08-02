@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head><title>FBX/PMX Bone Diagnostic</title>
+<style>
+body { font-family: monospace; padding: 20px; background: #111; color: #0f0; }
+pre { white-space: pre-wrap; word-break: break-all; font-size: 12px; }
+h2 { color: #ff0; }
+</style>
+</head>
+<body>
+<h2>FBX + PMX Bone Name Diagnostic</h2>
+<pre id="log">Loading...</pre>
+
+<script src="libs/three.min.js"></script>
+<script src="libs/fflate.min.js"></script>
+<script src="libs/mmdparser.min.js"></script>
+<script src="libs/TGALoader.js"></script>
+<script src="libs/MMDLoader.js"></script>
+<script src="libs/FBXLoader.js"></script>
+
+<script>
+const log = document.getElementById('log');
+function print(...args) {
+    const line = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+    log.textContent += line + '\n';
+    console.log(...args);
+}
+
+print('=== STARTING DIAGNOSTIC ===');
+
+const mmdLoader = new THREE.MMDLoader();
+const fbxLoader = new THREE.FBXLoader();
+
+// ── 1. Load PMX and dump ALL bone names ──
+print('\n[1] Loading PMX model...');
+mmdLoader.load('/model/test/Chisa/Chisa.pmx', (pmx) => {
+    print('[PMX] Loaded OK');
+
+    const boneNames = [];
+    pmx.traverse(c => {
+        if (c.isBone) boneNames.push(c.name);
+    });
+    print(`[PMX] Bones via traverse (${boneNames.length}):`, boneNames.join(' | '));
+
+    // Also check skeleton bones
+    const skelBones = [];
+    pmx.traverse(c => {
+        if (c.isSkinnedMesh && c.skeleton) {
+            for (const b of c.skeleton.bones) {
+                if (!skelBones.includes(b.name)) skelBones.push(b.name);
+            }
+        }
+    });
+    print(`[PMX] Bones via skeleton (${skelBones.length}):`, skelBones.join(' | '));
+
+    // ── 2. Load Idle FBX and dump ALL track names ──
+    print('\n[2] Loading Idle.fbx...');
+    fbxLoader.load('/model/test/Idle.fbx', (fbx) => {
+        print('[FBX] Loaded OK, animations:', fbx.animations.length);
+        if (fbx.animations.length > 0) {
+            const clip = fbx.animations[0];
+            print('[FBX] Clip name:', clip.name, 'duration:', clip.duration);
+            print('[FBX] ALL track names:');
+            clip.tracks.forEach((t, i) => {
+                print(`  [${i}] ${t.name}  (type: ${t.constructor.name})`);
+            });
+        }
+
+        // ── 3. Check FBX bone objects ──
+        print('\n[3] FBX bone objects:');
+        const fbxBones = [];
+        fbx.traverse(c => {
+            if (c.isBone) fbxBones.push(c.name);
+        });
+        print(`FBX scene bones (${fbxBones.length}):`, fbxBones.join(' | '));
+
+        print('\n=== DIAGNOSTIC COMPLETE ===');
+    }, undefined, err => print('[FBX ERROR]', err));
+
+}, undefined, err => print('[PMX ERROR]', err));
+</script>
+</body>
+</html>

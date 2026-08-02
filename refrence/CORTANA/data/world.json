@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "environment": {
+    "background": "#ffffff",
+    "ground_color": "#ffffff",
+    "tile_scale": 30.0
+  },
+  "objects": []
+}

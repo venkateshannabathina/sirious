@@ -1,0 +1,1489 @@
+/*
+ * CORTANA Dynamic Island
+ * The Phoebe reference contributes the state model: one persistent world,
+ * one morphing context surface, and one compact utility rail.
+ */
+
+:root {
+    --island-ink: #f5f5f7;
+    --island-muted: rgba(245, 245, 247, 0.62);
+    --island-faint: rgba(245, 245, 247, 0.38);
+    --island-surface: rgba(10, 10, 12, 0.92);
+    --island-surface-strong: rgba(10, 10, 12, 0.97);
+    --island-raised: rgba(255, 255, 255, 0.065);
+    --island-hover: rgba(255, 255, 255, 0.10);
+    --island-selected: rgba(255, 255, 255, 0.15);
+    --island-border: rgba(255, 255, 255, 0.11);
+    --island-border-strong: rgba(255, 255, 255, 0.20);
+    --island-blue: #0a84ff;
+    --island-green: #30d158;
+    --island-red: #ff453a;
+    --axis-x: #ff5a52;
+    --axis-y: #30d158;
+    --axis-z: #5e8bff;
+    --studio-panel-width: 468px;
+    --studio-rail-width: 56px;
+    --studio-gutter: 16px;
+    --studio-right-safe: calc(var(--studio-panel-width) + var(--studio-rail-width) + 44px);
+    --island-morph: 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body[data-studio-category="face"],
+body[data-studio-category="objects"] {
+    --studio-panel-width: 560px;
+}
+
+/* ── Rest identity ─────────────────────────────────────────── */
+
+.app-identity {
+    top: max(18px, env(safe-area-inset-top)) !important;
+    left: max(18px, env(safe-area-inset-left)) !important;
+    min-height: 48px !important;
+    gap: 10px !important;
+    padding: 5px 13px 5px 5px !important;
+    border-color: var(--island-border) !important;
+    border-radius: 17px !important;
+    color: var(--island-ink) !important;
+    background: var(--island-surface) !important;
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.18) !important;
+    backdrop-filter: blur(24px) saturate(125%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(125%) !important;
+    pointer-events: none;
+    transition:
+        opacity 180ms ease,
+        transform var(--island-morph) !important;
+}
+
+.app-identity-mark {
+    width: 38px !important;
+    height: 38px !important;
+    border: 1px solid var(--island-border) !important;
+    border-radius: 13px !important;
+    color: #08080a !important;
+    background: #f5f5f7 !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+}
+
+.app-identity strong {
+    color: var(--island-ink) !important;
+    font-size: 12px !important;
+    font-weight: 750 !important;
+    letter-spacing: 0.11em !important;
+}
+
+.app-identity small {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--island-muted) !important;
+    font-size: 10px !important;
+    font-weight: 560 !important;
+}
+
+.identity-status-dot,
+.editor-header-status i,
+.world-save-summary i {
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    flex: 0 0 6px;
+    border-radius: 50%;
+    background: var(--island-green);
+    box-shadow: 0 0 0 3px rgba(48, 209, 88, 0.12);
+}
+
+body.is-world-editing .app-identity {
+    opacity: 0 !important;
+    transform: translateY(-8px) scale(0.96);
+}
+
+/* ── Compact utility rail ──────────────────────────────────── */
+
+#settings-container {
+    position: fixed !important;
+    top: max(18px, env(safe-area-inset-top)) !important;
+    right: max(18px, env(safe-area-inset-right)) !important;
+    z-index: 44 !important;
+    display: block !important;
+    width: var(--studio-rail-width);
+    pointer-events: auto;
+    visibility: visible !important;
+}
+
+.control-cluster,
+#settings-container > div:first-child {
+    width: var(--studio-rail-width);
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px !important;
+    padding: 6px;
+    border: 1px solid var(--island-border);
+    border-radius: 22px;
+    background: var(--island-surface);
+    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.20);
+    backdrop-filter: blur(24px) saturate(125%);
+    -webkit-backdrop-filter: blur(24px) saturate(125%);
+}
+
+.control-cluster-divider {
+    width: 24px;
+    height: 1px;
+    margin: 2px 0;
+    background: var(--island-border);
+}
+
+.icon-button {
+    width: 44px !important;
+    height: 44px !important;
+    flex: 0 0 44px !important;
+    border: 0 !important;
+    border-radius: 15px !important;
+    color: rgba(245, 245, 247, 0.68) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transition:
+        color 110ms ease,
+        background 110ms ease,
+        transform 110ms ease !important;
+}
+
+.icon-button svg {
+    stroke-width: 2.25;
+}
+
+.icon-button:hover {
+    color: var(--island-ink) !important;
+    background: var(--island-hover) !important;
+}
+
+.icon-button:active {
+    transform: scale(0.92) !important;
+}
+
+.icon-button.is-active,
+.root-mode-button[aria-pressed="true"],
+#settings-button[aria-expanded="true"],
+#camera-view-button[aria-expanded="true"] {
+    color: #09090b !important;
+    background: #f5f5f7 !important;
+}
+
+.icon-button:focus-visible,
+.axis-orbit-button:focus-visible {
+    outline: 2px solid #ffffff !important;
+    outline-offset: 3px !important;
+}
+
+/* ── Blender-like Y-up axis puck ───────────────────────────── */
+
+.axis-orbit-control {
+    position: relative;
+    width: 44px;
+    height: 44px;
+}
+
+.axis-orbit-button {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    overflow: hidden;
+    border: 0;
+    border-radius: 15px;
+    color: var(--island-ink);
+    background: var(--island-raised);
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    transition:
+        background 110ms ease,
+        transform 110ms ease;
+}
+
+.axis-orbit-button:hover {
+    background: var(--island-hover);
+}
+
+.axis-orbit-button:active,
+.axis-orbit-control.is-dragging .axis-orbit-button {
+    cursor: grabbing;
+    transform: scale(0.96);
+}
+
+.axis-stem,
+.axis-label,
+.axis-center {
+    position: absolute;
+    pointer-events: none;
+}
+
+.axis-stem {
+    left: 21px;
+    top: 21px;
+    width: 13px;
+    height: 2px;
+    border-radius: 2px;
+    transform-origin: left center;
+}
+
+.axis-stem-x {
+    background: var(--axis-x);
+    transform: rotate(-22deg);
+}
+
+.axis-stem-y {
+    background: var(--axis-y);
+    transform: rotate(-90deg);
+}
+
+.axis-stem-z {
+    background: var(--axis-z);
+    transform: rotate(42deg);
+}
+
+.axis-label {
+    font-size: 8px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.axis-label-x {
+    right: 5px;
+    bottom: 11px;
+    color: var(--axis-x);
+}
+
+.axis-label-y {
+    top: 4px;
+    left: 19px;
+    color: var(--axis-y);
+}
+
+.axis-label-z {
+    right: 6px;
+    top: 9px;
+    color: var(--axis-z);
+}
+
+.axis-center {
+    left: 18px;
+    top: 18px;
+    width: 7px;
+    height: 7px;
+    border: 2px solid rgba(255, 255, 255, 0.78);
+    border-radius: 50%;
+    background: #151518;
+}
+
+.axis-orbit-menu {
+    position: absolute;
+    right: 54px;
+    bottom: 0;
+    width: 154px;
+    display: grid;
+    gap: 3px;
+    padding: 6px;
+    border: 1px solid var(--island-border);
+    border-radius: 16px;
+    background: var(--island-surface-strong);
+    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.24);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    transform: translateX(0) scale(1);
+    transform-origin: bottom right;
+    transition:
+        opacity 140ms ease,
+        transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 140ms ease;
+}
+
+.axis-orbit-menu.hidden {
+    display: grid !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(8px) scale(0.95);
+}
+
+.axis-orbit-menu button {
+    min-height: 38px;
+    display: grid;
+    grid-template-columns: 10px 1fr auto;
+    align-items: center;
+    gap: 9px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 11px;
+    color: var(--island-ink);
+    background: transparent;
+    font-size: 12px;
+    font-weight: 650;
+    text-align: left;
+}
+
+.axis-orbit-menu button:hover {
+    background: var(--island-hover);
+}
+
+.axis-orbit-menu kbd {
+    color: var(--island-faint);
+    font: 650 9px/1 var(--ui-font-sans);
+}
+
+.axis-dot {
+    width: 7px;
+    height: 7px;
+    display: block;
+    border-radius: 50%;
+}
+
+.axis-dot.axis-x { background: var(--axis-x); }
+.axis-dot.axis-y { background: var(--axis-y); }
+.axis-dot.axis-z { background: var(--axis-z); }
+.axis-dot.axis-free { background: #f5f5f7; }
+
+/* ── Morphing context island ───────────────────────────────── */
+
+#world-editor.world-editor {
+    inset: max(16px, env(safe-area-inset-top))
+        calc(var(--studio-rail-width) + 30px + env(safe-area-inset-right))
+        max(16px, env(safe-area-inset-bottom))
+        auto !important;
+    z-index: 40 !important;
+    width: min(var(--studio-panel-width), calc(100vw - 118px)) !important;
+    min-width: 0;
+    display: grid !important;
+    grid-template-rows: auto auto minmax(0, 1fr) auto !important;
+    overflow: hidden;
+    border: 1px solid var(--island-border) !important;
+    border-radius: 28px !important;
+    color: var(--island-ink) !important;
+    background: var(--island-surface) !important;
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.26) !important;
+    backdrop-filter: blur(28px) saturate(125%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(125%) !important;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0) scale(1);
+    transform-origin: top right;
+    transition:
+        width var(--island-morph),
+        opacity 180ms ease,
+        transform var(--island-morph),
+        visibility 180ms ease !important;
+}
+
+#world-editor.world-editor.hidden {
+    display: grid !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(28px) scale(0.96);
+}
+
+.world-editor .editor-header {
+    min-height: 74px !important;
+    padding: 14px 14px 12px 18px !important;
+    border: 0 !important;
+    background: transparent !important;
+}
+
+.editor-kicker {
+    margin-bottom: 4px !important;
+    color: var(--island-muted) !important;
+    font-size: 10px !important;
+    font-weight: 680 !important;
+    letter-spacing: 0.08em !important;
+}
+
+.editor-header h1 {
+    color: var(--island-ink) !important;
+    font-size: 23px !important;
+    font-weight: 720 !important;
+    letter-spacing: -0.035em !important;
+}
+
+.editor-header-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#studio-context-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--island-muted);
+    font-size: 10px;
+    font-weight: 620;
+}
+
+.world-editor .editor-icon-button {
+    width: 40px !important;
+    height: 40px !important;
+    border: 0 !important;
+    border-radius: 13px !important;
+    color: var(--island-muted) !important;
+    background: var(--island-raised) !important;
+}
+
+.world-editor .editor-icon-button:hover:not(:disabled) {
+    color: var(--island-ink) !important;
+    background: var(--island-hover) !important;
+}
+
+.world-editor .studio-mode-tabs {
+    width: calc(100% - 28px);
+    height: 42px !important;
+    min-height: 42px;
+    margin: 0 14px 12px;
+    padding: 4px !important;
+    border: 1px solid var(--island-border) !important;
+    border-radius: 14px;
+    background: var(--island-raised) !important;
+}
+
+.studio-mode-tabs button {
+    min-height: 32px !important;
+    border-radius: 10px !important;
+    color: var(--island-muted) !important;
+    font-size: 12px !important;
+    font-weight: 680 !important;
+}
+
+.studio-mode-tabs button::after {
+    display: none !important;
+}
+
+.studio-mode-tabs button:hover {
+    color: var(--island-ink) !important;
+}
+
+.studio-mode-tabs button.is-active {
+    color: #09090b !important;
+    background: #f5f5f7 !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+}
+
+.world-editor .editor-toolbar {
+    position: absolute;
+    z-index: 8;
+    right: 22px;
+    bottom: 92px;
+    width: auto;
+    min-height: 48px !important;
+    display: flex;
+    gap: 2px !important;
+    padding: 4px !important;
+    border: 1px solid var(--island-border) !important;
+    border-radius: 15px;
+    background: var(--island-surface-strong) !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.24);
+}
+
+.world-editor[data-category]:not([data-category="objects"]) .editor-toolbar,
+.world-editor.is-photo-mode .editor-toolbar {
+    display: none !important;
+}
+
+.editor-toolbar-divider {
+    width: 1px !important;
+    height: 22px !important;
+    margin: 9px 2px;
+    background: var(--island-border) !important;
+}
+
+.island-workspace {
+    min-width: 0;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 146px minmax(0, 1fr);
+    gap: 0;
+    overflow: hidden;
+}
+
+.island-nav-shell {
+    min-height: 0;
+    padding: 2px 8px 12px 12px;
+    border-right: 1px solid var(--island-border);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.island-category-nav {
+    display: grid;
+    gap: 3px;
+}
+
+.island-category-nav.hidden {
+    display: none !important;
+}
+
+.island-category-nav button {
+    width: 100%;
+    min-height: 42px;
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+    padding: 7px 8px;
+    border: 0;
+    border-radius: 12px;
+    color: var(--island-muted);
+    background: transparent;
+    text-align: left;
+    transition:
+        color 110ms ease,
+        background 110ms ease,
+        transform 110ms ease;
+}
+
+.island-category-nav button:hover {
+    color: var(--island-ink);
+    background: var(--island-hover);
+}
+
+.island-category-nav button:active {
+    transform: scale(0.98);
+}
+
+.island-category-nav button.is-active {
+    color: var(--island-ink);
+    background: var(--island-selected);
+}
+
+.island-category-nav button.is-active::after {
+    content: "";
+    position: absolute;
+}
+
+.island-category-nav svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.island-category-nav button > span {
+    min-width: 0;
+    display: grid;
+    gap: 1px;
+    overflow: hidden;
+    font-size: 11px;
+    font-weight: 680;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.island-category-nav small {
+    overflow: hidden;
+    color: var(--island-faint);
+    font-size: 8px;
+    font-weight: 540;
+    text-overflow: ellipsis;
+}
+
+.world-editor .editor-scroll {
+    min-width: 0;
+    min-height: 0;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    color: var(--island-ink) !important;
+    background: transparent !important;
+    overscroll-behavior: contain;
+}
+
+.world-editor .photo-booth {
+    min-height: 100%;
+    color: var(--island-ink) !important;
+    background: transparent !important;
+}
+
+/* ── Shared low-noise content ───────────────────────────────── */
+
+.studio-category-panel,
+.world-editor .photo-booth-pane,
+.world-editor .editor-section {
+    min-width: 0;
+    display: grid;
+    gap: 16px;
+    padding: 12px 18px 24px !important;
+    border: 0 !important;
+    color: var(--island-ink) !important;
+    background: transparent !important;
+}
+
+.studio-category-panel.hidden,
+.world-editor .photo-booth-pane.hidden,
+.world-editor .editor-section.hidden,
+[data-world-categories].hidden {
+    display: none !important;
+}
+
+.category-intro {
+    display: grid;
+    gap: 5px;
+    padding: 4px 2px 2px;
+}
+
+.category-intro h2,
+.category-hero h2 {
+    margin: 0;
+    color: var(--island-ink);
+    font-size: 20px;
+    font-weight: 720;
+    letter-spacing: -0.03em;
+}
+
+.category-intro p,
+.category-hero p,
+.category-footnote {
+    margin: 0;
+    color: var(--island-muted);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.category-eyebrow {
+    color: var(--island-faint);
+    font-size: 9px;
+    font-weight: 720;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.category-hero {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 4px 2px 2px;
+}
+
+.category-hero-mark {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    border-radius: 17px;
+    color: #08080a;
+    background: #f5f5f7;
+    font-size: 18px;
+    font-weight: 820;
+}
+
+.signal-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.signal-strip span {
+    min-height: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 9px;
+    border: 1px solid var(--island-border);
+    border-radius: 999px;
+    color: var(--island-muted);
+    font-size: 9px;
+    font-weight: 620;
+}
+
+.signal-ok {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--island-green);
+}
+
+.control-card {
+    min-width: 0;
+    display: grid;
+    gap: 12px;
+    padding: 13px;
+    border: 1px solid var(--island-border);
+    border-radius: 16px;
+    background: var(--island-raised);
+}
+
+.control-card + .control-card {
+    margin-top: -4px;
+}
+
+.control-card-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.control-card-heading > span,
+.island-switch-row > span,
+.island-color-row > span,
+.island-select-row > span,
+.island-input-row > span,
+.voice-state-row > span:last-child {
+    min-width: 0;
+    display: grid;
+    gap: 2px;
+}
+
+.control-card strong,
+.island-switch-row strong,
+.island-color-row strong,
+.island-select-row strong,
+.island-input-row strong,
+.voice-state-row strong {
+    color: var(--island-ink);
+    font-size: 11px;
+    font-weight: 680;
+}
+
+.control-card small,
+.island-switch-row small,
+.island-color-row small,
+.island-select-row small,
+.island-input-row small,
+.voice-state-row small,
+.world-save-summary small {
+    color: var(--island-muted);
+    font-size: 9px;
+    line-height: 1.4;
+}
+
+.control-card output {
+    color: var(--island-muted);
+    font-size: 10px;
+    font-weight: 650;
+}
+
+.safe-note {
+    min-height: 44px;
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr);
+    align-items: center;
+    gap: 9px;
+    padding: 10px 12px;
+    border: 1px solid var(--island-border);
+    border-radius: 14px;
+    color: var(--island-muted);
+    background: rgba(10, 132, 255, 0.07);
+    font-size: 9px;
+    line-height: 1.45;
+}
+
+.safe-note.compact {
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+.safe-note svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: var(--island-blue);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.island-switch-row,
+.island-color-row,
+.island-select-row,
+.island-input-row {
+    position: relative;
+    min-height: 46px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+}
+
+.island-switch-row + .island-color-row,
+.island-switch-row + .island-range-row,
+.island-select-row + .island-input-row {
+    padding-top: 11px;
+    border-top: 1px solid var(--island-border);
+}
+
+.island-switch-row input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.island-switch-row > i {
+    position: relative;
+    width: 38px;
+    height: 22px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.17);
+    transition: background 140ms ease;
+}
+
+.island-switch-row > i::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #f5f5f7;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+    transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.island-switch-row input:checked + i {
+    background: var(--island-green);
+}
+
+.island-switch-row input:checked + i::after {
+    transform: translateX(16px);
+}
+
+.island-switch-row:focus-within > i {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+}
+
+.island-color-row input[type="color"],
+.world-editor input[type="color"] {
+    width: 40px !important;
+    height: 32px !important;
+    padding: 2px !important;
+    overflow: hidden;
+    border: 1px solid var(--island-border-strong) !important;
+    border-radius: 10px !important;
+    background: transparent !important;
+}
+
+.island-range-row,
+.world-editor .camera-range {
+    display: grid !important;
+    gap: 8px !important;
+    color: var(--island-muted) !important;
+    font-size: 10px !important;
+    font-weight: 640 !important;
+}
+
+.island-range-row > span,
+.world-editor .camera-range > span {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.world-editor input[type="range"] {
+    width: 100%;
+    min-height: 22px;
+    accent-color: #f5f5f7 !important;
+}
+
+.world-editor select,
+.world-editor input[type="text"],
+.world-editor input[type="password"],
+.world-editor input[type="number"],
+.world-editor input[type="search"] {
+    min-height: 40px !important;
+    padding: 0 11px !important;
+    border: 1px solid var(--island-border) !important;
+    border-radius: 11px !important;
+    outline: 0;
+    color: var(--island-ink) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    font-size: 11px !important;
+}
+
+.world-editor select:focus,
+.world-editor input:focus {
+    border-color: rgba(255, 255, 255, 0.46) !important;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+}
+
+.world-editor option {
+    color: #1d1d1f;
+    background: #ffffff;
+}
+
+.island-select-row select,
+.island-input-row input {
+    min-width: 118px;
+    max-width: 154px;
+}
+
+.voice-state-row {
+    min-height: 54px;
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--island-border);
+}
+
+.voice-wave {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.voice-wave i {
+    width: 2px;
+    border-radius: 3px;
+    background: var(--island-ink);
+}
+
+.voice-wave i:nth-child(1) { height: 8px; }
+.voice-wave i:nth-child(2) { height: 15px; }
+.voice-wave i:nth-child(3) { height: 22px; }
+.voice-wave i:nth-child(4) { height: 13px; }
+.voice-wave i:nth-child(5) { height: 7px; }
+
+/* ── Camera and appearance ─────────────────────────────────── */
+
+.camera-shot-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+}
+
+.camera-shot-grid.compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.camera-shot-grid button,
+.world-editor .camera-chip,
+.world-editor .camera-action-button,
+.world-editor .photo-camera-options button,
+.world-editor .photo-booth-primary,
+.world-editor .photo-booth-secondary {
+    min-height: 40px !important;
+    padding: 0 9px !important;
+    border: 1px solid var(--island-border) !important;
+    border-radius: 11px !important;
+    color: var(--island-muted) !important;
+    background: rgba(255, 255, 255, 0.055) !important;
+    font-size: 10px !important;
+    font-weight: 670 !important;
+    transition:
+        color 110ms ease,
+        background 110ms ease,
+        border-color 110ms ease,
+        transform 110ms ease !important;
+}
+
+.camera-shot-grid button:hover,
+.world-editor .camera-chip:hover,
+.world-editor .camera-action-button:hover,
+.world-editor .photo-camera-options button:hover,
+.world-editor .photo-booth-secondary:hover {
+    color: var(--island-ink) !important;
+    border-color: var(--island-border-strong) !important;
+    background: var(--island-hover) !important;
+}
+
+.camera-shot-grid button.is-active,
+.world-editor .camera-chip.is-active,
+.world-editor .photo-camera-options button.is-active,
+.world-editor .photo-booth-primary {
+    border-color: #f5f5f7 !important;
+    color: #09090b !important;
+    background: #f5f5f7 !important;
+}
+
+.world-editor .camera-button-row,
+.world-editor .camera-action-row {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px !important;
+}
+
+.world-editor .camera-action-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.camera-lock-row {
+    padding-top: 10px;
+    border-top: 1px solid var(--island-border);
+}
+
+.appearance-shades {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+}
+
+.appearance-shades .shade-button {
+    height: 42px !important;
+    filter: saturate(0.82) !important;
+    border-color: var(--island-border) !important;
+    border-radius: 12px !important;
+}
+
+.appearance-shades .shade-button.is-active {
+    border-color: #ffffff !important;
+    box-shadow: inset 0 0 0 2px #0a0a0c, 0 0 0 1px #ffffff !important;
+}
+
+/* ── Existing Photo Booth and editor controls ──────────────── */
+
+.world-editor .photo-booth-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    width: calc(100% - 36px);
+    height: 42px !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    margin: 0 18px 4px;
+    padding: 4px;
+    border: 1px solid var(--island-border) !important;
+    border-radius: 13px;
+    background: rgba(22, 22, 25, 0.96) !important;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.world-editor .photo-booth-tabs button {
+    min-height: 32px !important;
+    border-radius: 9px;
+    color: var(--island-muted) !important;
+}
+
+.world-editor .photo-booth-tabs button::after {
+    display: none;
+}
+
+.world-editor .photo-booth-tabs button.is-active {
+    color: #09090b !important;
+    background: #f5f5f7 !important;
+}
+
+.world-editor .photo-booth-tabs button[data-photo-tab="animations"] {
+    display: none;
+}
+
+.world-editor[data-category]:not([data-category="face"]) .photo-booth-tabs {
+    display: none !important;
+}
+
+.world-editor .photo-booth-pane h2,
+.world-editor .editor-section-title h2,
+.world-editor .face-performance-head strong,
+.world-editor .expression-creator-head h2 {
+    color: var(--island-ink) !important;
+}
+
+.world-editor .photo-booth-note,
+.world-editor .expression-creator-help,
+.world-editor .face-editor-summary,
+.world-editor .face-performance-head span,
+.world-editor .editor-empty-state,
+.world-editor .editor-field,
+.world-editor .transform-label {
+    color: var(--island-muted) !important;
+}
+
+.world-editor .photo-check {
+    color: var(--island-ink) !important;
+}
+
+.world-editor .photo-booth-divider,
+.world-editor .settings-divider {
+    border-color: var(--island-border) !important;
+}
+
+.world-editor .photo-check span,
+.world-editor .editor-toggle span {
+    border-color: var(--island-border-strong) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.world-editor .photo-check input:checked + span,
+.world-editor .editor-toggle input:checked + span {
+    border-color: #f5f5f7 !important;
+    background: #f5f5f7 !important;
+}
+
+.world-editor .photo-eye-pad,
+.world-editor .face-performance-panel,
+.world-editor .photo-control-group,
+.world-editor .photo-all-face-keys,
+.world-editor .expression-rig-shell,
+.world-editor .expression-rig-inspector,
+.world-editor .scene-node-details,
+.world-editor .scene-stat-strip,
+.world-editor .editor-empty-state {
+    border-color: var(--island-border) !important;
+    color: var(--island-ink) !important;
+    background: var(--island-raised) !important;
+}
+
+.world-editor .photo-control-group h2,
+.world-editor .photo-control-group label,
+.world-editor .face-expression-presets button,
+.world-editor .face-lipsync-preview,
+.world-editor .photo-all-face-keys summary {
+    color: var(--island-muted) !important;
+}
+
+.world-editor .face-expression-presets button,
+.world-editor .face-lipsync-preview {
+    border-color: var(--island-border) !important;
+    background: var(--island-raised) !important;
+}
+
+.world-editor .face-editor-row,
+.world-editor .editor-object-row,
+.world-editor .scene-hierarchy-row {
+    border-color: var(--island-border) !important;
+    color: var(--island-ink) !important;
+    background: rgba(255, 255, 255, 0.045) !important;
+}
+
+.world-editor .editor-object-row.is-selected,
+.world-editor .scene-hierarchy-row.is-selected {
+    background: var(--island-selected) !important;
+}
+
+.world-editor .primitive-grid button,
+.world-editor .scene-view-modes button {
+    border-color: var(--island-border) !important;
+    color: var(--island-muted) !important;
+    background: var(--island-raised) !important;
+}
+
+.world-editor .primitive-grid button:hover,
+.world-editor .scene-view-modes button:hover,
+.world-editor .scene-view-modes button.is-active {
+    color: var(--island-ink) !important;
+    background: var(--island-hover) !important;
+}
+
+.world-editor .scene-outliner-head {
+    color: var(--island-faint) !important;
+    border-color: var(--island-border) !important;
+    background: rgba(255, 255, 255, 0.045) !important;
+}
+
+.world-editor .scene-search {
+    border-color: var(--island-border) !important;
+    color: var(--island-muted) !important;
+    background: rgba(255, 255, 255, 0.065) !important;
+}
+
+.world-editor .scene-search:focus-within {
+    border-color: var(--island-border-strong) !important;
+    outline: 2px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.world-editor .scene-view-modes {
+    border-color: var(--island-border) !important;
+    background: rgba(255, 255, 255, 0.045) !important;
+}
+
+.world-editor .scene-stat-strip span {
+    border-color: var(--island-border) !important;
+    color: var(--island-muted) !important;
+    background: rgba(255, 255, 255, 0.065) !important;
+}
+
+.world-editor .scene-hierarchy-list {
+    border-color: var(--island-border) !important;
+    background: rgba(255, 255, 255, 0.035) !important;
+}
+
+.world-editor .scene-node-row {
+    color: var(--island-muted) !important;
+}
+
+.world-editor .scene-node-row:hover,
+.world-editor .scene-node-row.is-selected {
+    color: var(--island-ink) !important;
+    background: var(--island-hover) !important;
+}
+
+.world-editor .scene-node-icon,
+.world-editor .scene-node-eye:hover,
+.world-editor .scene-node-solo:hover {
+    color: var(--island-muted) !important;
+    background: rgba(255, 255, 255, 0.065) !important;
+}
+
+.world-editor .vector-inputs label {
+    border-color: var(--island-border) !important;
+    background: var(--island-raised) !important;
+}
+
+.world-editor .axis-x { color: var(--axis-x) !important; }
+.world-editor .axis-y { color: var(--axis-y) !important; }
+.world-editor .axis-z { color: var(--axis-z) !important; }
+
+.world-editor[data-category="materials"] #editor-inspector .transform-group,
+.world-editor[data-category="materials"] #editor-inspector > .editor-inspector-content > .editor-field,
+.world-editor[data-category="materials"] #editor-inspector .editor-toggle,
+.world-editor[data-category="physics"] #editor-inspector .transform-group,
+.world-editor[data-category="physics"] #editor-inspector > .editor-inspector-content > .editor-field,
+.world-editor[data-category="physics"] #editor-inspector .color-field,
+.world-editor[data-category="physics"] #editor-inspector #editor-visible {
+    display: none !important;
+}
+
+.world-save-summary {
+    display: grid;
+    gap: 6px;
+    padding-top: 12px;
+    border-top: 1px solid var(--island-border);
+}
+
+.world-save-summary > span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--island-ink);
+    font-size: 11px;
+}
+
+/* ── Footer and viewport composition ───────────────────────── */
+
+.world-editor .photo-booth-footer,
+.world-editor .editor-footer {
+    min-height: 74px !important;
+    display: flex;
+    align-items: center;
+    gap: 10px !important;
+    padding: 10px 14px !important;
+    border-top: 1px solid var(--island-border) !important;
+    color: var(--island-muted) !important;
+    background: rgba(12, 12, 14, 0.96) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.world-editor .photo-booth-footer.hidden,
+.world-editor .editor-footer.hidden {
+    display: none !important;
+}
+
+.world-editor .photo-booth-status,
+.world-editor .editor-save-status {
+    color: var(--island-muted) !important;
+}
+
+.world-editor .photo-capture-actions {
+    gap: 6px !important;
+}
+
+.world-editor .photo-capture-actions button,
+.world-editor .editor-primary-button,
+.world-editor .editor-secondary-button {
+    min-height: 42px !important;
+    border: 1px solid var(--island-border) !important;
+    border-radius: 12px !important;
+    color: var(--island-muted) !important;
+    background: var(--island-raised) !important;
+}
+
+.world-editor .photo-capture-actions button {
+    width: 52px !important;
+}
+
+.world-editor .editor-primary-button {
+    color: #09090b !important;
+    background: #f5f5f7 !important;
+}
+
+.world-editor .editor-secondary-button.is-armed {
+    border-color: rgba(255, 69, 58, 0.65) !important;
+    color: #ffffff !important;
+    background: rgba(255, 69, 58, 0.18) !important;
+}
+
+.studio-scrim,
+.studio-scrim:not(.hidden),
+#editor-mode-pill {
+    display: none !important;
+}
+
+body.is-world-editing #settings-container {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+body.is-world-editing #chat-container {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none;
+    transform: translateY(18px) !important;
+}
+
+@media (min-width: 761px) {
+    body.is-world-editing #canvas-container {
+        left: 0 !important;
+        right: var(--studio-right-safe) !important;
+        width: auto !important;
+        transition: right var(--island-morph) !important;
+    }
+}
+
+/* ── Responsive bottom island ──────────────────────────────── */
+
+@media (max-width: 760px), (max-height: 570px) {
+    :root,
+    body[data-studio-category="face"],
+    body[data-studio-category="objects"] {
+        --studio-panel-width: calc(100vw - 24px);
+    }
+
+    .app-identity {
+        top: max(10px, env(safe-area-inset-top)) !important;
+        left: max(10px, env(safe-area-inset-left)) !important;
+    }
+
+    #settings-container {
+        top: auto !important;
+        right: 50% !important;
+        bottom: max(10px, env(safe-area-inset-bottom)) !important;
+        width: auto;
+        transform: translateX(50%);
+    }
+
+    .control-cluster,
+    #settings-container > div:first-child {
+        width: auto;
+        flex-direction: row;
+        border-radius: 20px;
+    }
+
+    .control-cluster-divider {
+        width: 1px;
+        height: 24px;
+        margin: 0 2px;
+    }
+
+    .axis-orbit-menu {
+        right: 0;
+        bottom: 54px;
+    }
+
+    #world-editor.world-editor {
+        inset: auto 12px calc(76px + env(safe-area-inset-bottom)) 12px !important;
+        width: auto !important;
+        max-height: min(68dvh, 610px);
+        border-radius: 26px !important;
+        transform-origin: bottom center;
+    }
+
+    #world-editor.world-editor.hidden {
+        transform: translateY(24px) scale(0.96);
+    }
+
+    .island-workspace {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    .island-nav-shell {
+        padding: 0 12px 8px;
+        border-right: 0;
+        border-bottom: 1px solid var(--island-border);
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .island-category-nav {
+        width: max-content;
+        min-width: 100%;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(86px, auto);
+        grid-template-columns: none;
+    }
+
+    .island-category-nav button {
+        min-height: 38px;
+        grid-template-columns: 18px auto;
+        padding: 5px 8px;
+    }
+
+    .island-category-nav small {
+        display: none;
+    }
+
+    .world-editor .editor-toolbar {
+        right: 16px;
+        bottom: 82px;
+    }
+
+    body.is-world-editing #canvas-container {
+        inset: 0 !important;
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 430px) {
+    .icon-button,
+    .axis-orbit-control,
+    .axis-orbit-button {
+        width: 40px !important;
+        height: 40px !important;
+        flex-basis: 40px !important;
+    }
+
+    .control-cluster,
+    #settings-container > div:first-child {
+        gap: 1px !important;
+        padding: 5px;
+    }
+
+    .world-editor .editor-header {
+        min-height: 64px !important;
+        padding: 11px 12px 9px 15px !important;
+    }
+
+    .editor-header h1 {
+        font-size: 20px !important;
+    }
+
+    #studio-context-status {
+        display: none;
+    }
+
+    .world-editor .studio-mode-tabs {
+        margin-bottom: 8px;
+    }
+
+    .studio-category-panel,
+    .world-editor .photo-booth-pane,
+    .world-editor .editor-section {
+        padding: 10px 14px 20px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .app-identity,
+    .icon-button,
+    .axis-orbit-button,
+    .axis-orbit-menu,
+    #world-editor.world-editor,
+    body.is-world-editing #canvas-container,
+    .island-switch-row > i,
+    .island-switch-row > i::after {
+        transition-duration: 1ms !important;
+        animation-duration: 1ms !important;
+    }
+}

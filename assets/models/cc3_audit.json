@@ -1,0 +1,1129 @@
+{
+  "source": "model/test/Blender/blender.Fbx",
+  "texture_root": "model/test/Blender/textures",
+  "mesh_count": 9,
+  "armatures": [
+    {
+      "name": "CC3_Base_Plus",
+      "bones": 101
+    },
+    {
+      "name": "Armature",
+      "bones": 3
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CC_Base_Body",
+      "vertices": 14164,
+      "polygons": 14046,
+      "uv_layers": [
+        "Channel0"
+      ],
+      "material_slots": [
+        "Std_Skin_Head",
+        "Std_Skin_Body",
+        "Std_Skin_Arm",
+        "Std_Skin_Leg",
+        "Std_Nails",
+        "Std_Eyelash"
+      ],
+      "shape_keys": [
+        "Basis",
+        "V_Open",
+        "V_Explosive",
+        "V_Dental_Lip",
+        "V_Tight_O",
+        "V_Tight",
+        "V_Wide",
+        "V_Affricate",
+        "V_Lip_Open",
+        "Brow_Raise_Inner_Left",
+        "Brow_Raise_Inner_Right",
+        "Brow_Raise_Outer_Left",
+        "Brow_Raise_Outer_Right",
+        "Brow_Drop_Left",
+        "Brow_Drop_Right",
+        "Brow_Raise_Left",
+        "Brow_Raise_Right",
+        "Eyes_Blink",
+        "Eye_Blink_L",
+        "Eye_Blink_R",
+        "Eye_Wide_L",
+        "Eye_Wide_R",
+        "Eye_Squint_L",
+        "Eye_Squint_R",
+        "Nose_Scrunch",
+        "Nose_Flanks_Raise",
+        "Nose_Flank_Raise_L",
+        "Nose_Flank_Raise_R",
+        "Nose_Nostrils_Flare",
+        "Cheek_Raise_L",
+        "Cheek_Raise_R",
+        "Cheeks_Suck",
+        "Cheek_Blow_L",
+        "Cheek_Blow_R",
+        "Mouth_Smile",
+        "Mouth_Smile_L",
+        "Mouth_Smile_R",
+        "Mouth_Frown",
+        "Mouth_Frown_L",
+        "Mouth_Frown_R",
+        "Mouth_Blow",
+        "Mouth_Pucker",
+        "Mouth_Pucker_Open",
+        "Mouth_Widen",
+        "Mouth_Widen_Sides",
+        "Mouth_Dimple_L",
+        "Mouth_Dimple_R",
+        "Mouth_Plosive",
+        "Mouth_Lips_Tight",
+        "Mouth_Lips_Tuck",
+        "Mouth_Lips_Open",
+        "Mouth_Lips_Part",
+        "Mouth_Bottom_Lip_Down",
+        "Mouth_Top_Lip_Up",
+        "Mouth_Top_Lip_Under",
+        "Mouth_Bottom_Lip_Under",
+        "Mouth_Snarl_Upper_L",
+        "Mouth_Snarl_Upper_R",
+        "Mouth_Snarl_Lower_L",
+        "Mouth_Snarl_Lower_R",
+        "Mouth_Bottom_Lip_Bite",
+        "Mouth_Down",
+        "Mouth_Up",
+        "Mouth_L",
+        "Mouth_R",
+        "Mouth_Lips_Jaw_Adjust",
+        "Mouth_Bottom_Lip_Trans",
+        "Mouth_Skewer",
+        "Mouth_Open",
+        "A01_Brow_Inner_Up",
+        "A02_Brow_Down_Left",
+        "A03_Brow_Down_Right",
+        "A04_Brow_Outer_Up_Left",
+        "A05_Brow_Outer_Up_Right",
+        "A06_Eye_Look_Up_Left",
+        "A07_Eye_Look_Up_Right",
+        "A08_Eye_Look_Down_Left",
+        "A09_Eye_Look_Down_Right",
+        "A10_Eye_Look_Out_Left",
+        "A11_Eye_Look_In_Left",
+        "A12_Eye_Look_In_Right",
+        "A13_Eye_Look_Out_Right",
+        "A14_Eye_Blink_Left",
+        "A15_Eye_Blink_Right",
+        "A16_Eye_Squint_Left",
+        "A17_Eye_Squint_Right",
+        "A18_Eye_Wide_Left",
+        "A19_Eye_Wide_Right",
+        "A20_Cheek_Puff",
+        "A21_Cheek_Squint_Left",
+        "A22_Cheek_Squint_Right",
+        "A23_Nose_Sneer_Left",
+        "A24_Nose_Sneer_Right",
+        "A25_Jaw_Open",
+        "A26_Jaw_Forward",
+        "A27_Jaw_Left",
+        "A28_Jaw_Right",
+        "A29_Mouth_Funnel",
+        "A30_Mouth_Pucker",
+        "A31_Mouth_Left",
+        "A32_Mouth_Right",
+        "A33_Mouth_Roll_Upper",
+        "A34_Mouth_Roll_Lower",
+        "A35_Mouth_Shrug_Upper",
+        "A36_Mouth_Shrug_Lower",
+        "A37_Mouth_Close",
+        "A38_Mouth_Smile_Left",
+        "A39_Mouth_Smile_Right",
+        "A40_Mouth_Frown_Left",
+        "A41_Mouth_Frown_Right",
+        "A42_Mouth_Dimple_Left",
+        "A43_Mouth_Dimple_Right",
+        "A44_Mouth_Upper_Up_Left",
+        "A45_Mouth_Upper_Up_Right",
+        "A46_Mouth_Lower_Down_Left",
+        "A47_Mouth_Lower_Down_Right",
+        "A48_Mouth_Press_Left",
+        "A49_Mouth_Press_Right",
+        "A50_Mouth_Stretch_Left",
+        "A51_Mouth_Stretch_Right",
+        "T10_Tongue_Bulge_Left",
+        "T11_Tongue_Bulge_Right"
+      ],
+      "armature": "CC3_Base_Plus"
+    },
+    {
+      "name": "Underwear_Bottoms",
+      "vertices": 762,
+      "polygons": 686,
+      "uv_layers": [
+        "Channel0"
+      ],
+      "material_slots": [
+        "Underwear_Bottoms"
+      ],
+      "shape_keys": [],
+      "armature": "CC3_Base_Plus"
+    },
+    {
+      "name": "CC_Base_TearLine",
+      "vertices": 190,
+      "polygons": 136,
+      "uv_layers": [
+        "Channel0"
+      ],
+      "material_slots": [
+        "Std_Tearline_R",
+        "Std_Tearline_L"
+      ],
+      "shape_keys": [
+        "Basis",
+        "Eyes_Blink",
+        "Eye_Blink_L",
+        "Eye_Blink_R",
+        "Eye_Wide_L",
+        "Eye_Wide_R",
+        "Eye_Squint_L",
+        "Eye_Squint_R",
+        "A01_Brow_Inner_Up",
+        "A02_Brow_Down_Left",
+        "A03_Brow_Down_Right",
+        "A04_Brow_Outer_Up_Left",
+        "A05_Brow_Outer_Up_Right",
+        "A06_Eye_Look_Up_Left",
+        "A07_Eye_Look_Up_Right",
+        "A08_Eye_Look_Down_Left",
+        "A09_Eye_Look_Down_Right",
+        "A10_Eye_Look_Out_Left",
+        "A11_Eye_Look_In_Left",
+        "A12_Eye_Look_In_Right",
+        "A13_Eye_Look_Out_Right",
+        "A14_Eye_Blink_Left",
+        "A15_Eye_Blink_Right",
+        "A16_Eye_Squint_Left",
+        "A17_Eye_Squint_Right",
+        "A18_Eye_Wide_Left",
+        "A19_Eye_Wide_Right",
+        "A21_Cheek_Squint_Left",
+        "A22_Cheek_Squint_Right",
+        "A23_Nose_Sneer_Left",
+        "A24_Nose_Sneer_Right",
+        "A31_Mouth_Left",
+        "A32_Mouth_Right",
+        "A38_Mouth_Smile_Left",
+        "A39_Mouth_Smile_Right",
+        "TL Inner Height L",
+        "TL Inner Height R",
+        "TL Inner Upper Height L",
+        "TL Inner Upper Height R",
+        "TL Inner Lower Height L",
+        "TL Inner Lower Height R",
+        "TL Center Upper Height L",
+        "TL Center Upper Height R",
+        "TL Center Lower Height L",
+        "TL Center Lower Height R",
+        "TL Outer Height L",
+        "TL Outer Height R",
+        "TL Outer Upper Height L",
+        "TL Outer Upper Height R",
+        "TL Outer Lower Height L",
+        "TL Outer Lower Height R",
+        "TL Inner Width L",
+        "TL Inner Width R",
+        "TL Outer Width L",
+        "TL Outer Width R",
+        "TL Depth L",
+        "TL Depth R",
+        "TL Upper Depth L",
+        "TL Upper Depth R",
+        "TL Lower Depth L",
+        "TL Lower Depth R",
+        "TL Duct Depth L",
+        "TL Duct Depth R",
+        "TL Inner Depth L",
+        "TL Inner Depth R",
+        "TL Inner Upper Depth L",
+        "TL Inner Upper Depth R",
+        "TL Inner Lower Depth L",
+        "TL Inner Lower Depth R",
+        "TL Center Upper Depth L",
+        "TL Center Upper Depth R",
+        "TL Center Lower Depth L",
+        "TL Center Lower Depth R",
+        "TL Outer Depth L",
+        "TL Outer Depth R",
+        "TL Outer Upper Depth L",
+        "TL Outer Upper Depth R",
+        "TL Outer Lower Depth L",
+        "TL Outer Lower Depth R"
+      ],
+      "armature": "CC3_Base_Plus"
+    },
+    {
+      "name": "CC_Game_Teeth",
+      "vertices": 154,
+      "polygons": 156,
+      "uv_layers": [
+        "Channel0"
+      ],
+      "material_slots": [
+        "Ga_Teeth"
+      ],
+      "shape_keys": [
+        "Basis",
+        "V_None"
+      ],
+      "armature": "CC3_Base_Plus"
+    },
+    {
+      "name": "Female_Angled",
+      "vertices": 1328,
+      "polygons": 540,
+      "uv_layers": [
+        "Channel0"
+      ],
+      "material_slots": [
+        "Female_Angled_Transparency",
+        "Female_Angled_Base_Transparency"
+      ],
+      "shape_keys": [
+        "Basis",
+        "V_None",
+        "V_Open",
+        "V_Explosive",
+        "V_Dental_Lip",
+        "V_Tight_O",
+        "V_Tight",
+        "V_Wide",
+        "V_Affricate",
+        "V_Lip_Open",
+        "V_Tongue_up",
+        "V_Tongue_Raise",
+        "V_Tongue_Out",
+        "V_Tongue_Narrow",
+        "V_Tongue_Lower",
+        "V_Tongue_Curl_U",
+        "V_Tongue_Curl_D",
+        "Brow_Raise_Inner_Left",
+        "Brow_Raise_Inner_Right",
+        "Brow_Raise_Outer_Left",
+        "Brow_Raise_Outer_Right",
+        "Brow_Drop_Left",
+        "Brow_Drop_Right",
+        "Brow_Raise_Left",
+        "Brow_Raise_Right",
+        "Eyes_Blink",
+        "Eye_Blink_L",
+        "Eye_Blink_R",
+        "Eye_Wide_L",
+        "Eye_Wide_R",
+        "Eye_Squint_L",
+        "Eye_Squint_R",
+        "Nose_Scrunch",
+        "Nose_Flanks_Raise",
+        "Nose_Flank_Raise_L",
+        "Nose_Flank_Raise_R",
+        "Nose_Nostrils_Flare",
+        "Cheek_Raise_L",
+        "Cheek_Raise_R",
+        "Cheeks_Suck",
+        "Cheek_Blow_L",
+        "Cheek_Blow_R",
+        "Mouth_Smile",
+        "Mouth_Smile_L",
+        "Mouth_Smile_R",
+        "Mouth_Frown",
+        "Mouth_Frown_L",
+        "Mouth_Frown_R",
+        "Mouth_Blow",
+        "Mouth_Pucker",
+        "Mouth_Pucker_Open",
+        "Mouth_Widen",
+        "Mouth_Widen_Sides",
+        "Mouth_Dimple_L",
+        "Mouth_Dimple_R",
+        "Mouth_Plosive",
+        "Mouth_Lips_Tight",
+        "Mouth_Lips_Tuck",
+        "Mouth_Lips_Open",
+        "Mouth_Lips_Part",
+        "Mouth_Bottom_Lip_Down",
+        "Mouth_Top_Lip_Up",
+        "Mouth_Top_Lip_Under",
+        "Mouth_Bottom_Lip_Under",
+        "Mouth_Snarl_Upper_L",
+        "Mouth_Snarl_Upper_R",
+        "Mouth_Snarl_Lower_L",
+        "Mouth_Snarl_Lower_R",
+        "Mouth_Bottom_Lip_Bite",
+        "Mouth_Down",
+        "Mouth_Up",
+        "Mouth_L",
+        "Mouth_R",
+        "Mouth_Lips_Jaw_Adjust",
+        "Mouth_Bottom_Lip_Trans",
+        "Mouth_Skewer",
+        "Mouth_Open",
+        "Head_Turn_Up",
+        "Head_Turn_Down",
+        "Head_Turn_L",
+        "Head_Turn_R",
+        "Head_Tilt_L",
+        "Head_Tilt_R",
+        "Turn_Jaw_Down",
+        "Turn_Jaw_L",
+        "Turn_Jaw_R",
+        "Move_Jaw_Down",
+        "Move_Jaw_L",
+        "Move_Jaw_R",
+        "Left_Eyeball_Look_R",
+        "Left_Eyeball_Look_L",
+        "Left_Eyeball_Look_Down",
+        "Left_Eyeball_Look_Up",
+        "Right_Eyeball_Look_R",
+        "Right_Eyeball_Look_L",
+        "Right_Eyeball_Look_Down",
+        "Right_Eyeball_Look_Up",
+        "A01_Brow_Inner_Up",
+        "A02_Brow_Down_Left",
+        "A03_Brow_Down_Right",
+        "A04_Brow_Outer_Up_Left",
+        "A05_Brow_Outer_Up_Right",
+        "A06_Eye_Look_Up_Left",
+        "A07_Eye_Look_Up_Right",
+        "A08_Eye_Look_Down_Left",
+        "A09_Eye_Look_Down_Right",
+        "A10_Eye_Look_Out_Left",
+        "A11_Eye_Look_In_Left",
+        "A12_Eye_Look_In_Right",
+        "A13_Eye_Look_Out_Right",
+        "A14_Eye_Blink_Left",
+        "A15_Eye_Blink_Right",
+        "A16_Eye_Squint_Left",
+        "A17_Eye_Squint_Right",
+        "A18_Eye_Wide_Left",
+        "A19_Eye_Wide_Right",
+        "A20_Cheek_Puff",
+        "A21_Cheek_Squint_Left",
+        "A22_Cheek_Squint_Right",
+        "A23_Nose_Sneer_Left",
+        "A24_Nose_Sneer_Right",
+        "A25_Jaw_Open",
+        "A26_Jaw_Forward",
+        "A27_Jaw_Left",
+        "A28_Jaw_Right",
+        "A29_Mouth_Funnel",
+        "A30_Mouth_Pucker",
+        "A31_Mouth_Left",
+        "A32_Mouth_Right",
+        "A33_Mouth_Roll_Upper",
+        "A34_Mouth_Roll_Lower",
+        "A35_Mouth_Shrug_Upper",
+        "A36_Mouth_Shrug_Lower",
+        "A37_Mouth_Close",
+        "A38_Mouth_Smile_Left",
+        "A39_Mouth_Smile_Right",
+        "A40_Mouth_Frown_Left",
+        "A41_Mouth_Frown_Right",
+        "A42_Mouth_Dimple_Left",
+        "A43_Mouth_Dimple_Right",
+        "A44_Mouth_Upper_Up_Left",
+        "A45_Mouth_Upper_Up_Right",
+        "A46_Mouth_Lower_Down_Left",
+        "A47_Mouth_Lower_Down_Right",
+        "A48_Mouth_Press_Left",
+        "A49_Mouth_Press_Right",
+        "A50_Mouth_Stretch_Left",
+        "A51_Mouth_Stretch_Right",
+        "A52_Tongue_Out",
+        "T01_Tongue_Up",
+        "T02_Tongue_Down",
+        "T03_Tongue_Left",
+        "T04_Tongue_Right",
+        "T05_Tongue_Roll",
+        "T06_Tongue_Tip_Up",
+        "T07_Tongue_Tip_Down",
+        "T08_Tongue_Width",
+        "T09_Tongue_Thickness",
+        "T10_Tongue_Bulge_Left",
+        "T11_Tongue_Bulge_Right"
+      ],
+      "armature": "CC3_Base_Plus"
+    },
+    {
+      "name": "Bra",
+      "vertices": 638,
+      "polygons": 546,
+      "uv_layers": [
+        "Channel0"
+      ],
+      "material_slots": [
+        "Bra"
+      ],
+      "shape_keys": [],
+      "armature": "CC3_Base_Plus"
+    },
+    {
+      "name": "CC_Base_EyeOcclusion",
+      "vertices": 182,
+      "polygons": 144,
+      "uv_layers": [
+        "Channel0",
+        "Channel1"
+      ],
+      "material_slots": [
+        "Std_Eye_Occlusion_R",
+        "Std_Eye_Occlusion_L"
+      ],
+      "shape_keys": [
+        "Basis",
+        "Eyes_Blink",
+        "Eye_Blink_L",
+        "Eye_Blink_R",
+        "Eye_Wide_L",
+        "Eye_Wide_R",
+        "Eye_Squint_L",
+        "Eye_Squint_R",
+        "A01_Brow_Inner_Up",
+        "A02_Brow_Down_Left",
+        "A03_Brow_Down_Right",
+        "A04_Brow_Outer_Up_Left",
+        "A05_Brow_Outer_Up_Right",
+        "A06_Eye_Look_Up_Left",
+        "A07_Eye_Look_Up_Right",
+        "A08_Eye_Look_Down_Left",
+        "A09_Eye_Look_Down_Right",
+        "A10_Eye_Look_Out_Left",
+        "A11_Eye_Look_In_Left",
+        "A12_Eye_Look_In_Right",
+        "A13_Eye_Look_Out_Right",
+        "A14_Eye_Blink_Left",
+        "A15_Eye_Blink_Right",
+        "A16_Eye_Squint_Left",
+        "A17_Eye_Squint_Right",
+        "A18_Eye_Wide_Left",
+        "A19_Eye_Wide_Right",
+        "A21_Cheek_Squint_Left",
+        "A22_Cheek_Squint_Right",
+        "A23_Nose_Sneer_Left",
+        "A24_Nose_Sneer_Right",
+        "A31_Mouth_Left",
+        "A32_Mouth_Right",
+        "A38_Mouth_Smile_Left",
+        "A39_Mouth_Smile_Right",
+        "EO Inner Height L",
+        "EO Inner Height R",
+        "EO Inner Upper Height L",
+        "EO Inner Upper Height R",
+        "EO Inner Lower Height L",
+        "EO Inner Lower Height R",
+        "EO Center Upper Height L",
+        "EO Center Upper Height R",
+        "EO Center Lower Height L",
+        "EO Center Lower Height R",
+        "EO Outer Height L",
+        "EO Outer Height R",
+        "EO Outer Upper Height L",
+        "EO Outer Upper Height R",
+        "EO Outer Lower Height L",
+        "EO Outer Lower Height R",
+        "EO Inner Width L",
+        "EO Inner Width R",
+        "EO Outer Width L",
+        "EO Outer Width R",
+        "EO Bulge L",
+        "EO Bulge R",
+        "EO Depth L",
+        "EO Depth R",
+        "EO Duct Depth L",
+        "EO Duct Depth R",
+        "EO Upper Depth L",
+        "EO Upper Depth R",
+        "EO Lower Depth L",
+        "EO Lower Depth R",
+        "EO Inner Depth L",
+        "EO Inner Depth R",
+        "EO Inner Upper Depth L",
+        "EO Inner Upper Depth R",
+        "EO Inner Lower Depth L",
+        "EO Inner Lower Depth R",
+        "EO Center Upper Depth L",
+        "EO Center Upper Depth R",
+        "EO Center Lower Depth L",
+        "EO Center Lower Depth R",
+        "EO Outer Depth L",
+        "EO Outer Depth R",
+        "EO Outer Upper Depth L",
+        "EO Outer Upper Depth R",
+        "EO Outer Lower Depth L",
+        "EO Outer Lower Depth R"
+      ],
+      "armature": "CC3_Base_Plus"
+    },
+    {
+      "name": "CC_Base_Tongue",
+      "vertices": 309,
+      "polygons": 296,
+      "uv_layers": [
+        "Channel0"
+      ],
+      "material_slots": [
+        "Std_Tongue"
+      ],
+      "shape_keys": [
+        "Basis",
+        "V_Tongue_up",
+        "V_Tongue_Raise",
+        "V_Tongue_Out",
+        "V_Tongue_Narrow",
+        "V_Tongue_Lower",
+        "V_Tongue_Curl_U",
+        "V_Tongue_Curl_D",
+        "A52_Tongue_Out",
+        "T01_Tongue_Up",
+        "T02_Tongue_Down",
+        "T03_Tongue_Left",
+        "T04_Tongue_Right",
+        "T05_Tongue_Roll",
+        "T06_Tongue_Tip_Up",
+        "T07_Tongue_Tip_Down",
+        "T08_Tongue_Width",
+        "T09_Tongue_Thickness",
+        "T10_Tongue_Bulge_Left",
+        "T11_Tongue_Bulge_Right"
+      ],
+      "armature": "CC3_Base_Plus"
+    },
+    {
+      "name": "CC_Game_Eye",
+      "vertices": 140,
+      "polygons": 152,
+      "uv_layers": [
+        "Channel0"
+      ],
+      "material_slots": [
+        "Ga_Eye"
+      ],
+      "shape_keys": [
+        "Basis",
+        "V_None"
+      ],
+      "armature": "CC3_Base_Plus"
+    }
+  ],
+  "materials": [
+    {
+      "name": "Bra",
+      "use_nodes": true,
+      "blend_method": "BLEND",
+      "images": [
+        {
+          "name": "Bra_Diffuse",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Bra_Diffuse.bmp"
+        },
+        {
+          "name": "Bra_Normal",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Bra_Normal.bmp"
+        },
+        {
+          "name": "Bra_Opacity",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Bra_Opacity.bmp"
+        },
+        {
+          "name": "Bra_Specular",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Bra_Specular.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Female_Angled_Base_Transparency",
+      "use_nodes": true,
+      "blend_method": "BLEND",
+      "images": [
+        {
+          "name": "Female_Angled_Base_Transparency_Diffuse",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Female_Angled_Base_Transparency_Diffuse.bmp"
+        },
+        {
+          "name": "Female_Angled_Base_Transparency_Diffuse.001",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Female_Angled_Base_Transparency_Diffuse.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Female_Angled_Transparency",
+      "use_nodes": true,
+      "blend_method": "BLEND",
+      "images": [
+        {
+          "name": "Female_Angled_Transparency_Diffuse",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Female_Angled_Transparency_Diffuse.bmp"
+        },
+        {
+          "name": "Female_Angled_Transparency_Opacity",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Female_Angled_Transparency_Opacity.bmp"
+        },
+        {
+          "name": "Female_Angled_Transparency_Specular",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Female_Angled_Transparency_Specular.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Ga_Eye",
+      "use_nodes": true,
+      "blend_method": "HASHED",
+      "images": [
+        {
+          "name": "Ga_Eye_Diffuse",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Ga_Eye_Diffuse.bmp"
+        },
+        {
+          "name": "Ga_Eye_Normal",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Ga_Eye_Normal.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Ga_Teeth",
+      "use_nodes": true,
+      "blend_method": "HASHED",
+      "images": [
+        {
+          "name": "Ga_Teeth_Diffuse",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Ga_Teeth_Diffuse.bmp"
+        },
+        {
+          "name": "Ga_Teeth_Normal",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Ga_Teeth_Normal.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Material",
+      "use_nodes": true,
+      "blend_method": "HASHED",
+      "images": []
+    },
+    {
+      "name": "Std_Eye_Occlusion_L",
+      "use_nodes": true,
+      "blend_method": "BLEND",
+      "images": [
+        {
+          "name": "Std_Eye_Occlusion_L_Opacity",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Eye_Occlusion_L_Opacity.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Std_Eye_Occlusion_R",
+      "use_nodes": true,
+      "blend_method": "BLEND",
+      "images": [
+        {
+          "name": "Std_Eye_Occlusion_R_Opacity",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Eye_Occlusion_R_Opacity.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Std_Eyelash",
+      "use_nodes": true,
+      "blend_method": "BLEND",
+      "images": [
+        {
+          "name": "Std_Eyelash_Diffuse",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Eyelash_Diffuse.bmp"
+        },
+        {
+          "name": "Std_Eyelash_Normal",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Eyelash_Normal.bmp"
+        },
+        {
+          "name": "Std_Eyelash_Opacity",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Eyelash_Opacity.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Std_Nails",
+      "use_nodes": true,
+      "blend_method": "HASHED",
+      "images": [
+        {
+          "name": "Std_Nails_Diffuse",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Nails_Diffuse.bmp"
+        },
+        {
+          "name": "Std_Nails_Normal",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Nails_Normal.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Std_Skin_Arm",
+      "use_nodes": true,
+      "blend_method": "HASHED",
+      "images": [
+        {
+          "name": "Std_Skin_Arm_Diffuse",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Arm_Diffuse.bmp"
+        },
+        {
+          "name": "Std_Skin_Arm_Normal",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Arm_Normal.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Std_Skin_Body",
+      "use_nodes": true,
+      "blend_method": "HASHED",
+      "images": [
+        {
+          "name": "Std_Skin_Body_Diffuse",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Body_Diffuse.bmp"
+        },
+        {
+          "name": "Std_Skin_Body_Normal",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Body_Normal.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Std_Skin_Head",
+      "use_nodes": true,
+      "blend_method": "HASHED",
+      "images": [
+        {
+          "name": "Std_Skin_Head_Diffuse",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Head_Diffuse.bmp"
+        },
+        {
+          "name": "Std_Skin_Head_Normal",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Head_Normal.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Std_Skin_Leg",
+      "use_nodes": true,
+      "blend_method": "HASHED",
+      "images": [
+        {
+          "name": "Std_Skin_Leg_Diffuse",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Leg_Diffuse.bmp"
+        },
+        {
+          "name": "Std_Skin_Leg_Normal",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Leg_Normal.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Std_Tearline_L",
+      "use_nodes": true,
+      "blend_method": "BLEND",
+      "images": [
+        {
+          "name": "Std_Tearline_L_Diffuse",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Tearline_L_Diffuse.bmp"
+        },
+        {
+          "name": "Std_Tearline_R_Opacity",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Tearline_R_Opacity.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Std_Tearline_R",
+      "use_nodes": true,
+      "blend_method": "BLEND",
+      "images": [
+        {
+          "name": "Std_Tearline_R_Diffuse",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Tearline_R_Diffuse.bmp"
+        },
+        {
+          "name": "Std_Tearline_R_Opacity",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Tearline_R_Opacity.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Std_Tongue",
+      "use_nodes": true,
+      "blend_method": "HASHED",
+      "images": [
+        {
+          "name": "Std_Tongue_Diffuse",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Tongue_Diffuse.bmp"
+        },
+        {
+          "name": "Std_Tongue_Normal",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Tongue_Normal.bmp"
+        }
+      ]
+    },
+    {
+      "name": "Underwear_Bottoms",
+      "use_nodes": true,
+      "blend_method": "HASHED",
+      "images": [
+        {
+          "name": "Underwear_Bottoms_Diffuse",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Underwear_Bottoms_Diffuse.bmp"
+        },
+        {
+          "name": "Underwear_Bottoms_Normal",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Underwear_Bottoms_Normal.bmp"
+        },
+        {
+          "name": "Underwear_Bottoms_Specular",
+          "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Underwear_Bottoms_Specular.bmp"
+        }
+      ]
+    }
+  ],
+  "images": [
+    {
+      "name": "Bra_Diffuse",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Bra_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Bra_Normal",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Bra_Normal.bmp",
+      "packed": true
+    },
+    {
+      "name": "Bra_Opacity",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Bra_Opacity.bmp",
+      "packed": true
+    },
+    {
+      "name": "Bra_Specular",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Bra_Specular.bmp",
+      "packed": true
+    },
+    {
+      "name": "Female_Angled_Base_Transparency_Diffuse",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Female_Angled_Base_Transparency_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Female_Angled_Base_Transparency_Diffuse.001",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Female_Angled_Base_Transparency_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Female_Angled_Base_Transparency_Opacity",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Female_Angled_Base_Transparency_Opacity.bmp",
+      "packed": true
+    },
+    {
+      "name": "Female_Angled_Transparency_Diffuse",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Female_Angled_Transparency_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Female_Angled_Transparency_Opacity",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Female_Angled_Transparency_Opacity.bmp",
+      "packed": true
+    },
+    {
+      "name": "Female_Angled_Transparency_Specular",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Female_Angled_Transparency_Specular.bmp",
+      "packed": true
+    },
+    {
+      "name": "Ga_Eye_Diffuse",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Ga_Eye_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Ga_Eye_Normal",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Ga_Eye_Normal.bmp",
+      "packed": true
+    },
+    {
+      "name": "Ga_Teeth_Diffuse",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Ga_Teeth_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Ga_Teeth_Normal",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Ga_Teeth_Normal.bmp",
+      "packed": true
+    },
+    {
+      "name": "Render Result",
+      "path": "",
+      "packed": false
+    },
+    {
+      "name": "Std_Eye_Occlusion_L_Opacity",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Eye_Occlusion_L_Opacity.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Eye_Occlusion_R_Opacity",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Eye_Occlusion_R_Opacity.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Eyelash_Diffuse",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Eyelash_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Eyelash_Normal",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Eyelash_Normal.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Eyelash_Opacity",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Eyelash_Opacity.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Nails_Diffuse",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Nails_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Nails_Normal",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Nails_Normal.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Skin_Arm_Diffuse",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Arm_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Skin_Arm_Normal",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Arm_Normal.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Skin_Body_Diffuse",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Body_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Skin_Body_Normal",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Body_Normal.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Skin_Head_Diffuse",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Head_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Skin_Head_Normal",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Head_Normal.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Skin_Leg_Diffuse",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Leg_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Skin_Leg_Normal",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Skin_Leg_Normal.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Tearline_L_Diffuse",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Tearline_L_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Tearline_R_Diffuse",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Tearline_R_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Tearline_R_Opacity",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Tearline_R_Opacity.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Tongue_Diffuse",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Tongue_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Std_Tongue_Normal",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Std_Tongue_Normal.bmp",
+      "packed": true
+    },
+    {
+      "name": "Underwear_Bottoms_Diffuse",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Underwear_Bottoms_Diffuse.bmp",
+      "packed": true
+    },
+    {
+      "name": "Underwear_Bottoms_Normal",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Underwear_Bottoms_Normal.bmp",
+      "packed": true
+    },
+    {
+      "name": "Underwear_Bottoms_Specular",
+      "path": "/Users/venkateshannabathina/Desktop/projects/CORTANA/model/test/Blender/../../../../../../../../../AppData/Local/Temp/CharacterCreator4Temp/FbxWorkingDirectory/Underwear_Bottoms_Specular.bmp",
+      "packed": true
+    }
+  ],
+  "actions": [
+    {
+      "name": "Armature|FBXExportClip_0",
+      "fcurves": 30
+    },
+    {
+      "name": "Camera.001|FBXExportClip_0",
+      "fcurves": 2
+    },
+    {
+      "name": "CC3_Base_Plus|FBXExportClip_0",
+      "fcurves": 1019
+    },
+    {
+      "name": "Key.001|FBXExportClip_0",
+      "fcurves": 121
+    },
+    {
+      "name": "Key.002|FBXExportClip_0",
+      "fcurves": 34
+    },
+    {
+      "name": "Key.003|FBXExportClip_0",
+      "fcurves": 34
+    },
+    {
+      "name": "Key.004|FBXExportClip_0",
+      "fcurves": 1
+    },
+    {
+      "name": "Key.005|FBXExportClip_0",
+      "fcurves": 1
+    },
+    {
+      "name": "Key.006|FBXExportClip_0",
+      "fcurves": 159
+    },
+    {
+      "name": "Key|FBXExportClip_0",
+      "fcurves": 19
+    },
+    {
+      "name": "Preview_Camera|FBXExportClip_0",
+      "fcurves": 9
+    }
+  ]
+}

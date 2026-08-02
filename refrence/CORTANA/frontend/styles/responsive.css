@@ -1,0 +1,309 @@
+/*
+ * Responsive sheet behavior, comfort breakpoints, and user preferences.
+ */
+
+@media (max-width: 1023px) {
+    body.is-world-editing::before {
+        display: none;
+    }
+
+    .studio-scrim:not(.hidden) {
+        position: fixed;
+        inset: 0;
+        z-index: var(--ui-layer-scrim);
+        display: block;
+        border: 0;
+        background: var(--ui-scrim);
+        cursor: default;
+    }
+
+    .world-editor {
+        inset: 12px 12px 12px auto;
+        width: min(var(--ui-panel-width), calc(100vw - 24px));
+        max-height: calc(100dvh - 24px);
+        overflow: hidden;
+        border: 1px solid var(--ui-border);
+        border-radius: var(--ui-radius-xl);
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.16);
+    }
+
+    body.is-world-editing #canvas-container {
+        right: 0;
+        width: 100%;
+        opacity: 1;
+    }
+
+    .editor-mode-pill {
+        display: none;
+    }
+}
+
+@media (max-width: 639px) {
+    :root {
+        --ui-panel-width: 100vw;
+    }
+
+    #settings-container {
+        top: max(var(--ui-space-3), env(safe-area-inset-top));
+        right: max(var(--ui-space-3), env(safe-area-inset-right));
+    }
+
+    #render-controls {
+        width: min(360px, calc(100vw - 24px));
+        max-height: calc(100dvh - 76px);
+        gap: var(--ui-space-3);
+        padding: var(--ui-space-3);
+        border-radius: var(--ui-radius-lg);
+    }
+
+    .camera-button-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .camera-button-row + .camera-button-row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .shade-buttons-container {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .shade-button {
+        height: var(--ui-control-height);
+    }
+
+    #chat-container {
+        bottom: max(var(--ui-space-3), env(safe-area-inset-bottom));
+        width: calc(100vw - 24px);
+    }
+
+    #chat-form {
+        min-height: 56px;
+        border-radius: var(--ui-radius-lg);
+    }
+
+    #chat-input {
+        padding: 0 var(--ui-space-2);
+    }
+
+    #send-button {
+        min-width: 72px;
+        padding: 0 var(--ui-space-3);
+    }
+
+    body.is-world-editing::before {
+        display: none;
+    }
+
+    .studio-scrim:not(.hidden),
+    .app-identity {
+        display: none;
+    }
+
+    .world-editor {
+        inset: 0;
+        width: 100vw;
+        max-height: 100dvh;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .editor-header {
+        min-height: calc(68px + env(safe-area-inset-top));
+        padding:
+            calc(var(--ui-space-3) + env(safe-area-inset-top))
+            var(--ui-space-4)
+            var(--ui-space-3);
+    }
+
+    .editor-header h1 {
+        font-size: 20px;
+    }
+
+    .studio-mode-tabs {
+        padding: 0 var(--ui-space-3);
+    }
+
+    .photo-booth-tabs button {
+        padding: 0 5px;
+        font-size: 12px;
+    }
+
+    .photo-booth-pane {
+        padding: var(--ui-space-5) var(--ui-space-4) var(--ui-space-8);
+    }
+
+    .expression-creator-pane {
+        padding: var(--ui-space-4) var(--ui-space-3) var(--ui-space-6);
+    }
+
+    .expression-creator-head {
+        align-items: flex-start;
+    }
+
+    .expression-rig-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    #expression-rig-connectivity {
+        min-height: 24px;
+        display: flex;
+        align-items: center;
+    }
+
+    .expression-rig-inspector {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .expression-rig-inspector output {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+    .expression-creator-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .expression-rig-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .photo-camera-options,
+    .face-expression-presets {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .photo-camera-options button:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .photo-booth-footer {
+        padding-bottom: max(var(--ui-space-4), env(safe-area-inset-bottom));
+    }
+
+    .editor-section,
+    .editor-section:nth-of-type(even) {
+        padding: var(--ui-space-4);
+    }
+
+    .editor-field-row {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .editor-field-row .color-field {
+        grid-column: 1 / -1;
+    }
+
+    .editor-footer {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        padding-bottom: max(var(--ui-space-3), env(safe-area-inset-bottom));
+    }
+}
+
+@media (max-width: 380px) {
+    .icon-button {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+    }
+
+    .photo-booth-tabs button {
+        font-size: 11px;
+    }
+
+    .photo-animation-actions,
+    .photo-capture-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .photo-booth-footer {
+        min-height: 164px;
+    }
+
+    .scene-view-modes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .vector-inputs {
+        gap: var(--ui-space-1);
+    }
+
+    .editor-footer {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .editor-save-status {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-height: 700px) and (min-width: 640px) {
+    #render-controls {
+        max-height: calc(100dvh - 72px);
+    }
+
+    .editor-header {
+        min-height: 64px;
+        padding-block: var(--ui-space-3);
+    }
+
+    .photo-booth-footer {
+        min-height: 96px;
+    }
+
+    .photo-capture-actions button {
+        height: 48px;
+    }
+
+    .editor-footer {
+        min-height: 64px;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .scene-view-modes button,
+    .face-expression-presets button,
+    .face-lipsync-preview {
+        min-height: var(--ui-control-height);
+    }
+
+    .scene-node-row,
+    .editor-object-row {
+        min-height: var(--ui-control-height);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+    }
+}
+
+@media (prefers-contrast: more) {
+    :root {
+        --ui-border: #8a8a8e;
+        --ui-border-subtle: #b7b7bb;
+        --ui-text-secondary: #3a3a3c;
+        --ui-text-tertiary: #515154;
+    }
+}
+
+@media (forced-colors: active) {
+    .expression-rig-shell,
+    .rig-handle circle,
+    .rig-handle > rect,
+    .photo-check > span,
+    .editor-toggle span {
+        forced-color-adjust: auto;
+    }
+}

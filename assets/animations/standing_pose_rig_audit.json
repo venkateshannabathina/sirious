@@ -1,0 +1,314 @@
+{
+  "source": {
+    "path": "assets/Female Standing Pose.fbx",
+    "bytes": 267744,
+    "armatures": [
+      {
+        "name": "Armature",
+        "bone_count": 65,
+        "bones": [
+          "mixamorig:Hips",
+          "mixamorig:Spine",
+          "mixamorig:Spine1",
+          "mixamorig:Spine2",
+          "mixamorig:Neck",
+          "mixamorig:Head",
+          "mixamorig:HeadTop_End",
+          "mixamorig:LeftShoulder",
+          "mixamorig:LeftArm",
+          "mixamorig:LeftForeArm",
+          "mixamorig:LeftHand",
+          "mixamorig:LeftHandThumb1",
+          "mixamorig:LeftHandThumb2",
+          "mixamorig:LeftHandThumb3",
+          "mixamorig:LeftHandThumb4",
+          "mixamorig:LeftHandIndex1",
+          "mixamorig:LeftHandIndex2",
+          "mixamorig:LeftHandIndex3",
+          "mixamorig:LeftHandIndex4",
+          "mixamorig:LeftHandMiddle1",
+          "mixamorig:LeftHandMiddle2",
+          "mixamorig:LeftHandMiddle3",
+          "mixamorig:LeftHandMiddle4",
+          "mixamorig:LeftHandRing1",
+          "mixamorig:LeftHandRing2",
+          "mixamorig:LeftHandRing3",
+          "mixamorig:LeftHandRing4",
+          "mixamorig:LeftHandPinky1",
+          "mixamorig:LeftHandPinky2",
+          "mixamorig:LeftHandPinky3",
+          "mixamorig:LeftHandPinky4",
+          "mixamorig:RightShoulder",
+          "mixamorig:RightArm",
+          "mixamorig:RightForeArm",
+          "mixamorig:RightHand",
+          "mixamorig:RightHandThumb1",
+          "mixamorig:RightHandThumb2",
+          "mixamorig:RightHandThumb3",
+          "mixamorig:RightHandThumb4",
+          "mixamorig:RightHandIndex1",
+          "mixamorig:RightHandIndex2",
+          "mixamorig:RightHandIndex3",
+          "mixamorig:RightHandIndex4",
+          "mixamorig:RightHandMiddle1",
+          "mixamorig:RightHandMiddle2",
+          "mixamorig:RightHandMiddle3",
+          "mixamorig:RightHandMiddle4",
+          "mixamorig:RightHandRing1",
+          "mixamorig:RightHandRing2",
+          "mixamorig:RightHandRing3",
+          "mixamorig:RightHandRing4",
+          "mixamorig:RightHandPinky1",
+          "mixamorig:RightHandPinky2",
+          "mixamorig:RightHandPinky3",
+          "mixamorig:RightHandPinky4",
+          "mixamorig:LeftUpLeg",
+          "mixamorig:LeftLeg",
+          "mixamorig:LeftFoot",
+          "mixamorig:LeftToeBase",
+          "mixamorig:LeftToe_End",
+          "mixamorig:RightUpLeg",
+          "mixamorig:RightLeg",
+          "mixamorig:RightFoot",
+          "mixamorig:RightToeBase",
+          "mixamorig:RightToe_End"
+        ]
+      }
+    ],
+    "meshes": [],
+    "actions": [
+      {
+        "name": "Armature|mixamo.com|Layer0",
+        "frame_range": [
+          1.0,
+          2.0
+        ],
+        "fcurves": 520
+      }
+    ]
+  },
+  "target": {
+    "path": "assets/Blender/blender.Fbx",
+    "bytes": 249554304,
+    "armatures": [
+      {
+        "name": "CC3_Base_Plus",
+        "bone_count": 101,
+        "bones": [
+          "CC_Base_BoneRoot",
+          "CC_Base_Hip",
+          "CC_Base_Pelvis",
+          "CC_Base_L_Thigh",
+          "CC_Base_L_Calf",
+          "CC_Base_L_Foot",
+          "CC_Base_L_ToeBaseShareBone",
+          "CC_Base_L_ToeBase",
+          "CC_Base_L_PinkyToe1",
+          "CC_Base_L_RingToe1",
+          "CC_Base_L_MidToe1",
+          "CC_Base_L_IndexToe1",
+          "CC_Base_L_BigToe1",
+          "CC_Base_L_CalfTwist01",
+          "CC_Base_L_CalfTwist02",
+          "CC_Base_L_KneeShareBone",
+          "CC_Base_L_ThighTwist01",
+          "CC_Base_L_ThighTwist02",
+          "CC_Base_R_Thigh",
+          "CC_Base_R_Calf",
+          "CC_Base_R_KneeShareBone",
+          "CC_Base_R_Foot",
+          "CC_Base_R_ToeBase",
+          "CC_Base_R_BigToe1",
+          "CC_Base_R_PinkyToe1",
+          "CC_Base_R_RingToe1",
+          "CC_Base_R_IndexToe1",
+          "CC_Base_R_MidToe1",
+          "CC_Base_R_ToeBaseShareBone",
+          "CC_Base_R_CalfTwist01",
+          "CC_Base_R_CalfTwist02",
+          "CC_Base_R_ThighTwist01",
+          "CC_Base_R_ThighTwist02",
+          "CC_Base_Waist",
+          "CC_Base_Spine01",
+          "CC_Base_Spine02",
+          "CC_Base_NeckTwist01",
+          "CC_Base_NeckTwist02",
+          "CC_Base_Head",
+          "CC_Base_FacialBone",
+          "CC_Base_JawRoot",
+          "CC_Base_Tongue01",
+          "CC_Base_Tongue02",
+          "CC_Base_Tongue03",
+          "CC_Base_Teeth02",
+          "CC_Base_R_Eye",
+          "CC_Base_L_Eye",
+          "CC_Base_UpperJaw",
+          "CC_Base_Teeth01",
+          "CC_Base_L_Clavicle",
+          "CC_Base_L_Upperarm",
+          "CC_Base_L_Forearm",
+          "CC_Base_L_ForearmTwist01",
+          "CC_Base_L_ForearmTwist02",
+          "CC_Base_L_ElbowShareBone",
+          "CC_Base_L_Hand",
+          "CC_Base_L_Pinky1",
+          "CC_Base_L_Pinky2",
+          "CC_Base_L_Pinky3",
+          "CC_Base_L_Ring1",
+          "CC_Base_L_Ring2",
+          "CC_Base_L_Ring3",
+          "CC_Base_L_Mid1",
+          "CC_Base_L_Mid2",
+          "CC_Base_L_Mid3",
+          "CC_Base_L_Index1",
+          "CC_Base_L_Index2",
+          "CC_Base_L_Index3",
+          "CC_Base_L_Thumb1",
+          "CC_Base_L_Thumb2",
+          "CC_Base_L_Thumb3",
+          "CC_Base_L_UpperarmTwist01",
+          "CC_Base_L_UpperarmTwist02",
+          "CC_Base_L_RibsTwist",
+          "CC_Base_L_Breast",
+          "CC_Base_R_RibsTwist",
+          "CC_Base_R_Breast",
+          "CC_Base_R_Clavicle",
+          "CC_Base_R_Upperarm",
+          "CC_Base_R_Forearm",
+          "CC_Base_R_ElbowShareBone",
+          "CC_Base_R_ForearmTwist01",
+          "CC_Base_R_ForearmTwist02",
+          "CC_Base_R_Hand",
+          "CC_Base_R_Ring1",
+          "CC_Base_R_Ring2",
+          "CC_Base_R_Ring3",
+          "CC_Base_R_Mid1",
+          "CC_Base_R_Mid2",
+          "CC_Base_R_Mid3",
+          "CC_Base_R_Thumb1",
+          "CC_Base_R_Thumb2",
+          "CC_Base_R_Thumb3",
+          "CC_Base_R_Index1",
+          "CC_Base_R_Index2",
+          "CC_Base_R_Index3",
+          "CC_Base_R_Pinky1",
+          "CC_Base_R_Pinky2",
+          "CC_Base_R_Pinky3",
+          "CC_Base_R_UpperarmTwist01",
+          "CC_Base_R_UpperarmTwist02"
+        ]
+      },
+      {
+        "name": "Armature",
+        "bone_count": 3,
+        "bones": [
+          "Shadow_Catcher",
+          "CC_Base_Pivot",
+          "Plane_001"
+        ]
+      }
+    ],
+    "meshes": [
+      "Female_Angled",
+      "Bra",
+      "CC_Base_EyeOcclusion",
+      "CC_Base_Tongue",
+      "CC_Game_Eye",
+      "Underwear_Bottoms",
+      "CC_Base_Body",
+      "CC_Base_TearLine",
+      "CC_Game_Teeth"
+    ],
+    "actions": [
+      {
+        "name": "Armature|FBXExportClip_0",
+        "frame_range": [
+          1.0,
+          2.0
+        ],
+        "fcurves": 30
+      },
+      {
+        "name": "Camera.001|FBXExportClip_0",
+        "frame_range": [
+          1.0,
+          2.0
+        ],
+        "fcurves": 2
+      },
+      {
+        "name": "CC3_Base_Plus|FBXExportClip_0",
+        "frame_range": [
+          1.0,
+          2.0
+        ],
+        "fcurves": 1019
+      },
+      {
+        "name": "Key.001|FBXExportClip_0",
+        "frame_range": [
+          1.0,
+          1.0
+        ],
+        "fcurves": 121
+      },
+      {
+        "name": "Key.002|FBXExportClip_0",
+        "frame_range": [
+          1.0,
+          1.0
+        ],
+        "fcurves": 34
+      },
+      {
+        "name": "Key.003|FBXExportClip_0",
+        "frame_range": [
+          1.0,
+          1.0
+        ],
+        "fcurves": 34
+      },
+      {
+        "name": "Key.004|FBXExportClip_0",
+        "frame_range": [
+          1.0,
+          1.0
+        ],
+        "fcurves": 1
+      },
+      {
+        "name": "Key.005|FBXExportClip_0",
+        "frame_range": [
+          1.0,
+          1.0
+        ],
+        "fcurves": 1
+      },
+      {
+        "name": "Key.006|FBXExportClip_0",
+        "frame_range": [
+          1.0,
+          1.0
+        ],
+        "fcurves": 159
+      },
+      {
+        "name": "Key|FBXExportClip_0",
+        "frame_range": [
+          1.0,
+          1.0
+        ],
+        "fcurves": 19
+      },
+      {
+        "name": "Preview_Camera|FBXExportClip_0",
+        "frame_range": [
+          1.0,
+          2.0
+        ],
+        "fcurves": 9
+      }
+    ]
+  },
+  "blender_version": "4.3.0"
+}

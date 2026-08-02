@@ -1,0 +1,60 @@
+# Secrets and local environment overrides
+.env
+.env.*
+!.env.example
+
+# Python environments and caches
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Operating-system and editor metadata
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Runtime-created data
+temp_audio/*
+!temp_audio/.gitkeep
+var/
+*.pid
+*.log
+
+# Generated QA and diagnostic output
+artifacts/
+model/cc3/diagnostics/
+model/cc3/cc3_audit.json
+playwright-report/
+test-results/
+coverage/
+
+# Large local source assets; deployable runtime assets remain under model/cc3
+model/test/
+assets-source/
+
+# Local one-off outputs
+test.mp3
+pmx_info.txt
+*.tmp
+*.bak
+
+# JavaScript dependency/build output if a build system is introduced
+node_modules/
+dist/
+.vite/
+.parcel-cache/
+

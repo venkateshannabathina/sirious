@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bone Diagnostic</title>
+<script src="/libs/three.min.js"></script>
+<script src="/libs/MMDLoader.js"></script>
+<script src="/libs/MMDParser.js"></script>
+<script src="/libs/mmd-morph.js"></script>
+<script src="/libs/FBXLoader.js"></script>
+<script src="/libs/inflate.min.js"></script>
+<style>
+body { font-family: monospace; white-space: pre-wrap; padding: 20px; background: #1a1a2e; color: #0f0; }
+h2 { color: #fff; }
+.mismatch { color: #f00; }
+.match { color: #0f0; }
+</style>
+</head>
+<body>
+<h2>PMX ↔ FBX Bone Diagnostic</h2>
+<div id="output">Loading...</div>
+<script>
+const out = document.getElementById('output');
+function log(msg) { out.textContent += msg + '\n'; console.log(msg); }
+
+const BONE_MAP = {
+    'mixamorigHips':'センター','mixamorigSpine':'上半身',
+    'mixamorigSpine1':'上半身3','mixamorigSpine2':'上半身2',
+    'mixamorigNeck':'首','mixamorigHead':'頭',
+    'mixamorigLeftShoulder':'左肩','mixamorigRightShoulder':'右肩',
+    'mixamorigLeftArm':'左腕','mixamorigRightArm':'右腕',
+    'mixamorigLeftForeArm':'左ひじ','mixamorigRightForeArm':'右ひじ',
+    'mixamorigLeftHand':'左手首','mixamorigRightHand':'右手首',
+    'mixamorigLeftUpLeg':'左足','mixamorigRightUpLeg':'右足',
+    'mixamorigLeftLeg':'左ひざ','mixamorigRightLeg':'右ひざ',
+    'mixamorigLeftFoot':'左足首','mixamorigRightFoot':'右足首',
+    'mixamorigLeftToeBase':'左つま先','mixamorigRightToeBase':'右つま先',
+};
+
+const mmdLoader = new THREE.MMDLoader();
+const fbxLoader = new THREE.FBXLoader();
+
+let pmxBones = {};
+let fbxBones = {};
+
+// Load PMX
+mmdLoader.load('/model/test/Chisa/Chisa.pmx', (mmd) => {
+    mmd.traverse(c => { if (c.isBone) pmxBones[c.name] = c; });
+    mmd.updateMatrixWorld(true);
+    log('=== PMX BONES ===');
+    for (const [fbxName, pmxName] of Object.entries(BONE_MAP)) {
+        const b = pmxBones[pmxName];
+        if (b) {
+            const q = b.quaternion;
+            const wq = new THREE.Quaternion();
+            b.getWorldQuaternion(wq);
+            const e = new THREE.Euler().setFromQuaternion(q);
+            const we = new THREE.Euler().setFromQuaternion(wq);
+            log(`  ${pmxName} (→${fbxName})`);
+            log(`    local quat: (${q.x.toFixed(4)}, ${q.y.toFixed(4)}, ${q.z.toFixed(4)}, ${q.w.toFixed(4)})`);
+            log(`    local euler: (${(e.x*180/Math.PI).toFixed(1)}°, ${(e.y*180/Math.PI).toFixed(1)}°, ${(e.z*180/Math.PI).toFixed(1)}°)`);
+            log(`    world euler: (${(we.x*180/Math.PI).toFixed(1)}°, ${(we.y*180/Math.PI).toFixed(1)}°, ${(we.z*180/Math.PI).toFixed(1)}°)`);
+            log(`    parent: ${b.parent ? b.parent.name : 'NONE'}`);
+        } else {
+            log(`  ${pmxName} → NOT FOUND in PMX!`);
+        }
+    }
+
+    // Load FBX
+    fbxLoader.load('/model/test/Idle.fbx', (fbx) => {
+        fbx.traverse(c => { if (c.isBone) fbxBones[c.name] = c; });
+        fbx.updateMatrixWorld(true);
+
+        log('\n=== FBX BONES (Idle.fbx) ===');
+        for (const [fbxName, pmxName] of Object.entries(BONE_MAP)) {
+            const b = fbxBones[fbxName];
+            if (b) {
+                const q = b.quaternion;
+                const wq = new THREE.Quaternion();
+                b.getWorldQuaternion(wq);
+                const e = new THREE.Euler().setFromQuaternion(q);
+                const we = new THREE.Euler().setFromQuaternion(wq);
+                log(`  ${fbxName} (→${pmxName})`);
+                log(`    local quat: (${q.x.toFixed(4)}, ${q.y.toFixed(4)}, ${q.z.toFixed(4)}, ${q.w.toFixed(4)})`);
+                log(`    local euler: (${(e.x*180/Math.PI).toFixed(1)}°, ${(e.y*180/Math.PI).toFixed(1)}°, ${(e.z*180/Math.PI).toFixed(1)}°)`);
+                log(`    world euler: (${(we.x*180/Math.PI).toFixed(1)}°, ${(we.y*180/Math.PI).toFixed(1)}°, ${(we.z*180/Math.PI).toFixed(1)}°)`);
+                log(`    parent: ${b.parent ? b.parent.name : 'NONE'}`);
+            } else {
+                log(`  ${fbxName} → NOT FOUND in FBX!`);
+            }
+        }
+
+        // Now play idle animation and sample frame 0 vs frame 100
+        log('\n=== FBX ANIMATION TRACKS ===');
+        const clip = fbx.animations[0];
+        log(`Clip: "${clip.name}", duration=${clip.duration.toFixed(2)}s, tracks=${clip.tracks.length}`);
+        clip.tracks.slice(0, 10).forEach(t => {
+            log(`  ${t.name} (${t.times.length} keys, type=${t.ValueTypeName})`);
+            if (t.ValueTypeName === 'quaternion' && t.values.length >= 8) {
+                log(`    frame0: (${t.values[0].toFixed(4)}, ${t.values[1].toFixed(4)}, ${t.values[2].toFixed(4)}, ${t.values[3].toFixed(4)})`);
+                const mid = Math.floor(t.values.length / 2);
+                const midN = mid - (mid % 4);
+                log(`    midPt: (${t.values[midN].toFixed(4)}, ${t.values[midN+1].toFixed(4)}, ${t.values[midN+2].toFixed(4)}, ${t.values[midN+3].toFixed(4)})`);
+            }
+        });
+
+        // Play animation and sample
+        const mixer = new THREE.AnimationMixer(fbx);
+        const action = mixer.clipAction(clip);
+        action.play();
+        mixer.update(0);
+        fbx.updateMatrixWorld(true);
+
+        log('\n=== FBX BONES AFTER PLAYING frame 0 ===');
+        for (const [fbxName, pmxName] of Object.entries(BONE_MAP)) {
+            const b = fbxBones[fbxName];
+            if (b) {
+                const q = b.quaternion;
+                const e = new THREE.Euler().setFromQuaternion(q);
+                log(`  ${fbxName}: euler=(${(e.x*180/Math.PI).toFixed(1)}°, ${(e.y*180/Math.PI).toFixed(1)}°, ${(e.z*180/Math.PI).toFixed(1)}°)  quat=(${q.x.toFixed(4)}, ${q.y.toFixed(4)}, ${q.z.toFixed(4)}, ${q.w.toFixed(4)})`);
+            }
+        }
+
+        // Advance to 2 seconds
+        mixer.update(2.0);
+        fbx.updateMatrixWorld(true);
+
+        log('\n=== FBX BONES AFTER PLAYING frame at 2.0s ===');
+        for (const [fbxName, pmxName] of Object.entries(BONE_MAP)) {
+            const b = fbxBones[fbxName];
+            if (b) {
+                const q = b.quaternion;
+                const e = new THREE.Euler().setFromQuaternion(q);
+                log(`  ${fbxName}: euler=(${(e.x*180/Math.PI).toFixed(1)}°, ${(e.y*180/Math.PI).toFixed(1)}°, ${(e.z*180/Math.PI).toFixed(1)}°)  quat=(${q.x.toFixed(4)}, ${q.y.toFixed(4)}, ${q.z.toFixed(4)}, ${q.w.toFixed(4)})`);
+            }
+        }
+
+        // Check: is animation data the same as the FBX track data?
+        log('\n=== TRACK NAME vs BONE NAME MATCHING ===');
+        const trackBoneNames = new Set();
+        for (const t of clip.tracks) {
+            const dotIdx = t.name.lastIndexOf('.');
+            const boneName = t.name.substring(0, dotIdx);
+            trackBoneNames.add(boneName);
+        }
+        log('Track bone names (first 15): ' + [...trackBoneNames].slice(0, 15).join(', '));
+        log('FBX bone names (first 15): ' + Object.keys(fbxBones).slice(0, 15).join(', '));
+
+        // Check if tracks target the FBX bones
+        let matchCount = 0;
+        for (const tn of trackBoneNames) {
+            if (fbxBones[tn]) matchCount++;
+        }
+        log(`Track-to-bone matches: ${matchCount} / ${trackBoneNames.size}`);
+
+        log('\n=== DONE ===');
+    });
+});
+</script>
+</body>
+</html>

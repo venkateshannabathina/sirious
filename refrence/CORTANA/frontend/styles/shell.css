@@ -1,0 +1,494 @@
+/*
+ * Viewport shell, utility controls, settings popover, and chat composer.
+ */
+
+.app-identity {
+    position: fixed;
+    top: max(var(--ui-space-5), env(safe-area-inset-top));
+    left: max(var(--ui-space-5), env(safe-area-inset-left));
+    z-index: var(--ui-layer-hud);
+    min-height: var(--ui-control-height);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ui-space-3);
+    padding: 6px var(--ui-space-3) 6px 6px;
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-md);
+    background: var(--ui-surface-glass-strong);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    pointer-events: none;
+    transition: opacity var(--ui-duration-state) ease;
+}
+
+.app-identity-mark {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--ui-radius-sm);
+    color: var(--ui-text-inverse);
+    background: var(--ui-surface-inverse);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.app-identity > span:last-child {
+    display: grid;
+    gap: 1px;
+}
+
+.app-identity strong {
+    color: var(--ui-text);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.app-identity small {
+    color: var(--ui-text-secondary);
+    font-size: 10px;
+    font-weight: 500;
+}
+
+body.is-world-editing .app-identity {
+    opacity: 0;
+}
+
+.control-cluster {
+    display: flex;
+    gap: var(--ui-space-2);
+}
+
+#canvas-container {
+    z-index: var(--ui-layer-canvas);
+    background: var(--ui-canvas);
+}
+
+#settings-container {
+    top: max(var(--ui-space-5), env(safe-area-inset-top));
+    right: max(var(--ui-space-5), env(safe-area-inset-right));
+    z-index: var(--ui-layer-popover);
+    gap: var(--ui-space-2);
+}
+
+#settings-container > div:first-child {
+    gap: var(--ui-space-2) !important;
+}
+
+.icon-button {
+    width: var(--ui-icon-target);
+    height: var(--ui-icon-target);
+    flex: 0 0 var(--ui-icon-target);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-pill);
+    color: var(--ui-text);
+    background: var(--ui-surface-glass-strong);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(20px) saturate(120%);
+    -webkit-backdrop-filter: blur(20px) saturate(120%);
+    transition:
+        color var(--ui-duration-fast) ease,
+        background var(--ui-duration-fast) ease,
+        border-color var(--ui-duration-fast) ease,
+        transform var(--ui-duration-fast) ease;
+}
+
+.icon-button:hover {
+    border-color: var(--ui-border-strong);
+    color: var(--ui-text-inverse);
+    background: var(--ui-surface-inverse);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
+}
+
+.icon-button:active {
+    transform: scale(0.96);
+}
+
+#settings-button.is-active {
+    border-color: var(--ui-surface-inverse);
+    color: var(--ui-text-inverse);
+    background: var(--ui-surface-inverse);
+}
+
+#settings-button:hover {
+    transform: none;
+}
+
+#settings-button:hover:active {
+    transform: scale(0.96);
+}
+
+#render-controls {
+    width: min(320px, calc(100vw - 32px));
+    max-height: min(760px, calc(100dvh - 88px));
+    gap: var(--ui-space-4);
+    padding: var(--ui-space-4);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-lg);
+    color: var(--ui-text);
+    background: var(--ui-surface-glass-strong);
+    box-shadow: var(--ui-shadow-raised);
+    backdrop-filter: blur(24px) saturate(120%);
+    -webkit-backdrop-filter: blur(24px) saturate(120%);
+    transform: translateY(0) scale(1);
+    transform-origin: top right;
+    transition:
+        opacity var(--ui-duration-state) ease,
+        transform var(--ui-duration-state) var(--ui-ease-standard),
+        visibility var(--ui-duration-state) ease;
+}
+
+#render-controls.hidden {
+    transform: translateY(-8px) scale(0.98);
+}
+
+.settings-header {
+    position: sticky;
+    top: -16px;
+    z-index: 2;
+    display: flex;
+    padding: var(--ui-space-2) 0 var(--ui-space-3);
+    border-bottom: 1px solid var(--ui-border-subtle);
+    background: var(--ui-surface-glass-strong);
+}
+
+.settings-header > span {
+    display: grid;
+    gap: 2px;
+}
+
+.settings-header strong {
+    color: var(--ui-text);
+    font-size: 17px;
+    font-weight: 650;
+}
+
+.settings-header small,
+.sensitivity-scale {
+    color: var(--ui-text-secondary);
+    font-size: 11px;
+}
+
+.settings-toggle-row {
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    gap: var(--ui-space-2);
+    cursor: pointer;
+}
+
+.settings-toggle-row + .settings-toggle-row {
+    margin-top: var(--ui-space-1);
+}
+
+.settings-range {
+    display: grid;
+    gap: var(--ui-space-2);
+}
+
+.sensitivity-scale {
+    display: flex;
+    justify-content: space-between;
+}
+
+.runtime-alert {
+    position: fixed;
+    top: max(var(--ui-space-4), env(safe-area-inset-top));
+    left: 50%;
+    z-index: var(--ui-layer-toast);
+    width: min(440px, calc(100vw - 32px));
+    display: grid;
+    gap: var(--ui-space-1);
+    padding: var(--ui-space-3) var(--ui-space-4);
+    border-radius: var(--ui-radius-md);
+    color: var(--ui-text-inverse);
+    background: var(--ui-surface-inverse);
+    box-shadow: var(--ui-shadow-raised);
+    transform: translateX(-50%);
+}
+
+.runtime-alert strong {
+    font-size: 13px;
+}
+
+.runtime-alert span {
+    color: #d2d2d7;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.settings-section {
+    gap: var(--ui-space-2);
+}
+
+.settings-label {
+    color: var(--ui-text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.settings-input:not([type="range"]) {
+    min-height: var(--ui-control-height);
+    padding: 0 var(--ui-space-3);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-sm);
+    outline: 0;
+    color: var(--ui-text);
+    background: var(--ui-surface);
+    font-size: 14px;
+}
+
+.settings-input:not([type="range"]):hover {
+    border-color: var(--ui-border-strong);
+}
+
+.settings-input:not([type="range"]):focus,
+.settings-input:not([type="range"]):focus-visible {
+    border-color: var(--ui-text-strong);
+    outline: 2px solid var(--ui-text-strong);
+    outline-offset: 1px;
+}
+
+.settings-divider {
+    border-top-color: var(--ui-border-subtle);
+    margin: 0;
+}
+
+#cam-lock-toggle,
+#head-tracking-toggle {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    accent-color: var(--ui-surface-inverse);
+}
+
+#head-sensitivity-container {
+    margin-top: var(--ui-space-2) !important;
+}
+
+#head-sensitivity-slider,
+.camera-range input,
+.expression-rig-strength input,
+.range-field input,
+.photo-control-group input[type="range"],
+.face-editor-row input[type="range"] {
+    accent-color: var(--ui-surface-inverse);
+}
+
+.camera-section {
+    gap: var(--ui-space-3);
+}
+
+.camera-button-row,
+.camera-action-row {
+    gap: var(--ui-space-2);
+}
+
+.camera-chip,
+.camera-action-button {
+    min-height: var(--ui-control-height);
+    padding: 0 var(--ui-space-2);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-sm);
+    color: var(--ui-text);
+    background: var(--ui-surface);
+    font-size: 12px;
+    font-weight: 600;
+    transition:
+        color var(--ui-duration-fast) ease,
+        background var(--ui-duration-fast) ease,
+        border-color var(--ui-duration-fast) ease,
+        transform var(--ui-duration-fast) ease;
+}
+
+.camera-chip:hover,
+.camera-action-button:hover {
+    border-color: var(--ui-border-strong);
+    color: var(--ui-text-strong);
+    background: var(--ui-surface-muted);
+}
+
+.camera-chip:active,
+.camera-action-button:active {
+    transform: scale(0.98);
+}
+
+.camera-chip.is-active {
+    border-color: var(--ui-surface-inverse);
+    color: var(--ui-text-inverse);
+    background: var(--ui-surface-inverse);
+}
+
+.camera-range {
+    gap: var(--ui-space-2);
+    color: var(--ui-text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.camera-range input {
+    min-height: 24px;
+}
+
+.camera-action-button {
+    background: var(--ui-surface-muted);
+}
+
+.settings-action {
+    min-height: 68px;
+    grid-template-columns: 40px minmax(0, 1fr) 18px;
+    gap: var(--ui-space-3);
+    padding: var(--ui-space-2);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-md);
+    color: var(--ui-text);
+    background: var(--ui-surface);
+    transition:
+        background var(--ui-duration-fast) ease,
+        border-color var(--ui-duration-fast) ease,
+        transform var(--ui-duration-fast) ease;
+}
+
+.settings-action:hover {
+    border-color: var(--ui-border-strong);
+    background: var(--ui-surface-muted);
+}
+
+.settings-action:active {
+    transform: scale(0.99);
+}
+
+.settings-action-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--ui-radius-sm);
+    color: var(--ui-text-inverse);
+    background: var(--ui-surface-inverse);
+}
+
+.settings-action strong {
+    color: var(--ui-text);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.settings-action small {
+    color: var(--ui-text-secondary);
+    font-size: 11px;
+}
+
+.settings-action-arrow {
+    color: var(--ui-text-tertiary);
+}
+
+.shade-buttons-container {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--ui-space-2);
+}
+
+.shade-button {
+    width: 100%;
+    height: var(--ui-control-height);
+    min-width: 0;
+    filter: grayscale(1);
+    flex: none;
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-sm);
+    box-shadow: none;
+}
+
+.shade-button:hover {
+    border-color: var(--ui-border-strong);
+    transform: translateY(-1px);
+}
+
+.shade-button.is-active {
+    border-color: var(--ui-text-strong);
+    box-shadow:
+        inset 0 0 0 2px var(--ui-surface),
+        0 0 0 2px var(--ui-text-strong);
+}
+
+.shade-button::after {
+    z-index: 2;
+    border-radius: var(--ui-radius-sm);
+    color: var(--ui-text-inverse);
+    background: var(--ui-surface-inverse);
+}
+
+#chat-container {
+    bottom: max(28px, env(safe-area-inset-bottom));
+    z-index: var(--ui-layer-hud);
+    width: min(680px, calc(100vw - 40px));
+    max-width: none;
+    transition:
+        opacity var(--ui-duration-state) ease,
+        transform var(--ui-duration-panel) var(--ui-ease-standard);
+}
+
+#chat-form {
+    min-height: 60px;
+    gap: var(--ui-space-2);
+    padding: var(--ui-space-2);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-xl);
+    background: var(--ui-surface-glass-strong);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(24px) saturate(120%);
+    -webkit-backdrop-filter: blur(24px) saturate(120%);
+    transition:
+        border-color var(--ui-duration-fast) ease,
+        box-shadow var(--ui-duration-fast) ease;
+}
+
+#chat-form:focus-within {
+    border-color: var(--ui-text-strong);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
+}
+
+#chat-input {
+    min-width: 0;
+    min-height: var(--ui-control-height);
+    padding: 0 var(--ui-space-3);
+    color: var(--ui-text);
+    font-size: 16px;
+}
+
+#chat-input::placeholder {
+    color: var(--ui-text-tertiary);
+}
+
+#send-button {
+    min-width: 88px;
+    min-height: var(--ui-control-height);
+    padding: 0 var(--ui-space-5);
+    border-radius: var(--ui-radius-md);
+    color: var(--ui-text-inverse);
+    background: var(--ui-surface-inverse);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#send-button:hover {
+    background: #2c2c2e;
+}
+
+#send-button:disabled {
+    color: var(--ui-text-tertiary);
+    background: var(--ui-surface-strong);
+}
+
+/* Keep the existing fatal error surface readable without introducing color. */
+body > div[style*="999999"] {
+    border-bottom: 1px solid var(--ui-border-strong) !important;
+    color: var(--ui-text-inverse) !important;
+    background: var(--ui-surface-inverse) !important;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+}
