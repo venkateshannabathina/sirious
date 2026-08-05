@@ -32,7 +32,10 @@ def test_living_idle_expression_engine_is_exposed():
     html = home_response.text
     assert 'id="expression-idle-toggle"' in html
     assert 'id="expression-idle-status"' in html
-    assert "sirious-idle-mouth-v12" in html
+    assert "sirious-chat-v13" in html
+    assert 'id="chat-form"' in html
+    assert 'id="chat-input"' in html
+    assert 'id="chat-send"' in html
 
     script = client.get("/app.js").text
     assert "function updateLivingIdle" in script
@@ -68,3 +71,6 @@ def test_living_idle_expression_engine_is_exposed():
     assert "function getComposedARKitValue" in script
     assert "state.arkit.panelOpen || !state.expression.enabled" in script
     assert "document.body.dataset.expressionEngine" in script
+    assert "http://127.0.0.1:8010" in script
+    assert "function initializeChat" in script
+    assert "function sendChatMessage" in script

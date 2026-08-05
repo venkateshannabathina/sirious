@@ -4,6 +4,7 @@
   const DEFAULT_MODEL = '/assets/models/cc3_master.glb';
   const DEFAULT_STANDING_POSE = '/assets/animations/female_standing_baked.glb';
   const ENVIRONMENT = '/assets/environment/studio_1k.hdr';
+  const CHAT_API_BASE = 'http://127.0.0.1:8010';
   const MAIN_INTERFACE_CAMERA = Object.freeze({
     position: [-0.0723844704365821, 1.555924939681181, 0.5614867515643476],
     target: [-0.07032106307009192, 1.5838371864144523, -0.01638891297256201],
@@ -115,6 +116,13 @@
     cameraLocked: true,
     filterMode: 0,
     post: null,
+    chat: {
+      ready: false,
+      sending: false,
+      provider: 'demo',
+      model: null,
+      messages: [],
+    },
     arkit: {
       channels: new Map(),
       values: Object.create(null),
@@ -198,6 +206,11 @@
     arkitTestAll: document.getElementById('arkit-test-all'),
     expressionToggle: document.getElementById('expression-idle-toggle'),
     expressionStatus: document.getElementById('expression-idle-status'),
+    chatForm: document.getElementById('chat-form'),
+    chatInput: document.getElementById('chat-input'),
+    chatSend: document.getElementById('chat-send'),
+    chatMessages: document.getElementById('chat-messages'),
+    chatStatus: document.getElementById('chat-status'),
     clothing: {
       bra: {
         visibility: document.getElementById('bra-visibility'),
@@ -2045,6 +2058,86 @@
     applyQuality(state.quality);
   }
 
+  function appendChatMessage(role, content, error = false) {
+    const message = document.createElement('div');
+    message.className = `chat-message ${role}${error ? ' error' : ''}`;
+    message.textContent = content;
+    ui.chatMessages.appendChild(message);
+    ui.chatMessages.scrollTop = ui.chatMessages.scrollHeight;
+  }
+
+  async function initializeChat() {
+    ui.chatSend.disabled = true;
+    ui.chatStatus.textContent = 'Connecting…';
+    try {
+      const response = await fetch(`${CHAT_API_BASE}/api/config`, { cache: 'no-store' });
+      if (!response.ok) throw new Error('Agent backend is unavailable.');
+      const config = await response.json();
+      const priority = ['groq', 'openai', 'anthropic', 'gemini', 'grok', 'demo'];
+      const provider = priority.find((name) => config.providers?.[name]) || 'demo';
+      state.chat.provider = provider;
+      state.chat.model = config.models?.[provider] || null;
+      state.chat.ready = true;
+      ui.chatSend.disabled = false;
+      ui.chatStatus.textContent = `${provider === 'demo' ? 'Demo' : provider.toUpperCase()} ready`;
+      document.body.dataset.chatBackend = JSON.stringify({
+        ready: true,
+        provider,
+        model: state.chat.model,
+        endpoint: `${CHAT_API_BASE}/api/chat`,
+      });
+    } catch (error) {
+      state.chat.ready = false;
+      ui.chatStatus.textContent = 'Agent backend offline';
+      document.body.dataset.chatBackend = JSON.stringify({ ready: false, error: error.message });
+    }
+  }
+
+  async function sendChatMessage(content) {
+    if (!state.chat.ready || state.chat.sending) return;
+    const text = String(content || '').trim();
+    if (!text) return;
+    state.chat.messages = state.chat.messages.slice(-38);
+    state.chat.messages.push({ role: 'user', content: text });
+    appendChatMessage('user', text);
+    ui.chatInput.value = '';
+    state.chat.sending = true;
+    ui.chatSend.disabled = true;
+    ui.chatSend.textContent = '…';
+    ui.chatStatus.textContent = 'Thinking…';
+
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 60000);
+    try {
+      const response = await fetch(`${CHAT_API_BASE}/api/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
+        body: JSON.stringify({
+          provider: state.chat.provider,
+          model: state.chat.model,
+          messages: state.chat.messages.slice(-40),
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.detail || 'Chat request failed.');
+      state.chat.messages.push({ role: 'assistant', content: result.message });
+      state.chat.messages = state.chat.messages.slice(-40);
+      appendChatMessage('assistant', result.message);
+      ui.chatStatus.textContent = `${state.chat.provider === 'demo' ? 'Demo' : state.chat.provider.toUpperCase()} ready`;
+    } catch (error) {
+      const message = error.name === 'AbortError' ? 'The agent took too long to reply.' : error.message;
+      appendChatMessage('assistant', message, true);
+      ui.chatStatus.textContent = 'Reply failed';
+    } finally {
+      window.clearTimeout(timeout);
+      state.chat.sending = false;
+      ui.chatSend.disabled = !state.chat.ready;
+      ui.chatSend.textContent = 'Send';
+      ui.chatInput.focus();
+    }
+  }
+
   function animate(now) {
     state.frameRequest = requestAnimationFrame(animate);
     const delta = Math.min((now - state.lastTime) / 1000, 0.05);
@@ -2073,6 +2166,10 @@
   }
 
   function wireInterface() {
+    ui.chatForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      sendChatMessage(ui.chatInput.value);
+    });
     ui.settingsToggle.addEventListener('click', () => {
       if (state.arkit.panelOpen) setARKitPanel(false);
       setSettingsPanel(!ui.settingsPanel.classList.contains('is-open'));
@@ -2145,6 +2242,7 @@
       applyQuality('peak');
       setScreenFilter(0);
       wireInterface();
+      initializeChat();
       animate(performance.now());
       setProgress(5, 'Building image-based studio lighting');
       await loadEnvironment();

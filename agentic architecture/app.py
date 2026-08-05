@@ -7,7 +7,6 @@ from typing import Literal
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 ROOT = Path(__file__).resolve().parent
@@ -157,6 +156,15 @@ async def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
+@app.get("/")
+async def backend_info() -> dict[str, object]:
+    return {
+        "service": "sirious-agent-backend",
+        "frontend": False,
+        "chat_endpoint": "/api/chat",
+    }
+
+
 @app.get("/api/config")
 async def config() -> dict[str, object]:
     return {
@@ -194,6 +202,3 @@ async def chat(request: ChatRequest) -> ChatResponse:
         raise HTTPException(status_code=502, detail=f"Provider request failed: {exc}") from exc
 
     return ChatResponse(provider=request.provider, model=model, message=answer)
-
-
-app.mount("/", StaticFiles(directory=ROOT / "frontend", html=True), name="frontend")

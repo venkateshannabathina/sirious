@@ -11,6 +11,16 @@ def test_health() -> None:
     assert response.json() == {"status": "ok"}
 
 
+def test_backend_is_api_only() -> None:
+    response = client.get("/")
+    assert response.status_code == 200
+    assert response.json() == {
+        "service": "sirious-agent-backend",
+        "frontend": False,
+        "chat_endpoint": "/api/chat",
+    }
+
+
 def test_demo_chat() -> None:
     response = client.post(
         "/api/chat",
