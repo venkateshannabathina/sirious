@@ -4,7 +4,7 @@
   const DEFAULT_MODEL = '/assets/models/cc3_master.glb';
   const DEFAULT_STANDING_POSE = '/assets/animations/female_standing_baked.glb';
   const ENVIRONMENT = '/assets/environment/studio_1k.hdr';
-  const CHAT_API_BASE = 'http://127.0.0.1:8010';
+  const MAX_LOCAL_MODEL_BYTES = 512 * 1024 * 1024;
   const MAIN_INTERFACE_CAMERA = Object.freeze({
     position: [-0.0723844704365821, 1.555924939681181, 0.5614867515643476],
     target: [-0.07032106307009192, 1.5838371864144523, -0.01638891297256201],
@@ -98,6 +98,25 @@
     'A12_Eye_Look_In_Right', 'A13_Eye_Look_Out_Right',
     'A14_Eye_Blink_Left', 'A15_Eye_Blink_Right',
   ])));
+  const SPEECH_VISEME_RECIPES = Object.freeze({
+    AA: { A25_Jaw_Open: 0.56, A44_Mouth_Upper_Up_Left: 0.15, A45_Mouth_Upper_Up_Right: 0.15, A46_Mouth_Lower_Down_Left: 0.20, A47_Mouth_Lower_Down_Right: 0.20 },
+    E: { A25_Jaw_Open: 0.24, A38_Mouth_Smile_Left: 0.11, A39_Mouth_Smile_Right: 0.11, A50_Mouth_Stretch_Left: 0.38, A51_Mouth_Stretch_Right: 0.38 },
+    I: { A25_Jaw_Open: 0.19, A38_Mouth_Smile_Left: 0.14, A39_Mouth_Smile_Right: 0.14, A50_Mouth_Stretch_Left: 0.34, A51_Mouth_Stretch_Right: 0.34 },
+    O: { A25_Jaw_Open: 0.40, A29_Mouth_Funnel: 0.60, A30_Mouth_Pucker: 0.32 },
+    WQ: { A25_Jaw_Open: 0.15, A29_Mouth_Funnel: 0.48, A30_Mouth_Pucker: 0.72 },
+    PBM: { A25_Jaw_Open: 0.015, A37_Mouth_Close: 0.92, A48_Mouth_Press_Left: 0.34, A49_Mouth_Press_Right: 0.34 },
+    FV: { A25_Jaw_Open: 0.10, A34_Mouth_Roll_Lower: 0.34, A44_Mouth_Upper_Up_Left: 0.10, A45_Mouth_Upper_Up_Right: 0.10 },
+    TH: { A25_Jaw_Open: 0.18, A46_Mouth_Lower_Down_Left: 0.10, A47_Mouth_Lower_Down_Right: 0.10, A52_Tongue_Out: 0.10 },
+    TD: { A25_Jaw_Open: 0.16, A50_Mouth_Stretch_Left: 0.12, A51_Mouth_Stretch_Right: 0.12 },
+    KG: { A25_Jaw_Open: 0.27, A35_Mouth_Shrug_Upper: 0.09 },
+    SZ: { A25_Jaw_Open: 0.11, A50_Mouth_Stretch_Left: 0.28, A51_Mouth_Stretch_Right: 0.28 },
+    SH: { A25_Jaw_Open: 0.18, A29_Mouth_Funnel: 0.30, A30_Mouth_Pucker: 0.20 },
+    R: { A25_Jaw_Open: 0.17, A29_Mouth_Funnel: 0.17, A30_Mouth_Pucker: 0.30 },
+    L: { A25_Jaw_Open: 0.25, A50_Mouth_Stretch_Left: 0.10, A51_Mouth_Stretch_Right: 0.10, A52_Tongue_Out: 0.055 },
+  });
+  const SPEECH_CHANNELS = Object.freeze(Array.from(new Set(
+    Object.values(SPEECH_VISEME_RECIPES).flatMap((recipe) => Object.keys(recipe)),
+  )));
   const state = {
     renderer: null,
     scene: null,
@@ -113,16 +132,10 @@
     renderScale: 1,
     modelUrl: DEFAULT_MODEL,
     objectUrl: null,
+    loadGeneration: 0,
     cameraLocked: true,
     filterMode: 0,
     post: null,
-    chat: {
-      ready: false,
-      sending: false,
-      provider: 'demo',
-      model: null,
-      messages: [],
-    },
     arkit: {
       channels: new Map(),
       values: Object.create(null),
@@ -161,6 +174,17 @@
       nextLipReadjustAt: 0,
       nextBlinkAt: 0,
       nextGazeAt: 0,
+      lastDiagnosticAt: 0,
+    },
+    speech: {
+      active: false,
+      mode: 'idle',
+      audio: null,
+      cues: [],
+      values: Object.create(null),
+      currentViseme: 'SIL',
+      generation: 0,
+      settle: null,
       lastDiagnosticAt: 0,
     },
     clothing: {
@@ -206,11 +230,6 @@
     arkitTestAll: document.getElementById('arkit-test-all'),
     expressionToggle: document.getElementById('expression-idle-toggle'),
     expressionStatus: document.getElementById('expression-idle-status'),
-    chatForm: document.getElementById('chat-form'),
-    chatInput: document.getElementById('chat-input'),
-    chatSend: document.getElementById('chat-send'),
-    chatMessages: document.getElementById('chat-messages'),
-    chatStatus: document.getElementById('chat-status'),
     clothing: {
       bra: {
         visibility: document.getElementById('bra-visibility'),
@@ -573,8 +592,18 @@
     material.dispose();
   }
 
+  function disposeModelRoot(root) {
+    if (!root) return;
+    root.traverse((object) => {
+      if (object.geometry) object.geometry.dispose();
+      if (Array.isArray(object.material)) object.material.forEach(disposeMaterial);
+      else disposeMaterial(object.material);
+    });
+  }
+
   function clearCurrentModel() {
     if (!state.model) return;
+    stopSpeech('model-change', true);
     if (state.arkit.panelOpen) setARKitPanel(false);
     resetARKitRig();
     state.arkit.channels.clear();
@@ -594,11 +623,7 @@
     state.expression.body.bases = Object.create(null);
     updateARKitStatus('Waiting for the CC3 face');
     state.scene.remove(state.model);
-    state.model.traverse((object) => {
-      if (object.geometry) object.geometry.dispose();
-      if (Array.isArray(object.material)) object.material.forEach(disposeMaterial);
-      else disposeMaterial(object.material);
-    });
+    disposeModelRoot(state.model);
     state.model = null;
     state.mixer = null;
   }
@@ -1204,11 +1229,153 @@
 
   function getComposedARKitValue(channel) {
     const manual = Number(state.arkit.values[channel]) || 0;
-    if (state.arkit.panelOpen || !state.expression.enabled) {
+    if (state.arkit.panelOpen) {
       return THREE.MathUtils.clamp(manual, 0, 1);
     }
-    const idle = Number(state.expression.values[channel]) || 0;
-    return THREE.MathUtils.clamp(manual + idle, 0, 1);
+    const idle = state.expression.enabled ? Number(state.expression.values[channel]) || 0 : 0;
+    const speech = Number(state.speech.values[channel]) || 0;
+    const idleContribution = state.speech.active && SPEECH_CHANNELS.includes(channel)
+      ? idle * 0.08
+      : idle;
+    return THREE.MathUtils.clamp(manual + idleContribution + speech, 0, 1);
+  }
+
+  function publishSpeechDiagnostics(force = false) {
+    const diagnosticNow = performance.now();
+    if (!force && diagnosticNow - state.speech.lastDiagnosticAt < 80) return;
+    state.speech.lastDiagnosticAt = diagnosticNow;
+    const audio = state.speech.audio;
+    document.body.dataset.lipSync = JSON.stringify({
+      active: state.speech.active,
+      mode: state.speech.mode,
+      clock: audio ? 'audio.currentTime' : 'stopped',
+      time: Number((audio?.currentTime || 0).toFixed(3)),
+      duration: Number((audio?.duration || 0).toFixed(3)) || null,
+      viseme: state.speech.currentViseme,
+      cues: state.speech.cues.length,
+      activeChannels: SPEECH_CHANNELS
+        .filter((channel) => (state.speech.values[channel] || 0) > 0.005)
+        .map((channel) => ({ channel, value: Number(state.speech.values[channel].toFixed(3)) })),
+    });
+  }
+
+  function finishSpeech(reason = 'ended', error = null) {
+    const settle = state.speech.settle;
+    state.speech.settle = null;
+    state.speech.active = false;
+    state.speech.mode = 'release';
+    state.speech.currentViseme = 'SIL';
+    state.expression.mode = 'speech-release';
+    if (state.speech.audio && reason !== 'ended') state.speech.audio.pause();
+    state.speech.audio = null;
+    if (settle) {
+      if (error) settle.reject(error);
+      else settle.resolve({ reason });
+    }
+    publishSpeechDiagnostics(true);
+  }
+
+  function stopSpeech(reason = 'stopped', immediate = false) {
+    state.speech.generation += 1;
+    finishSpeech(reason);
+    if (immediate) {
+      SPEECH_CHANNELS.forEach((channel) => { state.speech.values[channel] = 0; });
+      state.speech.mode = 'idle';
+      state.expression.mode = 'idle';
+    }
+  }
+
+  function playSpeech({ audioUrl, cues }) {
+    stopSpeech('replaced', true);
+    const generation = state.speech.generation + 1;
+    state.speech.generation = generation;
+    const audio = new Audio(audioUrl);
+    audio.preload = 'auto';
+    state.speech.audio = audio;
+    state.speech.cues = Array.isArray(cues)
+      ? cues.filter((cue) => cue && SPEECH_VISEME_RECIPES[cue.viseme]
+        && Number.isFinite(cue.start) && Number.isFinite(cue.end) && cue.end > cue.start)
+      : [];
+    state.speech.active = true;
+    state.speech.mode = 'speaking';
+    state.expression.mode = 'speaking';
+    state.expression.mouth = null;
+    publishSpeechDiagnostics(true);
+
+    return new Promise((resolve, reject) => {
+      state.speech.settle = { resolve, reject };
+      audio.addEventListener('ended', () => {
+        if (generation === state.speech.generation) finishSpeech('ended');
+      }, { once: true });
+      audio.addEventListener('error', () => {
+        if (generation === state.speech.generation) {
+          finishSpeech('error', new Error('The generated speech audio could not be played.'));
+        }
+      }, { once: true });
+      audio.play().catch((error) => {
+        if (generation === state.speech.generation) finishSpeech('blocked', error);
+      });
+    });
+  }
+
+  function updateSpeech(delta) {
+    const desired = Object.create(null);
+    const audio = state.speech.audio;
+    const now = audio?.currentTime || 0;
+    let strongestCue = null;
+    let strongestEnvelope = 0;
+
+    if (state.speech.active && audio) {
+      state.speech.cues.forEach((cue) => {
+        const cueDuration = cue.end - cue.start;
+        const anticipation = Math.min(0.11, Math.max(0.065, cueDuration * 0.55));
+        const release = Math.min(0.12, Math.max(0.070, cueDuration * 0.60));
+        const innerAttack = Math.min(0.09, Math.max(0.035, cueDuration * 0.42));
+        const innerRelease = Math.min(0.10, Math.max(0.040, cueDuration * 0.46));
+        let envelope = 0;
+        if (now >= cue.start && now <= cue.end) {
+          const attackEnvelope = 0.62 + (smooth01((now - cue.start) / innerAttack) * 0.38);
+          const releaseEnvelope = 0.62 + (smooth01((cue.end - now) / innerRelease) * 0.38);
+          envelope = Math.min(attackEnvelope, releaseEnvelope);
+        } else if (now < cue.start && cue.start - now <= anticipation) {
+          envelope = smooth01(1 - ((cue.start - now) / anticipation)) * 0.62;
+        } else if (now > cue.end && now - cue.end <= release) {
+          envelope = (1 - smooth01((now - cue.end) / release)) * 0.62;
+        }
+        if (!envelope) return;
+        if (envelope > strongestEnvelope) {
+          strongestEnvelope = envelope;
+          strongestCue = cue;
+        }
+        Object.entries(SPEECH_VISEME_RECIPES[cue.viseme]).forEach(([channel, weight]) => {
+          desired[channel] = Math.max(desired[channel] || 0, weight * envelope);
+        });
+      });
+    }
+
+    state.speech.currentViseme = strongestCue?.viseme || 'SIL';
+    let moving = false;
+    const smoothingDelta = Math.min(Math.max(delta, 0), 1 / 30);
+    SPEECH_CHANNELS.forEach((channel) => {
+      const target = THREE.MathUtils.clamp(desired[channel] || 0, 0, 1);
+      const current = Number(state.speech.values[channel]) || 0;
+      const attackSpeed = channel === 'A37_Mouth_Close' ? 20 : channel === 'A25_Jaw_Open' ? 12 : 14;
+      const releaseSpeed = channel === 'A25_Jaw_Open' ? 9 : 11;
+      const response = 1 - Math.exp(-smoothingDelta * (target > current ? attackSpeed : releaseSpeed));
+      let value = THREE.MathUtils.lerp(current, target, response);
+      if (channel === 'A25_Jaw_Open') {
+        const maximumJawStep = smoothingDelta * 1.8;
+        value = THREE.MathUtils.clamp(value, current - maximumJawStep, current + maximumJawStep);
+      }
+      state.speech.values[channel] = value < 0.0005 ? 0 : value;
+      moving = moving || state.speech.values[channel] > 0.002;
+    });
+    if (!state.speech.active && !moving && state.speech.mode === 'release') {
+      state.speech.mode = 'idle';
+      state.expression.mode = 'idle';
+      state.expression.nextMouthAt = performance.now() / 1000 + randomBetween(3.5, 6.5);
+    }
+    publishSpeechDiagnostics();
   }
 
   function clearExpressionLayer(immediate = false) {
@@ -1232,6 +1399,7 @@
     if (immediate && state.model) {
       applyARKitMorphs();
       applyEyebrowMorphs();
+      applyJawRig();
       applyHeadRig();
       applyEyeRig();
     }
@@ -1485,6 +1653,10 @@
   function updateLivingIdle(nowSeconds, delta) {
     if (!state.model || !state.arkit.channels.size) return;
     if (!state.expression.enabled || state.arkit.panelOpen) {
+      if (!state.arkit.panelOpen && state.speech.mode !== 'idle') {
+        applyARKitMorphs();
+        applyJawRig();
+      }
       updateExpressionDiagnostics(nowSeconds);
       return;
     }
@@ -1525,6 +1697,7 @@
     state.expression.headValues.neckRoll = 0;
     applyARKitMorphs();
     applyEyebrowMorphs();
+    applyJawRig();
     applyHeadRig();
     applyEyeRig();
     applyLivingBody(nowSeconds);
@@ -1603,10 +1776,10 @@
     const baseQuaternion = state.arkit.jawBaseQuaternion;
     const basePosition = state.arkit.jawBasePosition;
     if (!jaw || !baseQuaternion || !basePosition) return;
-    const open = state.arkit.values.A25_Jaw_Open || 0;
-    const forward = state.arkit.values.A26_Jaw_Forward || 0;
-    const left = state.arkit.values.A27_Jaw_Left || 0;
-    const right = state.arkit.values.A28_Jaw_Right || 0;
+    const open = getComposedARKitValue('A25_Jaw_Open');
+    const forward = getComposedARKitValue('A26_Jaw_Forward');
+    const left = getComposedARKitValue('A27_Jaw_Left');
+    const right = getComposedARKitValue('A28_Jaw_Right');
     // Match the Blender jaw-control progression: restrained near closed,
     // natural through speech range, and approximately 25 degrees at maximum.
     const openCurve = open * open * (3 - (2 * open));
@@ -1776,6 +1949,7 @@
   function setARKitPanel(open) {
     const nextOpen = Boolean(open);
     if (nextOpen === state.arkit.panelOpen) return;
+    if (nextOpen) stopSpeech('manual-rig', true);
     state.arkit.panelOpen = nextOpen;
     ui.arkitPanel.classList.toggle('is-open', nextOpen);
     ui.arkitPanel.setAttribute('aria-hidden', String(!nextOpen));
@@ -1878,7 +2052,7 @@
 
   function applyStandingPose(root) {
     if (!root.getObjectByName('CC_Base_Hip')) {
-      return Promise.resolve({ applied: false, tracks: 0, reason: 'non-CC3 model' });
+      return Promise.resolve({ applied: false, tracks: 0, reason: 'non-CC3 model', mixer: null });
     }
     return new Promise((resolve, reject) => {
       new THREE.GLTFLoader().load(
@@ -1894,15 +2068,15 @@
             reject(new Error('The baked standing pose contains no compatible CC3 tracks.'));
             return;
           }
-          state.mixer = new THREE.AnimationMixer(root);
-          const action = state.mixer.clipAction(clip);
+          const mixer = new THREE.AnimationMixer(root);
+          const action = mixer.clipAction(clip);
           action.setLoop(THREE.LoopOnce, 1);
           action.clampWhenFinished = true;
           action.play();
-          state.mixer.setTime(0);
+          mixer.setTime(0);
           action.paused = true;
           root.updateMatrixWorld(true);
-          resolve({ applied: true, tracks: clip.tracks.length, clip: clip.name });
+          resolve({ applied: true, tracks: clip.tracks.length, clip: clip.name, mixer });
         },
         undefined,
         reject,
@@ -1910,7 +2084,11 @@
     });
   }
 
-  function installModel(root, animations, label) {
+  function installModel(root, animations, label, generation) {
+    if (generation !== state.loadGeneration) {
+      disposeModelRoot(root);
+      return;
+    }
     clearCurrentModel();
     state.model = root;
     root.name = root.name || 'Sirious_Model';
@@ -1926,6 +2104,11 @@
     setProgress(95, 'Applying audited 52-bone standing pose');
     applyStandingPose(root)
       .then((pose) => {
+        if (generation !== state.loadGeneration || state.model !== root) {
+          if (pose.mixer) pose.mixer.stopAllAction();
+          return;
+        }
+        state.mixer = pose.mixer || null;
         frameModel(root);
         registerARKitRig(root);
         if (pose.applied) applyMainInterfaceCamera();
@@ -1958,7 +2141,9 @@
         requestAnimationFrame(() => setTimeout(() => ui.loadingCard.classList.add('is-complete'), 240));
         console.info('[Sirious] Model ready', debugState);
       })
-      .catch(showError);
+      .catch((error) => {
+        if (generation === state.loadGeneration && state.model === root) showError(error);
+      });
   }
 
   function loaderFor(url) {
@@ -1969,6 +2154,7 @@
   }
 
   function loadModel(url, label) {
+    const generation = ++state.loadGeneration;
     ui.errorCard.hidden = true;
     ui.loadingCard.classList.remove('is-complete');
     ui.loadingTitle.textContent = `Loading ${label || 'model'}`;
@@ -1989,9 +2175,14 @@
       (result) => {
         const root = descriptor.type === 'gltf' ? result.scene : result;
         const animations = descriptor.type === 'gltf' ? result.animations : result.animations || [];
-        installModel(root, animations, label || url.split('/').pop());
+        if (generation !== state.loadGeneration) {
+          disposeModelRoot(root);
+          return;
+        }
+        installModel(root, animations, label || url.split('/').pop(), generation);
       },
       (event) => {
+        if (generation !== state.loadGeneration) return;
         if (event.lengthComputable && event.total > 0) {
           const percent = (event.loaded / event.total) * 92;
           const loaded = (event.loaded / 1048576).toFixed(1);
@@ -2001,7 +2192,9 @@
           setProgress(18, `${(event.loaded / 1048576).toFixed(1)} MB received`);
         }
       },
-      showError,
+      (error) => {
+        if (generation === state.loadGeneration) showError(error);
+      },
     );
   }
 
@@ -2058,91 +2251,12 @@
     applyQuality(state.quality);
   }
 
-  function appendChatMessage(role, content, error = false) {
-    const message = document.createElement('div');
-    message.className = `chat-message ${role}${error ? ' error' : ''}`;
-    message.textContent = content;
-    ui.chatMessages.appendChild(message);
-    ui.chatMessages.scrollTop = ui.chatMessages.scrollHeight;
-  }
-
-  async function initializeChat() {
-    ui.chatSend.disabled = true;
-    ui.chatStatus.textContent = 'Connecting…';
-    try {
-      const response = await fetch(`${CHAT_API_BASE}/api/config`, { cache: 'no-store' });
-      if (!response.ok) throw new Error('Agent backend is unavailable.');
-      const config = await response.json();
-      const priority = ['groq', 'openai', 'anthropic', 'gemini', 'grok', 'demo'];
-      const provider = priority.find((name) => config.providers?.[name]) || 'demo';
-      state.chat.provider = provider;
-      state.chat.model = config.models?.[provider] || null;
-      state.chat.ready = true;
-      ui.chatSend.disabled = false;
-      ui.chatStatus.textContent = `${provider === 'demo' ? 'Demo' : provider.toUpperCase()} ready`;
-      document.body.dataset.chatBackend = JSON.stringify({
-        ready: true,
-        provider,
-        model: state.chat.model,
-        endpoint: `${CHAT_API_BASE}/api/chat`,
-      });
-    } catch (error) {
-      state.chat.ready = false;
-      ui.chatStatus.textContent = 'Agent backend offline';
-      document.body.dataset.chatBackend = JSON.stringify({ ready: false, error: error.message });
-    }
-  }
-
-  async function sendChatMessage(content) {
-    if (!state.chat.ready || state.chat.sending) return;
-    const text = String(content || '').trim();
-    if (!text) return;
-    state.chat.messages = state.chat.messages.slice(-38);
-    state.chat.messages.push({ role: 'user', content: text });
-    appendChatMessage('user', text);
-    ui.chatInput.value = '';
-    state.chat.sending = true;
-    ui.chatSend.disabled = true;
-    ui.chatSend.textContent = '…';
-    ui.chatStatus.textContent = 'Thinking…';
-
-    const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 60000);
-    try {
-      const response = await fetch(`${CHAT_API_BASE}/api/chat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        signal: controller.signal,
-        body: JSON.stringify({
-          provider: state.chat.provider,
-          model: state.chat.model,
-          messages: state.chat.messages.slice(-40),
-        }),
-      });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.detail || 'Chat request failed.');
-      state.chat.messages.push({ role: 'assistant', content: result.message });
-      state.chat.messages = state.chat.messages.slice(-40);
-      appendChatMessage('assistant', result.message);
-      ui.chatStatus.textContent = `${state.chat.provider === 'demo' ? 'Demo' : state.chat.provider.toUpperCase()} ready`;
-    } catch (error) {
-      const message = error.name === 'AbortError' ? 'The agent took too long to reply.' : error.message;
-      appendChatMessage('assistant', message, true);
-      ui.chatStatus.textContent = 'Reply failed';
-    } finally {
-      window.clearTimeout(timeout);
-      state.chat.sending = false;
-      ui.chatSend.disabled = !state.chat.ready;
-      ui.chatSend.textContent = 'Send';
-      ui.chatInput.focus();
-    }
-  }
-
   function animate(now) {
     state.frameRequest = requestAnimationFrame(animate);
     const delta = Math.min((now - state.lastTime) / 1000, 0.05);
     state.lastTime = now;
     if (state.mixer) state.mixer.update(delta);
+    updateSpeech(delta);
     updateLivingIdle(now / 1000, delta);
     if (state.arkit.panelOpen) {
       // Keep the ARKit state authoritative after animation evaluation. Several
@@ -2166,13 +2280,17 @@
   }
 
   function wireInterface() {
-    ui.chatForm.addEventListener('submit', (event) => {
-      event.preventDefault();
-      sendChatMessage(ui.chatInput.value);
-    });
     ui.settingsToggle.addEventListener('click', () => {
       if (state.arkit.panelOpen) setARKitPanel(false);
       setSettingsPanel(!ui.settingsPanel.classList.contains('is-open'));
+    });
+    window.addEventListener('sirious:open-settings', () => {
+      if (state.arkit.panelOpen) setARKitPanel(false);
+      setSettingsPanel(true);
+      ui.settingsClose.focus();
+    });
+    window.addEventListener('sirious:reset-view', () => {
+      resetView();
     });
     ui.settingsClose.addEventListener('click', () => setSettingsPanel(false));
     ui.qualitySelect.addEventListener('change', () => applyQuality(ui.qualitySelect.value));
@@ -2224,12 +2342,22 @@
     ui.modelInput.addEventListener('change', () => {
       const file = ui.modelInput.files && ui.modelInput.files[0];
       if (!file) return;
+      if (file.size > MAX_LOCAL_MODEL_BYTES) {
+        showError(new Error('That model is larger than the 512 MB local safety limit.'));
+        ui.modelInput.value = '';
+        return;
+      }
       if (state.objectUrl) URL.revokeObjectURL(state.objectUrl);
       state.objectUrl = URL.createObjectURL(file);
       loadModel(state.objectUrl, file.name);
       setSettingsPanel(false);
     });
     window.addEventListener('resize', onResize, { passive: true });
+    window.addEventListener('pagehide', () => {
+      if (!state.objectUrl) return;
+      URL.revokeObjectURL(state.objectUrl);
+      state.objectUrl = null;
+    }, { once: true });
   }
 
   async function boot() {
@@ -2242,7 +2370,7 @@
       applyQuality('peak');
       setScreenFilter(0);
       wireInterface();
-      initializeChat();
+      window.SiriousChat.mount(document.getElementById('chat-panel'));
       animate(performance.now());
       setProgress(5, 'Building image-based studio lighting');
       await loadEnvironment();
@@ -2251,6 +2379,12 @@
       showError(error);
     }
   }
+
+  window.SiriousFaceSpeech = Object.freeze({
+    play: playSpeech,
+    stop: () => stopSpeech('external-stop', false),
+    getState: () => JSON.parse(document.body.dataset.lipSync || '{}'),
+  });
 
   boot();
 }());

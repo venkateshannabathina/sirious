@@ -10,8 +10,24 @@ from fastapi.staticfiles import StaticFiles
 
 
 BASE_DIR = Path(__file__).resolve().parent
-FRONTEND_DIR = BASE_DIR / "frontend"
-ASSETS_DIR = BASE_DIR / "assets"
+PUBLIC_DIR = BASE_DIR / "public"
+ASSETS_DIR = PUBLIC_DIR / "assets"
+
+VIEWER_CONTENT_SECURITY_POLICY = "; ".join(
+    (
+        "default-src 'self'",
+        "base-uri 'none'",
+        "object-src 'none'",
+        "frame-ancestors 'none'",
+        "script-src 'self'",
+        "style-src 'self' 'unsafe-inline'",
+        "img-src 'self' data: blob:",
+        "media-src 'self' blob:",
+        "worker-src 'self' blob:",
+        "connect-src 'self' blob: http://127.0.0.1:8010 http://localhost:8010",
+        "form-action 'self'",
+    )
+)
 
 app = FastAPI(title="Sirious CC3 Viewer", version="0.1.0")
 
@@ -20,7 +36,12 @@ app = FastAPI(title="Sirious CC3 Viewer", version="0.1.0")
 async def prevent_viewer_shell_caching(request, call_next):
     """Always deliver the current testing UI while preserving heavy asset caching."""
     response = await call_next(request)
-    if request.url.path in {"/", "/index.html", "/app.js", "/style.css"}:
+    response.headers["Content-Security-Policy"] = VIEWER_CONTENT_SECURITY_POLICY
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    if request.url.path in {"/", "/index.html", "/app.js", "/chat.js", "/lip-sync.js", "/style.css"}:
         response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
@@ -40,5 +61,4 @@ def health() -> JSONResponse:
     )
 
 
-app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
-app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
+app.mount("/", StaticFiles(directory=PUBLIC_DIR, html=True), name="frontend")
