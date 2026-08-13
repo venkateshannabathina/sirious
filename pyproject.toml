@@ -6,11 +6,20 @@ build-backend = "setuptools.build_meta"
 name = "sirious-cc3-viewer"
 version = "0.1.0"
 description = "High-fidelity Three.js viewer for CC3 and common 3D model formats"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
     "fastapi==0.137.1",
     "uvicorn==0.49.0",
 ]
+
+[project.optional-dependencies]
+dev = [
+    "httpx==0.28.1",
+    "pytest==9.0.3",
+]
+
+[tool.setuptools]
+py-modules = []
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

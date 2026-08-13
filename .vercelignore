@@ -1,0 +1,11 @@
+.git
+.venv
+agentic architecture
+assets
+docs
+refrence
+tests
+tools
+__pycache__
+.pytest_cache
+*.pyc
