@@ -32,7 +32,9 @@ def test_living_idle_expression_engine_is_exposed():
     html = home_response.text
     assert 'id="expression-idle-toggle"' in html
     assert 'id="expression-idle-status"' in html
-    assert "sirious-chat-v13" in html
+    assert "sirious-command-ui-v18" in html
+    assert 'class="quality-cluster" hidden' in html
+    assert 'id="reset-view" class="reset-button" type="button" hidden' in html
     assert 'id="chat-form"' in html
     assert 'id="chat-input"' in html
     assert 'id="chat-send"' in html
@@ -71,6 +73,34 @@ def test_living_idle_expression_engine_is_exposed():
     assert "function getComposedARKitValue" in script
     assert "state.arkit.panelOpen || !state.expression.enabled" in script
     assert "document.body.dataset.expressionEngine" in script
-    assert "http://127.0.0.1:8010" in script
-    assert "function initializeChat" in script
-    assert "function sendChatMessage" in script
+    assert "SPEECH_VISEME_RECIPES" in script
+    assert "audio?.currentTime" in script
+    assert "function updateSpeech" in script
+    assert "const maximumJawStep = smoothingDelta * 1.8" in script
+    assert "const innerAttack" in script
+    assert "state.expression.mode = 'speaking'" in script
+    assert "getComposedARKitValue('A25_Jaw_Open')" in script
+    assert "window.SiriousFaceSpeech" in script
+
+    chat_script = client.get("/chat.js").text
+    assert "window.SiriousLipSync.speak(result.message)" in chat_script
+    assert "message.textContent = content" in chat_script
+    assert "'/settings': 'sirious:open-settings'" in chat_script
+    assert "'/reset': 'sirious:reset-view'" in chat_script
+    assert "window.dispatchEvent(new CustomEvent(localCommand))" in chat_script
+    assert "event.key !== 'Enter'" in chat_script
+    assert "window.addEventListener('sirious:open-settings'" in script
+    assert "window.addEventListener('sirious:reset-view'" in script
+
+    lip_sync_script = client.get("/lip-sync.js").text
+    assert "window.SiriousLipSync" in lip_sync_script
+    assert "/api/speech" in lip_sync_script
+    assert "payload.visemes" in lip_sync_script
+
+
+def test_security_headers_cover_dynamic_frontend_modules():
+    response = client.get("/")
+    assert response.headers["x-content-type-options"] == "nosniff"
+    assert response.headers["x-frame-options"] == "DENY"
+    assert "default-src 'self'" in response.headers["content-security-policy"]
+    assert "no-store" in client.get("/lip-sync.js").headers["cache-control"]
