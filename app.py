@@ -2,16 +2,18 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from fastapi import FastAPI
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 
 BASE_DIR = Path(__file__).resolve().parent
 PUBLIC_DIR = BASE_DIR / "public"
 ASSETS_DIR = PUBLIC_DIR / "assets"
+IS_VERCEL = os.getenv("VERCEL") == "1"
 
 VIEWER_CONTENT_SECURITY_POLICY = "; ".join(
     (
@@ -61,4 +63,12 @@ def health() -> JSONResponse:
     )
 
 
-app.mount("/", StaticFiles(directory=PUBLIC_DIR, html=True), name="frontend")
+@app.get("/", include_in_schema=False)
+def viewer() -> FileResponse:
+    return FileResponse(PUBLIC_DIR / "index.html")
+
+
+# Vercel serves public/** from its CDN. Mounting it through FastAPI would route
+# the 81 MB GLB through a Function and exceed Vercel's 4.5 MB response limit.
+if not IS_VERCEL:
+    app.mount("/", StaticFiles(directory=PUBLIC_DIR, html=True), name="frontend")
