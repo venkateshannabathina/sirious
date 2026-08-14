@@ -1,7 +1,7 @@
 .git
 .venv
 agentic architecture
-assets
+/assets/
 docs
 refrence
 tests
