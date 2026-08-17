@@ -25,7 +25,7 @@ DEFAULT_MODELS = {
     "openai": os.getenv("OPENAI_MODEL", "gpt-4.1-mini"),
     "anthropic": os.getenv("ANTHROPIC_MODEL", "claude-3-5-haiku-latest"),
     "gemini": os.getenv("GEMINI_MODEL", "gemini-2.0-flash"),
-    "groq": os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
+    "groq": os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
     "grok": os.getenv("GROK_MODEL", "grok-3-mini"),
 }
 

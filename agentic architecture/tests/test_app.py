@@ -56,7 +56,7 @@ def test_groq_appears_in_config() -> None:
     response = client.get("/api/config")
     assert response.status_code == 200
     assert "groq" in response.json()["providers"]
-    assert response.json()["models"]["groq"] == "llama-3.3-70b-versatile"
+    assert response.json()["models"]["groq"] == "openai/gpt-oss-120b"
     assert response.json()["speech"]["enabled"] is True
 
 
