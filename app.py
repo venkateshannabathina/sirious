@@ -26,7 +26,7 @@ VIEWER_CONTENT_SECURITY_POLICY = "; ".join(
         "img-src 'self' data: blob:",
         "media-src 'self' blob:",
         "worker-src 'self' blob:",
-        "connect-src 'self' blob: http://127.0.0.1:8010 http://localhost:8010",
+        "connect-src 'self' blob: https://sirious-agent-api.onrender.com http://127.0.0.1:8010 http://localhost:8010",
         "form-action 'self'",
     )
 )
